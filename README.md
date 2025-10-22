@@ -60,15 +60,15 @@ Cada jugador, en su turno, puede elegir una de estas opciones:
 
 ### Habilidades especiales por personaje
 
-| Personaje        | Vida | Habilidad                                   |
-|------------------|------|----------------------------------------------|
-| Oso              | 2    | Al atacar hace 2 puntos de daño             |
-| Pato             | 1    | Se mueve 3 casillas en agua, objetivo a matar|
-| Alce             | 2    | Se mueve hasta 3 casillas por turno         |
-| Zarigüeya        | 2    | Esquiva 1 ataque si es atacada primero      |
-| Zorro            | 2    | Al atacar desde detrás hace 2 de daño       |
-| Robot Aliado     | 3    | Bloquea ataque y ataca 1 vez cada 3 turnos  |
-| Robot            | 3    | En montaña solo se mueve 1 casilla          |
+| Personaje    | Vida | Habilidad                                     |
+| ------------ | ---- | --------------------------------------------- |
+| Oso          | 2    | Al atacar hace 2 puntos de daño               |
+| Pato         | 1    | Se mueve 3 casillas en agua, objetivo a matar |
+| Alce         | 2    | Se mueve hasta 3 casillas por turno           |
+| Zarigüeya    | 2    | Esquiva 1 ataque si es atacada primero        |
+| Zorro        | 2    | Al atacar desde detrás hace 2 de daño         |
+| Robot Aliado | 3    | Bloquea ataque y ataca 1 vez cada 3 turnos    |
+| Robot        | 3    | En montaña solo se mueve 1 casilla            |
 
 ## Condiciones de victoria y puntuación
 
@@ -80,28 +80,32 @@ Cada jugador, en su turno, puede elegir una de estas opciones:
 ---
 
 **Notas:**
+
 - El Pato no puede atacar, solo moverse o esconderse.
 - Si el Pato es capturado, los animales pierden automáticamente.
+
+## Galeria de fotos:
+
+<img src="assets/foto1.jpeg" width="120">
+<img src="assets/roles.jpg" width="220">
 
 # Retos de implementación: De juego de mesa a juego web
 
 ## 1. Digitalización de reglas y mecánicas
+
 - Traducir las acciones físicas (mover fichas, lanzar dados, ocultar información) a interacciones digitales precisas e intuitivas.
 - Garantizar que todas las reglas se automaticen correctamente y sin ambigüedades para los usuarios.
 
 ## 2. Interfaz y experiencia de usuario (UI/UX)
+
 - Crear una interfaz clara y atractiva que refleje el tablero, áreas y elementos del juego original.
 - Diseñar controles simples para seleccionar, mover y activar habilidades de fichas.
 - Ofrecer notificaciones visuales o auditivas para eventos clave (ataques, bloqueos, cambios de turno).
 
 ## 3. Sincronización y multijugador
+
 - Programar un sistema eficiente para manejar turnos y sincronizar el estado del juego entre varios jugadores en tiempo real.
 - Prevenir problemas de latencia que puedan arruinar la experiencia o crear errores de juego.
 - Implementar lógica de reconexión para evitar que una desconexión afecte el desarrollo normal de la partida.
 
-
-
 ---
-
-
-
