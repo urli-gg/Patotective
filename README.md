@@ -109,3 +109,59 @@ Cada jugador, en su turno, puede elegir una de estas opciones:
 - Implementar lógica de reconexión para evitar que una desconexión afecte el desarrollo normal de la partida.
 
 ---
+
+
+## Algoritmos en Lenguaje Natural
+
+
+Componentes principales: tablero, fichas (animales, robots, pato), cartas/habilidades, marcadores de vida
+
+Crear Game con id y cargar tablero con posiciones iniciales predefinidas 
+
+Cada jugador selecciona bando: 
+
+- Si humano vs humano: asignar equipos según selección.
+
+- Si solo 1 humano: posibilidad de bots para completar.
+
+
+Inicializar turno_actual = 1; elegir primer jugador que juega animales 
+
+Esperar acción válida del playerTurnId o expiración del timer:
+
+
+Acciones posibles: MOVE, USE_ABILITY, ATTACK, PASS.
+
+
+Al recibir acción del cliente:
+
+- Si inválida → enviar
+
+- Si válida → aplicar efectos (ver algoritmos específicos abajo), actualizar estado, añadir Event al log.
+
+
+Si accion ejecutada con éxito, actualizar accionesRestantes (si solo 1 acción por turno, quedará 0).
+
+
+Enviar STATE_UPDATE a todos los clientes con cambios (movimientos, pérdidas de vida, eliminaciones).
+
+
+Ejecutar efectos pos-acción: check muertes (vida ≤ 0), aplicar puntos por eliminación si corresponde, comprobar condiciones de victoria (ver sección).
+
+
+Finalizar turno
+
+turno_actual += 1 (o calcular siguiente según orden de jugadores).
+
+
+Si turno_actual > 20 y los robots no capturaron al pato → declarar victoria de animales. O si robots = 0 ganan los animales.  
+
+
+## Diagramas de Flujo
+
+![Diagrama de Flujo](assets/IMG_8941.PNG)
+
+## Prototipo en Figma
+
+https://www.figma.com/design/iLdo7PqzoVSvcw4klDiC89/Web-Design-%7C-Website-Design-%7C-Software-House-Website-%7C-Software-Company-Website--Community-?node-id=0-1&t=zWIlJ7BZAITdQ76w-1
+
