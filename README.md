@@ -110,28 +110,23 @@ Cada jugador, en su turno, puede elegir una de estas opciones:
 
 ---
 
-
 ## Algoritmos en Lenguaje Natural
-
 
 Componentes principales: tablero, fichas (animales, robots, pato), cartas/habilidades, marcadores de vida
 
-Crear Game con id y cargar tablero con posiciones iniciales predefinidas 
+Crear Game con id y cargar tablero con posiciones iniciales predefinidas
 
-Cada jugador selecciona bando: 
+Cada jugador selecciona bando:
 
 - Si humano vs humano: asignar equipos según selección.
 
 - Si solo 1 humano: posibilidad de bots para completar.
 
-
-Inicializar turno_actual = 1; elegir primer jugador que juega animales 
+Inicializar turno_actual = 1; elegir primer jugador que juega animales
 
 Esperar acción válida del playerTurnId o expiración del timer:
 
-
 Acciones posibles: MOVE, USE_ABILITY, ATTACK, PASS.
-
 
 Al recibir acción del cliente:
 
@@ -139,23 +134,73 @@ Al recibir acción del cliente:
 
 - Si válida → aplicar efectos (ver algoritmos específicos abajo), actualizar estado, añadir Event al log.
 
-
 Si accion ejecutada con éxito, actualizar accionesRestantes (si solo 1 acción por turno, quedará 0).
-
 
 Enviar STATE_UPDATE a todos los clientes con cambios (movimientos, pérdidas de vida, eliminaciones).
 
-
 Ejecutar efectos pos-acción: check muertes (vida ≤ 0), aplicar puntos por eliminación si corresponde, comprobar condiciones de victoria (ver sección).
-
 
 Finalizar turno
 
 turno_actual += 1 (o calcular siguiente según orden de jugadores).
 
+Si turno_actual > 20 y los robots no capturaron al pato → declarar victoria de animales. O si robots = 0 ganan los animales.
 
-Si turno_actual > 20 y los robots no capturaron al pato → declarar victoria de animales. O si robots = 0 ganan los animales.  
+## Lenguaje natural
 
+- El usuario ingresa a la página web del videojuego.
+
+- Se carga la interfaz principal.
+
+- Se muestran la información y detalles de la película.
+
+- Se presentan opciones:
+
+- Si el usuario elige "Jugar":
+
+- Inicia el juego y selecciona el personaje (Robot o Pato).
+
+- El juego muestra instrucciones.
+
+- Se presenta el mapa.
+
+- Empieza el primer turno.
+
+- Si el personaje es Robot:
+
+- El Robot hace su movimiento.
+
+- Si elimina enemigos:
+
+- Elimina Pato (si corresponde).
+
+- Si todos los Patos fueron eliminados, los Robots ganan.
+
+- Si el personaje es Pato:
+
+- El Pato hace su movimiento.
+
+- Puede mover el Pato a un animal.
+
+- Si se mueve a un animal, puede usar una habilidad especial.
+
+- El turno termina.
+
+- Si se mueve a una casilla normal, el turno termina.
+
+- Si elimina a un Robot:
+
+- Elimina al Robot del mapa.
+
+- Si elimina todos los Robots, el Pato gana.
+
+- Al finalizar cada turno, se puede optar por salir o reiniciar.
+
+- Si se sale, termina el juego.
+
+- Si se reinicia, se vuelve a cargar la interfaz principal.
+
+- Si el usuario elige "Salir", termina el juego.
 
 ## Diagramas de Flujo
 
@@ -164,4 +209,3 @@ Si turno_actual > 20 y los robots no capturaron al pato → declarar victoria de
 ## Prototipo en Figma
 
 https://www.figma.com/design/iLdo7PqzoVSvcw4klDiC89/Web-Design-%7C-Website-Design-%7C-Software-House-Website-%7C-Software-Company-Website--Community-?node-id=0-1&t=zWIlJ7BZAITdQ76w-1
-
