@@ -209,3 +209,9 @@ Si turno_actual > 20 y los robots no capturaron al pato → declarar victoria de
 ## Prototipo en Figma
 
 https://www.figma.com/design/iLdo7PqzoVSvcw4klDiC89/Web-Design-%7C-Website-Design-%7C-Software-House-Website-%7C-Software-Company-Website--Community-?node-id=0-1&t=zWIlJ7BZAITdQ76w-1
+
+[index](https://urli-gg.github.io/entregas-lenguajes-interpretados/index.html)
+
+[Lovable](https://urli-gg.github.io/entregas-lenguajes-interpretados/lovable.html)
+
+[V0](https://urli-gg.github.io/entregas-lenguajes-interpretados/V0.html)
