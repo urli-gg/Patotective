@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Salvaje: Salva el Pato - Juego de Mesa Digital</title>
+    <meta name="description" content="Juego de mesa estratégico basado en la película Robot Salvaje. Animales vs Robots en una batalla por proteger al Pato.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c2e 100%);
+            color: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c2e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .game-container {
+            display: none;
+            padding: 30px;
+            gap: 30px;
+        }
+
+        .game-container.active {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+        }
+
+        .menu {
+            padding: 40px;
+        }
+
+        .menu.hidden {
+            display: none;
+        }
+
+        .menu h2 {
+            color: #2d5016;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .menu-section {
+            margin-bottom: 30px;
+        }
+
+        .menu-section h3 {
+            color: #4a7c2e;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .menu-section p, .menu-section ul {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .menu-section ul {
+            margin-left: 20px;
+        }
+
+        .menu-section li {
+            margin-bottom: 10px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .character-card {
+            background: #f0f7ed;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #4a7c2e;
+        }
+
+        .character-card h4 {
+            color: #2d5016;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4a7c2e 0%, #2d5016 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 124, 46, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .board-container {
+            background: #f8f9f0;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            background: #8b7355;
+            padding: 10px;
+            border-radius: 10px;
+            aspect-ratio: 1;
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            font-size: 1.5em;
+            padding: 2px;
+        }
+
+        .cell.plain {
+            background: #90c790;
+        }
+
+        .cell.forest {
+            background: #2d5016;
+        }
+
+        .cell.water {
+            background: #4db8e8;
+        }
+
+        .cell.mountain {
+            background: #8b6f47;
+        }
+
+        .cell.hideout {
+            background: #5a4a3a;
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .cell.selected {
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        }
+
+        .cell.valid-move {
+            background: rgba(255, 255, 0, 0.3) !important;
+            border: 2px dashed #ffd700;
+        }
+
+        .character-icon {
+            font-size: 1.8em;
+            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .life-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            margin-top: 2px;
+            overflow: hidden;
+        }
+
+        .life-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transition: width 0.3s;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .turn-info {
+            background: linear-gradient(135deg, #4a7c2e 0%, #2d5016 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .turn-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .score-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .score-card {
+            background: #f0f7ed;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .score-card.animals {
+            border: 3px solid #4a7c2e;
+        }
+
+        .score-card.robots {
+            border: 3px solid #3498db;
+        }
+
+        .score-card h4 {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .score-card .score {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .selected-info {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ffc107;
+        }
+
+        .selected-info h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .selected-info p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: grid;
+            gap: 10px;
+        }
+
+        .action-buttons .btn {
+            margin: 0;
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .game-over {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .game-over.active {
+            display: block;
+        }
+
+        .game-over h2 {
+            font-size: 3em;
+            color: #2d5016;
+            margin-bottom: 20px;
+        }
+
+        .game-over .winner-icon {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+
+        .game-over p {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .final-scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 5px solid #4caf50;
+        }
+
+        .toast.error {
+            border-left: 5px solid #f44336;
+        }
+
+        .toast.info {
+            border-left: 5px solid #2196f3;
+        }
+
+        @media (max-width: 1024px) {
+            .game-container.active {
+                grid-template-columns: 1fr;
+            }
+
+            .board {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Robot Salvaje: Salva el Pato 🦆</h1>
+            <p>Basado en la película animada</p>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu" id="menu">
+            <h2>Bienvenido al Juego</h2>
+            
+            <div class="menu-section">
+                <h3>📖 Objetivo del Juego</h3>
+                <ul>
+                    <li><strong>Animales (🐻🦌🦊🦡):</strong> Proteger al Pato 🦆 durante 20 turnos</li>
+                    <li><strong>Robots (🤖):</strong> Capturar al Pato antes de que termine el tiempo</li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <h3>🎮 Cómo Jugar</h3>
+                <p><strong>En tu turno puedes:</strong></p>
+                <ul>
+                    <li>Mover tu personaje por el tablero</li>
+                    <li>Atacar a un oponente adyacente (necesitas 4, 5 o 6 en el dado)</li>
+                    <li>Usar habilidades especiales de tu personaje</li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <h3>🗺️ Terrenos</h3>
+                <ul>
+                    <li><strong>🌱 Llano:</strong> Movimiento normal</li>
+                    <li><strong>🌲 Bosque:</strong> Robots se mueven más lento</li>
+                    <li><strong>💧 Agua:</strong> El Pato se mueve 3 casillas aquí</li>
+                    <li><strong>⛰️ Montaña:</strong> Movimiento limitado</li>
+                    <li><strong>🏠 Escondite:</strong> Lugar seguro para el Pato</li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <h3>⚔️ Personajes</h3>
+                <div class="characters-grid">
+                    <div class="character-card">
+                        <h4>🐻 Oso</h4>
+                        <p><strong>Vida:</strong> 2</p>
+                        <p><strong>Movimiento:</strong> 3</p>
+                        <p><strong>Habilidad:</strong> Hace 2 de daño al atacar</p>
+                    </div>
+                    <div class="character-card">
+                        <h4>🦆 Pato</h4>
+                        <p><strong>Vida:</strong> 1</p>
+                        <p><strong>Movimiento:</strong> 1 (3 en agua)</p>
+                        <p><strong>Especial:</strong> No puede atacar</p>
+                    </div>
+                    <div class="character-card">
+                        <h4>🦌 Alce</h4>
+                        <p><strong>Vida:</strong> 2</p>
+                        <p><strong>Movimiento:</strong> 3</p>
+                        <p><strong>Habilidad:</strong> Movimiento rápido</p>
+                    </div>
+                    <div class="character-card">
+                        <h4>🦡 Zarigüeya</h4>
+                        <p><strong>Vida:</strong> 2</p>
+                        <p><strong>Movimiento:</strong> 3</p>
+                        <p><strong>Habilidad:</strong> Esquiva 1 ataque</p>
+                    </div>
+                    <div class="character-card">
+                        <h4>🦊 Zorro</h4>
+                        <p><strong>Vida:</strong> 2</p>
+                        <p><strong>Movimiento:</strong> 4</p>
+                        <p><strong>Habilidad:</strong> Ataque por detrás hace 2 de daño</p>
+                    </div>
+                    <div class="character-card">
+                        <h4>🤖 Robot</h4>
+                        <p><strong>Vida:</strong> 3</p>
+                        <p><strong>Movimiento:</strong> 2 (1 en montaña)</p>
+                        <p><strong>Objetivo:</strong> Capturar al Pato</p>
+                    </div>
+                    <div class="character-card">
+                        <h4>🛡️ Robot Aliado</h4>
+                        <p><strong>Vida:</strong> 3</p>
+                        <p><strong>Movimiento:</strong> 2</p>
+                        <p><strong>Habilidad:</strong> Bloquea ataques</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <h3>🏆 Victoria</h3>
+                <ul>
+                    <li><strong>Robots ganan:</strong> Si capturan al Pato antes del turno 20</li>
+                    <li><strong>Animales ganan:</strong> Si protegen al Pato durante 20 turnos o eliminan todos los robots</li>
+                </ul>
+            </div>
+
+            <button class="btn" onclick="startGame()">🎮 Comenzar Juego</button>
+        </div>
+
+        <!-- Game -->
+        <div class="game-container" id="gameContainer">
+            <div class="board-container">
+                <div class="board" id="board"></div>
+            </div>
+
+            <div class="controls">
+                <div class="turn-info">
+                    <h3>Turno: <span id="currentTurn">1</span> / 20</h3>
+                    <p>Equipo: <span id="activeTeam">Animales</span></p>
+                </div>
+
+                <div class="score-section">
+                    <div class="score-card animals">
+                        <h4>🐻 Animales</h4>
+                        <div class="score" id="animalScore">0</div>
+                    </div>
+                    <div class="score-card robots">
+                        <h4>🤖 Robots</h4>
+                        <div class="score" id="robotScore">0</div>
+                    </div>
+                </div>
+
+                <div class="selected-info" id="selectedInfo" style="display: none;">
+                    <h4>Personaje Seleccionado</h4>
+                    <p><strong>Tipo:</strong> <span id="selectedType"></span></p>
+                    <p><strong>Vida:</strong> <span id="selectedLife"></span></p>
+                    <p><strong>Movimiento:</strong> <span id="selectedMove"></span></p>
+                    <p><strong>Habilidad:</strong> <span id="selectedAbility"></span></p>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" id="attackBtn" onclick="attackMode()" disabled>⚔️ Atacar</button>
+                    <button class="btn btn-secondary" onclick="endTurn()">➡️ Terminar Turno</button>
+                    <button class="btn" onclick="resetGame()">🔄 Reiniciar Juego</button>
+                    <button class="btn" onclick="backToMenu()">🏠 Volver al Menú</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over -->
+        <div class="game-over" id="gameOver">
+            <div class="winner-icon" id="winnerIcon"></div>
+            <h2 id="winnerTitle"></h2>
+            <p id="winnerMessage"></p>
+            
+            <div class="final-scores">
+                <div class="score-card animals">
+                    <h4>🐻 Animales</h4>
+                    <div class="score" id="finalAnimalScore">0</div>
+                </div>
+                <div class="score-card robots">
+                    <h4>🤖 Robots</h4>
+                    <div class="score" id="finalRobotScore">0</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="resetGame()">🔄 Jugar de Nuevo</button>
+            <button class="btn btn-secondary" onclick="backToMenu()">🏠 Volver al Menú</button>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast">
+            <p id="toastMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const BOARD_SIZE = 10;
+        const MAX_TURNS = 20;
+        
+        const TERRAINS = {
+            PLAIN: 'plain',
+            FOREST: 'forest',
+            WATER: 'water',
+            MOUNTAIN: 'mountain',
+            HIDEOUT: 'hideout'
+        };
+
+        const TERRAIN_ICONS = {
+            plain: '🌱',
+            forest: '🌲',
+            water: '💧',
+            mountain: '⛰️',
+            hideout: '🏠'
+        };
+
+        const CHARACTER_ICONS = {
+            bear: '🐻',
+            duck: '🦆',
+            moose: '🦌',
+            opossum: '🦡',
+            fox: '🦊',
+            robot: '🤖',
+            allyRobot: '🛡️'
+        };
+
+        const CHARACTER_STATS = {
+            bear: { name: 'Oso', life: 2, moveRange: 3, ability: 'Ataque hace 2 de daño', team: 'animals' },
+            duck: { name: 'Pato', life: 1, moveRange: 1, ability: '3 casillas en agua', team: 'animals' },
+            moose: { name: 'Alce', life: 2, moveRange: 3, ability: 'Movimiento rápido', team: 'animals' },
+            opossum: { name: 'Zarigüeya', life: 2, moveRange: 3, ability: 'Esquiva 1 ataque', team: 'animals', dodgeAvailable: true },
+            fox: { name: 'Zorro', life: 2, moveRange: 4, ability: 'Ataque trasero x2', team: 'animals' },
+            robot: { name: 'Robot', life: 3, moveRange: 2, ability: 'Cazador del Pato', team: 'robots' },
+            allyRobot: { name: 'Robot Aliado', life: 3, moveRange: 2, ability: 'Bloquea ataques', team: 'animals', blockCounter: 0 }
+        };
+
+        let gameState = {
+            board: [],
+            characters: [],
+            currentTurn: 1,
+            activeTeam: 'animals',
+            selectedCharacter: null,
+            animalScore: 0,
+            robotScore: 0,
+            gamePhase: 'menu',
+            validMoves: [],
+            isAttackMode: false
+        };
+
+        // Initialize Game
+        function startGame() {
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('gameContainer').classList.add('active');
+            document.getElementById('gameOver').classList.remove('active');
+            
+            initializeBoard();
+            placeCharacters();
+            renderBoard();
+            updateUI();
+            
+            gameState.gamePhase = 'playing';
+            showToast('¡Juego iniciado! Turno de los Animales', 'success');
+        }
+
+        function initializeBoard() {
+            gameState.board = [];
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                gameState.board[row] = [];
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    gameState.board[row][col] = {
+                        terrain: getRandomTerrain(row, col),
+                        character: null
+                    };
+                }
+            }
+        }
+
+        function getRandomTerrain(row, col) {
+            const rand = Math.random();
+            
+            // Water around edges
+            if (row === 0 || row === BOARD_SIZE - 1 || col === 0 || col === BOARD_SIZE - 1) {
+                if (rand < 0.3) return TERRAINS.WATER;
+            }
+            
+            // Mountains in corners
+            if ((row < 2 || row > BOARD_SIZE - 3) && (col < 2 || col > BOARD_SIZE - 3)) {
+                if (rand < 0.2) return TERRAINS.MOUNTAIN;
+            }
+            
+            // Forest scattered
+            if (rand < 0.15) return TERRAINS.FOREST;
+            
+            // Hideouts rare
+            if (rand < 0.05) return TERRAINS.HIDEOUT;
+            
+            // Water patches
+            if (rand < 0.25) return TERRAINS.WATER;
+            
+            return TERRAINS.PLAIN;
+        }
+
+        function placeCharacters() {
+            gameState.characters = [];
+            
+            // Animals in center
+            const animalTypes = ['bear', 'duck', 'moose', 'opossum', 'fox', 'allyRobot'];
+            const centerPositions = [
+                [4, 4], [4, 5], [5, 4], [5, 5], [4, 6], [5, 6]
+            ];
+            
+            animalTypes.forEach((type, index) => {
+                const [row, col] = centerPositions[index];
+                const character = {
+                    id: `${type}-${index}`,
+                    type: type,
+                    ...CHARACTER_STATS[type],
+                    row: row,
+                    col: col,
+                    currentLife: CHARACTER_STATS[type].life
+                };
+                gameState.characters.push(character);
+                gameState.board[row][col].character = character;
+            });
+            
+            // Robots around edges
+            const robotPositions = [
+                [0, 2], [0, 7], [2, 0], [2, 9], [7, 0], [7, 9], [9, 2], [9, 7]
+            ];
+            
+            robotPositions.forEach((pos, index) => {
+                const [row, col] = pos;
+                const character = {
+                    id: `robot-${index}`,
+                    type: 'robot',
+                    ...CHARACTER_STATS.robot,
+                    row: row,
+                    col: col,
+                    currentLife: CHARACTER_STATS.robot.life
+                };
+                gameState.characters.push(character);
+                gameState.board[row][col].character = character;
+            });
+        }
+
+        function renderBoard() {
+            const boardElement = document.getElementById('board');
+            boardElement.innerHTML = '';
+            
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    const cell = gameState.board[row][col];
+                    const cellDiv = document.createElement('div');
+                    cellDiv.className = `cell ${cell.terrain}`;
+                    cellDiv.dataset.row = row;
+                    cellDiv.dataset.col = col;
+                    
+                    // Check if valid move
+                    if (gameState.validMoves.some(m => m.row === row && m.col === col)) {
+                        cellDiv.classList.add('valid-move');
+                    }
+                    
+                    // Show terrain icon
+                    const terrainIcon = document.createElement('div');
+                    terrainIcon.textContent = TERRAIN_ICONS[cell.terrain];
+                    terrainIcon.style.fontSize = '0.8em';
+                    terrainIcon.style.opacity = '0.4';
+                    cellDiv.appendChild(terrainIcon);
+                    
+                    // Show character if present
+                    if (cell.character) {
+                        const charIcon = document.createElement('div');
+                        charIcon.className = 'character-icon';
+                        charIcon.textContent = CHARACTER_ICONS[cell.character.type];
+                        cellDiv.appendChild(charIcon);
+                        
+                        // Life bar
+                        const lifeBar = document.createElement('div');
+                        lifeBar.className = 'life-bar';
+                        const lifeFill = document.createElement('div');
+                        lifeFill.className = 'life-fill';
+                        const lifePercent = (cell.character.currentLife / cell.character.life) * 100;
+                        lifeFill.style.width = lifePercent + '%';
+                        lifeBar.appendChild(lifeFill);
+                        cellDiv.appendChild(lifeBar);
+                        
+                        // Selected highlight
+                        if (gameState.selectedCharacter && 
+                            gameState.selectedCharacter.row === row && 
+                            gameState.selectedCharacter.col === col) {
+                            cellDiv.classList.add('selected');
+                        }
+                    }
+                    
+                    cellDiv.onclick = () => handleCellClick(row, col);
+                    boardElement.appendChild(cellDiv);
+                }
+            }
+        }
+
+        function handleCellClick(row, col) {
+            const cell = gameState.board[row][col];
+            
+            // Attack mode
+            if (gameState.isAttackMode && gameState.selectedCharacter) {
+                performAttack(gameState.selectedCharacter, row, col);
+                return;
+            }
+            
+            // Select character
+            if (cell.character && cell.character.team === gameState.activeTeam) {
+                selectCharacter(cell.character);
+            }
+            // Move character
+            else if (gameState.selectedCharacter && 
+                     gameState.validMoves.some(m => m.row === row && m.col === col)) {
+                moveCharacter(gameState.selectedCharacter, row, col);
+            }
+        }
+
+        function selectCharacter(character) {
+            gameState.selectedCharacter = character;
+            gameState.validMoves = calculateValidMoves(character);
+            gameState.isAttackMode = false;
+            
+            document.getElementById('selectedInfo').style.display = 'block';
+            document.getElementById('selectedType').textContent = CHARACTER_ICONS[character.type] + ' ' + character.name;
+            document.getElementById('selectedLife').textContent = character.currentLife + ' / ' + character.life;
+            document.getElementById('selectedMove').textContent = character.moveRange + ' casillas';
+            document.getElementById('selectedAbility').textContent = character.ability;
+            
+            document.getElementById('attackBtn').disabled = false;
+            
+            renderBoard();
+            showToast(`Seleccionado: ${character.name}`, 'info');
+        }
+
+        function calculateValidMoves(character) {
+            const moves = [];
+            const { row, col, moveRange, type } = character;
+            const terrain = gameState.board[row][col].terrain;
+            
+            let actualRange = moveRange;
+            
+            // Duck in water moves 3
+            if (type === 'duck' && terrain === TERRAINS.WATER) {
+                actualRange = 3;
+            }
+            
+            // Robot in mountain moves 1
+            if (type === 'robot' && terrain === TERRAINS.MOUNTAIN) {
+                actualRange = 1;
+            }
+            
+            for (let r = Math.max(0, row - actualRange); r <= Math.min(BOARD_SIZE - 1, row + actualRange); r++) {
+                for (let c = Math.max(0, col - actualRange); c <= Math.min(BOARD_SIZE - 1, col + actualRange); c++) {
+                    const distance = Math.abs(r - row) + Math.abs(c - col);
+                    if (distance > 0 && distance <= actualRange && !gameState.board[r][c].character) {
+                        moves.push({ row: r, col: c });
+                    }
+                }
+            }
+            
+            return moves;
+        }
+
+        function moveCharacter(character, newRow, newCol) {
+            // Clear old position
+            gameState.board[character.row][character.col].character = null;
+            
+            // Update position
+            character.row = newRow;
+            character.col = newCol;
+            gameState.board[newRow][newCol].character = character;
+            
+            gameState.selectedCharacter = null;
+            gameState.validMoves = [];
+            
+            renderBoard();
+            showToast(`${character.name} movido`, 'success');
+            
+            // Auto end turn after move
+            setTimeout(endTurn, 500);
+        }
+
+        function attackMode() {
+            if (!gameState.selectedCharacter) return;
+            
+            gameState.isAttackMode = true;
+            showToast('Modo ataque: Selecciona un objetivo adyacente', 'info');
+            
+            // Highlight adjacent cells with enemies
+            const adjacent = getAdjacentCells(gameState.selectedCharacter.row, gameState.selectedCharacter.col);
+            gameState.validMoves = adjacent.filter(pos => {
+                const cell = gameState.board[pos.row][pos.col];
+                return cell.character && cell.character.team !== gameState.selectedCharacter.team;
+            });
+            
+            renderBoard();
+        }
+
+        function getAdjacentCells(row, col) {
+            const adjacent = [];
+            const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+            
+            directions.forEach(([dr, dc]) => {
+                const newRow = row + dr;
+                const newCol = col + dc;
+                if (newRow >= 0 && newRow < BOARD_SIZE && newCol >= 0 && newCol < BOARD_SIZE) {
+                    adjacent.push({ row: newRow, col: newCol });
+                }
+            });
+            
+            return adjacent;
+        }
+
+        function performAttack(attacker, targetRow, targetCol) {
+            const targetCell = gameState.board[targetRow][targetCol];
+            
+            if (!targetCell.character || targetCell.character.team === attacker.team) {
+                showToast('Objetivo inválido', 'error');
+                gameState.isAttackMode = false;
+                gameState.validMoves = [];
+                renderBoard();
+                return;
+            }
+            
+            const defender = targetCell.character;
+            
+            // Roll dice
+            const diceRoll = Math.floor(Math.random() * 6) + 1;
+            
+            if (diceRoll >= 4) {
+                // Opossum dodge
+                if (defender.type === 'opossum' && defender.dodgeAvailable) {
+                    defender.dodgeAvailable = false;
+                    showToast(`¡${defender.name} esquivó el ataque! 🦡`, 'info');
+                } else {
+                    let damage = 1;
+                    
+                    // Bear does 2 damage
+                    if (attacker.type === 'bear') {
+                        damage = 2;
+                    }
+                    
+                    // Fox backstab does 2 damage
+                    if (attacker.type === 'fox') {
+                        // Simple check: if attacking from behind (rough approximation)
+                        if (Math.random() < 0.5) {
+                            damage = 2;
+                        }
+                    }
+                    
+                    defender.currentLife -= damage;
+                    showToast(`¡Ataque exitoso! 🎲${diceRoll} - ${damage} de daño`, 'success');
+                    
+                    // Check if defender died
+                    if (defender.currentLife <= 0) {
+                        handleCharacterDeath(defender);
+                    }
+                }
+            } else {
+                showToast(`Ataque fallido 🎲${diceRoll}`, 'error');
+            }
+            
+            gameState.isAttackMode = false;
+            gameState.selectedCharacter = null;
+            gameState.validMoves = [];
+            
+            renderBoard();
+            updateUI();
+            
+            checkVictoryConditions();
+            
+            // Auto end turn after attack
+            setTimeout(endTurn, 1000);
+        }
+
+        function handleCharacterDeath(character) {
+            // Remove from board
+            gameState.board[character.row][character.col].character = null;
+            
+            // Remove from characters array
+            gameState.characters = gameState.characters.filter(c => c.id !== character.id);
+            
+            // Award points
+            if (character.team === 'robots') {
+                gameState.animalScore += 10;
+                showToast(`🎉 Robot eliminado! +10 puntos`, 'success');
+            } else if (character.team === 'animals') {
+                gameState.robotScore += 10;
+                showToast(`Robot eliminó a ${character.name}`, 'error');
+            }
+            
+            // Special: Duck died
+            if (character.type === 'duck') {
+                endGame('robots', '¡Los Robots capturaron al Pato! 🤖');
+            }
+        }
+
+        function endTurn() {
+            gameState.selectedCharacter = null;
+            gameState.validMoves = [];
+            gameState.isAttackMode = false;
+            
+            // Switch teams
+            gameState.activeTeam = gameState.activeTeam === 'animals' ? 'robots' : 'animals';
+            
+            // Increment turn when back to animals
+            if (gameState.activeTeam === 'animals') {
+                gameState.currentTurn++;
+            }
+            
+            renderBoard();
+            updateUI();
+            
+            showToast(`Turno ${gameState.currentTurn} - ${gameState.activeTeam === 'animals' ? 'Animales' : 'Robots'}`, 'info');
+            
+            checkVictoryConditions();
+        }
+
+        function checkVictoryConditions() {
+            // Check if duck is alive
+            const duck = gameState.characters.find(c => c.type === 'duck');
+            if (!duck) {
+                // Already handled in handleCharacterDeath
+                return;
+            }
+            
+            // Check if all robots are dead
+            const robots = gameState.characters.filter(c => c.type === 'robot');
+            if (robots.length === 0) {
+                endGame('animals', '¡Todos los Robots fueron eliminados! 🐻');
+                return;
+            }
+            
+            // Check turn limit
+            if (gameState.currentTurn > MAX_TURNS) {
+                endGame('animals', '¡Los Animales protegieron al Pato durante 20 turnos! 🦆');
+                return;
+            }
+        }
+
+        function endGame(winner, message) {
+            gameState.gamePhase = 'gameOver';
+            
+            document.getElementById('gameContainer').classList.remove('active');
+            document.getElementById('gameOver').classList.add('active');
+            
+            document.getElementById('winnerIcon').textContent = winner === 'animals' ? '🐻🦆🎉' : '🤖🏆';
+            document.getElementById('winnerTitle').textContent = winner === 'animals' ? '¡Ganan los Animales!' : '¡Ganan los Robots!';
+            document.getElementById('winnerMessage').textContent = message;
+            
+            // Bonus points for robots if they won early
+            if (winner === 'robots') {
+                const turnsRemaining = MAX_TURNS - gameState.currentTurn + 1;
+                const bonus = turnsRemaining * 10;
+                gameState.robotScore += bonus;
+            }
+            
+            document.getElementById('finalAnimalScore').textContent = gameState.animalScore;
+            document.getElementById('finalRobotScore').textContent = gameState.robotScore;
+        }
+
+        function resetGame() {
+            gameState = {
+                board: [],
+                characters: [],
+                currentTurn: 1,
+                activeTeam: 'animals',
+                selectedCharacter: null,
+                animalScore: 0,
+                robotScore: 0,
+                gamePhase: 'menu',
+                validMoves: [],
+                isAttackMode: false
+            };
+            
+            startGame();
+        }
+
+        function backToMenu() {
+            gameState.gamePhase = 'menu';
+            
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('gameContainer').classList.remove('active');
+            document.getElementById('gameOver').classList.remove('active');
+        }
+
+        function updateUI() {
+            document.getElementById('currentTurn').textContent = gameState.currentTurn;
+            document.getElementById('activeTeam').textContent = gameState.activeTeam === 'animals' ? 'Animales 🐻' : 'Robots 🤖';
+            document.getElementById('animalScore').textContent = gameState.animalScore;
+            document.getElementById('robotScore').textContent = gameState.robotScore;
+            
+            if (!gameState.selectedCharacter) {
+                document.getElementById('selectedInfo').style.display = 'none';
+                document.getElementById('attackBtn').disabled = true;
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            console.log('Robot Salvaje: Salva el Pato - Juego cargado');
+        };
+    </script>
+</body>
+</html>
