@@ -9,6 +9,9 @@
       rel="stylesheet"
     />
     <style>
+      /* -------------------------
+         TU CSS EXISTENTE (sin cambios)
+         ------------------------- */
       body {
         font-family: "Montserrat", Arial, sans-serif;
         background: linear-gradient(130deg, #e2eafc 0%, #f8f8fb 55%, #fff 100%);
@@ -178,8 +181,214 @@
         font-size: 1.07em;
         letter-spacing: 0.5px;
       }
+
+      /* -------------------------
+         CSS DEL JUEGO (encapsulado)
+         TODO dentro de .game-wrapper para evitar colisiones
+         ------------------------- */
+      .game-wrapper {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --accent: #f59e0b;
+        --muted: #94a3b8;
+        --tile-plain: #9ad3a3;
+        --tile-forest: #6aa84f;
+        --tile-water: #6ec5ff;
+        --tile-mountain: #b8b8b8;
+        --tile-hide: #f0d9b5;
+        margin-bottom: 20px;
+      }
+      .game-wrapper .game-card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        padding: 16px;
+        border-radius: 14px;
+        box-shadow: 0 6px 18px rgba(2, 6, 23, 0.35);
+      }
+      .game-wrapper .wrap-game {
+        max-width: 1000px;
+        margin: 8px auto 0 auto;
+        padding: 10px;
+      }
+      .game-wrapper header {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .game-wrapper header img.logo {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.06);
+      }
+      .game-wrapper h2 {
+        margin: 0;
+        color: #fff;
+        font-size: 20px;
+      }
+      .game-wrapper .subtitle {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .game-wrapper .toprow {
+        display: flex;
+        gap: 14px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+      .game-wrapper .panel {
+        flex: 1;
+        min-width: 280px;
+      }
+      .game-wrapper .left {
+        width: 680px;
+      }
+      .game-wrapper .board {
+        display: grid;
+        gap: 4px;
+        background: transparent;
+        padding: 8px;
+        border-radius: 10px;
+      }
+      .game-wrapper .tile {
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.12);
+      }
+      .game-wrapper .tile[data-type="plain"] {
+        background: var(--tile-plain);
+      }
+      .game-wrapper .tile[data-type="forest"] {
+        background: var(--tile-forest);
+      }
+      .game-wrapper .tile[data-type="water"] {
+        background: var(--tile-water);
+      }
+      .game-wrapper .tile[data-type="mountain"] {
+        background: var(--tile-mountain);
+      }
+      .game-wrapper .tile[data-type="hide"] {
+        background: var(--tile-hide);
+      }
+      .game-wrapper .tile .label {
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        font-size: 10px;
+        color: #072122;
+        font-weight: 600;
+      }
+      .game-wrapper .piece {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #071022;
+        cursor: pointer;
+        box-shadow: 0 6px 12px rgba(2, 6, 23, 0.4);
+        position: relative;
+      }
+      .game-wrapper .piece.robot {
+        background: linear-gradient(180deg, #e2e8ff, #c7d2fe);
+      }
+      .game-wrapper .piece.animal {
+        background: linear-gradient(180deg, #ffd8c8, #ffb4a2);
+      }
+      .game-wrapper .piece.pato {
+        background: linear-gradient(180deg, #fff1a8, #ffd166);
+      }
+      .game-wrapper .hud {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .game-wrapper .cardsmall {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 8px;
+        border-radius: 8px;
+        min-width: 140px;
+        color: #dfe8f8;
+      }
+      .game-wrapper .controls {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .game-wrapper button {
+        background: var(--accent);
+        border: none;
+        padding: 6px 8px;
+        border-radius: 8px;
+        color: #071022;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .game-wrapper button.secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+      }
+      .game-wrapper .log {
+        max-height: 180px;
+        overflow: auto;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+        font-size: 13px;
+        color: #dfe8f8;
+      }
+      .game-wrapper .selected {
+        outline: 3px solid rgba(245, 158, 11, 0.25);
+        transform: translateY(-2px);
+      }
+      .game-wrapper .highlight {
+        box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.06);
+      }
+      .game-wrapper .info {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.3;
+      }
+      .game-wrapper .piecesummary {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #fff;
+      }
+      .game-wrapper footer {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+      @media (max-width: 880px) {
+        .game-wrapper .tile {
+          width: 44px;
+          height: 44px;
+        }
+        .game-wrapper .left {
+          width: auto;
+        }
+        .game-wrapper .toprow {
+          flex-direction: column;
+        }
+      }
     </style>
   </head>
+
   <body>
     <nav>
       <a href="#inicio">Inicio</a>
@@ -188,7 +397,169 @@
       <a href="#acerca">Acerca</a>
     </nav>
 
+    <!-- ========== SECCIÓN INICIO (AQUÍ INSERTÉ EL JUEGO) ========== -->
     <section class="section" id="inicio">
+      <!-- Game wrapper inserted at top of inicio -->
+      <div
+        class="game-wrapper game-card wrap-game"
+        aria-label="Juego Robot Salvaje"
+      >
+        <header>
+          <img class="logo" src="../assets/roles.jpg" alt="roles" />
+          <div>
+            <h2>Robot Salvaje — Salva el Pato (Juego)</h2>
+            <div class="subtitle">
+              Juego local — controla animales o robots. Turnos: 20.
+            </div>
+          </div>
+        </header>
+
+        <div class="toprow">
+          <div class="panel left">
+            <div
+              style="
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <div>
+                <strong style="color: #fff">Tablero</strong>
+                <div class="info">
+                  Haz clic en una ficha para seleccionarla. Mueve, ataca o usa
+                  habilidad.
+                </div>
+              </div>
+              <div class="hud">
+                <div class="cardsmall">
+                  <div>Turno: <strong id="board_turnoText">1</strong> / 20</div>
+                  <div>
+                    Jugador actual:
+                    <strong id="board_currentSide">Animales</strong>
+                  </div>
+                </div>
+                <div class="cardsmall">
+                  <div>
+                    Acciones por turno:
+                    <strong id="board_actionsLeft">1</strong>
+                  </div>
+                  <div>Dado: <strong id="board_diceResult">—</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <hr style="border: none; height: 8px" />
+
+            <div id="boardContainer" style="display: flex; gap: 12px">
+              <div id="board" class="board" aria-hidden="false"></div>
+              <div style="width: 220px">
+                <div class="cardsmall" style="margin-bottom: 8px">
+                  <strong>Ficha seleccionada</strong>
+                  <div id="selectedInfo" style="margin-top: 6px" class="info">
+                    Ninguna
+                  </div>
+                  <div class="controls" style="margin-top: 8px">
+                    <button id="btnMove" class="secondary">Mover</button>
+                    <button id="btnAbility" class="secondary">Habilidad</button>
+                    <button id="btnAttack" class="secondary">Atacar</button>
+                  </div>
+                </div>
+
+                <div class="cardsmall" style="margin-bottom: 8px">
+                  <strong>Controles</strong>
+                  <div
+                    style="
+                      margin-top: 8px;
+                      display: flex;
+                      flex-direction: column;
+                      gap: 6px;
+                    "
+                  >
+                    <button id="endTurn">Finalizar turno</button>
+                    <button id="resetGame" class="secondary">
+                      Reiniciar juego
+                    </button>
+                  </div>
+                </div>
+
+                <div class="cardsmall">
+                  <strong>Reglas rápidas</strong>
+                  <div class="info" style="margin-top: 6px">
+                    Robots: 2 casillas llanas / 1 bosque/montaña. Animales: 3
+                    (Zorro 4). Pato: 1 (3 en agua). Ataque: d6, 4-6 éxito.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 12px">
+              <strong style="color: #fff">Registro</strong>
+              <div id="log" class="log"></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div style="display: flex; gap: 12px; align-items: center">
+              <div style="flex: 1">
+                <strong style="color: #fff"
+                  >Personajes (vida y habilidad)</strong
+                >
+                <ul style="margin: 8px 0 0 18px; color: var(--muted)">
+                  <li>Oso — Vida 2 — Ataque: 2 daño</li>
+                  <li>Pato — Vida 1 — Mueve 3 en agua; objetivo del juego</li>
+                  <li>Alce — Vida 2 — Mueve hasta 3</li>
+                  <li>
+                    Zarigüeya — Vida 2 — Evita 1 ataque si es atacada primero
+                  </li>
+                  <li>Zorro — Vida 2 — Ataque desde "detrás": +1 daño</li>
+                  <li>
+                    Robot Aliado — Vida 3 — Bloquea 1 ataque cada 3 turnos
+                  </li>
+                  <li>Robot — Vida 3 — En montaña solo 1 casilla</li>
+                </ul>
+              </div>
+
+              <div style="width: 150px">
+                <img
+                  src="../assets/foto1.jpeg"
+                  alt="foto"
+                  style="
+                    width: 150px;
+                    border-radius: 10px;
+                    display: block;
+                    margin-bottom: 8px;
+                  "
+                />
+                <div class="info">
+                  Imágenes referenciales. Coloca tus assets en /assets/
+                </div>
+              </div>
+            </div>
+
+            <hr style="border: none; height: 8px" />
+
+            <div>
+              <strong style="color: #fff">Cómo jugar</strong>
+              <ol style="color: var(--muted); margin-left: 18px">
+                <li>Selecciona una ficha (animal o robot).</li>
+                <li>
+                  Haz clic en <em>Mover</em> y luego en la casilla destino (o en
+                  <em>Atacar</em> si hay un enemigo adyacente).
+                </li>
+                <li>Usa <em>Habilidad</em> cuando aplique.</li>
+                <li>Finaliza turno cuando hayas hecho tu acción.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          Juego local — incorpora en tu página. Usa imágenes en ../assets/
+        </footer>
+      </div>
+
+      <!-- ========== AQUI COMIENZA EL CONTENIDO ORIGINAL DE TU SECCIÓN INICIO ========== -->
       <h1>Robot Salvaje: Salva el Pato</h1>
       <img
         src="../assets/wp.jpeg"
@@ -203,8 +574,10 @@
           captura al pato antes que se acabe el tiempo!</span
         >
       </p>
+      <!-- ========== FIN DEL INICIO ORIGINAL ========== -->
     </section>
 
+    <!-- ======= RESTO DE LA PÁGINA (sin cambios) ======= -->
     <section class="section" id="historia">
       <h2>Historia</h2>
       <p>
@@ -451,5 +824,692 @@
     >
       &copy; 2025 Robot Salvaje - Proyecto Web Semestral
     </footer>
+
+    <!-- =========================
+         SCRIPT DEL JUEGO (encapsulado)
+         ========================= -->
+    <script>
+      (function () {
+        // Scope root to the game wrapper so selectors don't collide with page.
+        const root = document.querySelector(".game-wrapper");
+        if (!root) return;
+
+        // Scoped $ and helper to find elements inside root.
+        const $ = (sel) => root.querySelector(sel);
+        // We will use document.getElementById for tile IDs since they are unique on page.
+        const logEl = $("#log");
+        function logAppend(txt) {
+          state.log.unshift(`${new Date().toLocaleTimeString()} — ${txt}`);
+          if (logEl)
+            logEl.innerHTML = state.log
+              .slice(0, 200)
+              .map((l) => `<div>${l}</div>`)
+              .join("");
+        }
+
+        /* ====== Configuración y datos ====== */
+        const ROWS = 7,
+          COLS = 9; // tablero
+        const MAX_TURNS = 20;
+
+        // personajes base con vida y etiquetas de habilidad
+        const CHARACTER_TEMPLATES = {
+          oso: { type: "animal", name: "Oso", hp: 2, ability: "oso" },
+          pato: { type: "pato", name: "Pato", hp: 1, ability: "pato" },
+          alce: { type: "animal", name: "Alce", hp: 2, ability: "alce" },
+          zarigueya: {
+            type: "animal",
+            name: "Zarigüeya",
+            hp: 2,
+            ability: "zarigueya",
+          },
+          zorro: { type: "animal", name: "Zorro", hp: 2, ability: "zorro" },
+          robotAliado: {
+            type: "robot",
+            name: "RobotAliado",
+            hp: 3,
+            ability: "robotAliado",
+          },
+          robot: { type: "robot", name: "Robot", hp: 3, ability: "robot" },
+        };
+
+        // estado del juego
+        let state = {
+          turno: 1,
+          currentSide: "Animales", // 'Animales' o 'Robots'
+          actionsLeft: 1,
+          dice: null,
+          board: [], // tiles
+          pieces: {}, // id -> piece
+          selected: null,
+          log: [],
+        };
+
+        /* ====== Utilidades ====== */
+        function coordToId(r, c) {
+          return `t_${r}_${c}`;
+        }
+        function shuffleArray(a) {
+          for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+          }
+          return a;
+        }
+        function rollDice() {
+          return Math.floor(Math.random() * 6) + 1;
+        }
+
+        /* ====== Inicialización del tablero y fichas ====== */
+        function seedBoard() {
+          state.board = [];
+          for (let r = 0; r < ROWS; r++) {
+            const row = [];
+            for (let c = 0; c < COLS; c++) {
+              let t = "plain";
+              if (Math.random() < 0.08) t = "mountain";
+              else if (Math.random() < 0.12) t = "forest";
+              else if (
+                (r === Math.floor(ROWS / 2) &&
+                  Math.abs(c - Math.floor(COLS / 2)) <= 1) ||
+                Math.random() < 0.07
+              )
+                t = "water";
+              else if (Math.random() < 0.04) t = "hide";
+              row.push({ type: t, r, c });
+            }
+            state.board.push(row);
+          }
+        }
+
+        function findTileOfTypeNear(type, r0, c0) {
+          for (let rad = 0; rad <= 3; rad++) {
+            for (let dr = -rad; dr <= rad; dr++) {
+              for (let dc = -rad; dc <= rad; dc++) {
+                const r = r0 + dr,
+                  c = c0 + dc;
+                if (
+                  r >= 0 &&
+                  r < ROWS &&
+                  c >= 0 &&
+                  c < COLS &&
+                  state.board[r][c].type === type
+                )
+                  return { r, c };
+              }
+            }
+          }
+          return null;
+        }
+
+        function placeInitialPieces() {
+          state.pieces = {};
+          let idCounter = 1;
+          const centerR = Math.floor(ROWS / 2),
+            centerC = Math.floor(COLS / 2);
+
+          // Animals around center: Oso, Pato, Alce, Zarigueya, Zorro
+          const animalsOrder = ["oso", "pato", "alce", "zarigueya", "zorro"];
+          const animalPositions = [
+            [centerR, centerC], // pato center (or water if possible)
+            [centerR, centerC - 1],
+            [centerR + 1, centerC],
+            [centerR, centerC + 1],
+            [centerR - 1, centerC],
+          ];
+          for (let i = 0; i < animalsOrder.length; i++) {
+            const tpl = CHARACTER_TEMPLATES[animalsOrder[i]];
+            const [r, c] = animalPositions[i];
+            const id = "p" + idCounter++;
+            state.pieces[id] = {
+              id,
+              template: animalsOrder[i],
+              name: tpl.name,
+              kind: tpl.type,
+              hp: tpl.hp,
+              r,
+              c,
+              movedThisTurn: false,
+              zarigFirstDefenseUsed: false,
+            };
+            // ensure pato starts in water or hide if possible
+            if (animalsOrder[i] === "pato") {
+              const tile = state.board[r][c];
+              if (tile.type !== "water" && tile.type !== "hide") {
+                const found =
+                  findTileOfTypeNear("water", r, c) ||
+                  findTileOfTypeNear("hide", r, c);
+                if (found) {
+                  state.pieces[id].r = found.r;
+                  state.pieces[id].c = found.c;
+                }
+              }
+            }
+          }
+
+          // Robots at edges: put 5 robots (3 normales + 2 aliados)
+          const robotsTypes = [
+            "robot",
+            "robot",
+            "robotAliado",
+            "robot",
+            "robotAliado",
+          ];
+          const edgePositions = [];
+          for (let c = 0; c < COLS; c++) edgePositions.push([0, c]);
+          for (let c = 0; c < COLS; c++) edgePositions.push([ROWS - 1, c]);
+          for (let r = 1; r < ROWS - 1; r++) {
+            edgePositions.push([r, 0]);
+            edgePositions.push([r, COLS - 1]);
+          }
+          shuffleArray(edgePositions);
+          for (let i = 0; i < robotsTypes.length; i++) {
+            const [r, c] = edgePositions[i];
+            const tpl = CHARACTER_TEMPLATES[robotsTypes[i]];
+            const id = "p" + idCounter++;
+            state.pieces[id] = {
+              id,
+              template: robotsTypes[i],
+              name: tpl.name,
+              kind: tpl.type,
+              hp: tpl.hp,
+              r,
+              c,
+              movedThisTurn: false,
+              allyBlockCounter: 0,
+            };
+          }
+        }
+
+        /* ====== Render UI ====== */
+        function renderBoard() {
+          const board = $("#board");
+          if (!board) return;
+          board.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
+          board.innerHTML = "";
+          for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+              const t = state.board[r][c];
+              const tile = document.createElement("div");
+              tile.className = "tile";
+              tile.dataset.type = t.type;
+              tile.id = coordToId(r, c);
+              tile.innerHTML = `<div class="label">${t.type[0].toUpperCase()}</div>`;
+              tile.addEventListener("click", () => onTileClick(r, c));
+              board.appendChild(tile);
+            }
+          }
+          renderPieces();
+        }
+
+        function renderPieces() {
+          // clear previous pieces inside tiles
+          for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++) {
+              const el = document.getElementById(coordToId(r, c));
+              if (el) el.querySelectorAll(".piece")?.forEach((n) => n.remove());
+              if (el) el.classList.remove("highlight");
+            }
+
+          for (const id in state.pieces) {
+            const p = state.pieces[id];
+            const container = document.getElementById(coordToId(p.r, p.c));
+            if (!container) continue;
+            const div = document.createElement("div");
+            div.className =
+              "piece " +
+              (p.kind === "robot"
+                ? "robot"
+                : p.template === "pato"
+                ? "pato"
+                : "animal");
+            div.innerText =
+              p.template === "pato"
+                ? "P"
+                : p.kind === "robot"
+                ? "R"
+                : p.name[0];
+            div.title = `${p.name} (HP:${p.hp})`;
+            div.dataset.id = id;
+            div.addEventListener("click", (e) => {
+              e.stopPropagation();
+              onPieceClick(id);
+            });
+            const hpBadge = document.createElement("div");
+            hpBadge.style.position = "absolute";
+            hpBadge.style.bottom = "6px";
+            hpBadge.style.right = "6px";
+            hpBadge.style.background = "rgba(0,0,0,0.35)";
+            hpBadge.style.color = "#fff";
+            hpBadge.style.fontSize = "11px";
+            hpBadge.style.padding = "2px 6px";
+            hpBadge.style.borderRadius = "8px";
+            hpBadge.innerText = p.hp;
+            div.appendChild(hpBadge);
+            container.appendChild(div);
+            if (state.selected && state.selected.id === id)
+              div.classList.add("selected");
+          }
+
+          const turnoText = $("#board_turnoText");
+          const currentSide = $("#board_currentSide");
+          const actionsLeft = $("#board_actionsLeft");
+          if (turnoText) turnoText.innerText = state.turno;
+          if (currentSide) currentSide.innerText = state.currentSide;
+          if (actionsLeft) actionsLeft.innerText = state.actionsLeft;
+        }
+
+        function updateSelectedInfo() {
+          const el = $("#selectedInfo");
+          if (!el) return;
+          if (!state.selected) {
+            el.innerHTML = "Ninguna";
+            return;
+          }
+          const p = state.selected;
+          el.innerHTML = `<div class="piecesummary"><strong>${
+            p.name
+          }</strong><div style="color:var(--muted);font-size:13px">(${
+            p.template
+          })</div></div>
+            <div class="info" style="margin-top:6px">HP: ${p.hp} <br>Pos: (${
+            p.r
+          },${p.c}) <br>Habilidad: ${
+            CHARACTER_TEMPLATES[p.template].ability
+          }</div>`;
+        }
+
+        /* ====== Interacción ====== */
+        let currentAction = null; // 'move' | 'attack' | 'ability' | null
+        function onPieceClick(id) {
+          const p = state.pieces[id];
+          if (!p) return;
+          state.selected = p;
+          currentAction = null;
+          updateSelectedInfo();
+          renderBoard();
+          logAppend(
+            `Seleccionada ficha: ${p.name} (${p.template}) en ${p.r},${p.c}`
+          );
+        }
+
+        function onTileClick(r, c) {
+          if (currentAction === "move" && state.selected) {
+            attemptMove(state.selected.id, r, c);
+            return;
+          }
+          if (currentAction === "attack" && state.selected) {
+            attemptAttackOnTile(state.selected.id, r, c);
+            return;
+          }
+          state.selected = null;
+          currentAction = null;
+          updateSelectedInfo();
+          renderBoard();
+        }
+
+        // bind buttons scoped inside root
+        const btnMove = $("#btnMove"),
+          btnAttack = $("#btnAttack"),
+          btnAbility = $("#btnAbility"),
+          btnEnd = $("#endTurn"),
+          btnReset = $("#resetGame");
+        if (btnMove)
+          btnMove.addEventListener("click", () => {
+            if (!state.selected) {
+              alert("Selecciona una ficha primero");
+              return;
+            }
+            currentAction = "move";
+            highlightMoveOptions(state.selected);
+          });
+        if (btnAttack)
+          btnAttack.addEventListener("click", () => {
+            if (!state.selected) {
+              alert("Selecciona una ficha primero");
+              return;
+            }
+            currentAction = "attack";
+            highlightAttackOptions(state.selected);
+          });
+        if (btnAbility)
+          btnAbility.addEventListener("click", () => {
+            if (!state.selected) {
+              alert("Selecciona una ficha primero");
+              return;
+            }
+            useAbility(state.selected.id);
+          });
+        if (btnEnd) btnEnd.addEventListener("click", endTurn);
+        if (btnReset)
+          btnReset.addEventListener("click", () => {
+            if (confirm("Reiniciar juego?")) initGame();
+          });
+
+        /* ====== Movimiento y reglas ====== */
+        function highlightMoveOptions(piece) {
+          clearHighlights();
+          const moves = getValidMoves(piece);
+          moves.forEach(({ r, c }) => {
+            const el = document.getElementById(coordToId(r, c));
+            if (el) el.classList.add("highlight");
+          });
+        }
+
+        function clearHighlights() {
+          for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++) {
+              const el = document.getElementById(coordToId(r, c));
+              if (el) el.classList.remove("highlight");
+            }
+        }
+
+        function getValidMoves(piece) {
+          const max = getMovementRange(piece);
+          const res = [];
+          for (let dr = -max; dr <= max; dr++) {
+            for (let dc = -max; dc <= max; dc++) {
+              const r = piece.r + dr,
+                c = piece.c + dc;
+              if (r < 0 || r >= ROWS || c < 0 || c >= COLS) continue;
+              if (Math.abs(dr) + Math.abs(dc) > max) continue;
+              const tile = state.board[r][c];
+              if (
+                Object.values(state.pieces).some((p) => p.r === r && p.c === c)
+              )
+                continue;
+              if (
+                piece.template.startsWith("robot") &&
+                tile.type === "mountain"
+              ) {
+                if (max < 1) continue;
+              }
+              res.push({ r, c });
+            }
+          }
+          return res;
+        }
+
+        function getMovementRange(piece) {
+          if (piece.template === "pato") {
+            const currentTile = state.board[piece.r][piece.c];
+            return currentTile.type === "water" ? 3 : 1;
+          }
+          if (piece.template === "alce") return 3;
+          if (piece.template === "zorro") return 4;
+          if (piece.kind === "robot") {
+            const tile = state.board[piece.r][piece.c];
+            if (tile.type === "forest" || tile.type === "mountain") return 1;
+            return 2;
+          }
+          return 3;
+        }
+
+        function attemptMove(id, rTo, cTo) {
+          if (state.actionsLeft <= 0) {
+            alert("No tienes acciones. Finaliza turno.");
+            currentAction = null;
+            clearHighlights();
+            return;
+          }
+          const p = state.pieces[id];
+          if (!p) return;
+          const valid = getValidMoves(p).some(
+            (m) => m.r === rTo && m.c === cTo
+          );
+          if (!valid) {
+            alert("Movimiento no válido");
+            return;
+          }
+          p.r = rTo;
+          p.c = cTo;
+          p.movedThisTurn = true;
+          state.actionsLeft--;
+          logAppend(`${p.name} se movió a (${rTo},${cTo})`);
+          if (p.template === "zorro") p._justMoved = true;
+          updateSelectedInfo();
+          renderBoard();
+          clearHighlights();
+          currentAction = null;
+          checkEndGameConditions();
+        }
+
+        function highlightAttackOptions(piece) {
+          clearHighlights();
+          const targets = getAdjacentEnemies(piece);
+          targets.forEach((t) => {
+            const el = document.getElementById(coordToId(t.r, t.c));
+            if (el) el.classList.add("highlight");
+          });
+          if (targets.length === 0) {
+            alert("No hay enemigos adyacentes para atacar");
+            currentAction = null;
+          }
+        }
+
+        function getAdjacentEnemies(piece) {
+          const list = [];
+          for (const id in state.pieces) {
+            const q = state.pieces[id];
+            if (q.id === piece.id) continue;
+            const dist = Math.abs(piece.r - q.r) + Math.abs(piece.c - q.c);
+            if (dist === 1) list.push(q);
+          }
+          return list;
+        }
+
+        function attemptAttackOnTile(attackerId, rTarget, cTarget) {
+          if (state.actionsLeft <= 0) {
+            alert("No tienes acciones. Finaliza turno.");
+            currentAction = null;
+            clearHighlights();
+            return;
+          }
+          const attacker = state.pieces[attackerId];
+          if (!attacker) return;
+          const target = Object.values(state.pieces).find(
+            (p) => p.r === rTarget && p.c === cTarget
+          );
+          if (!target) {
+            alert("No hay objetivo");
+            currentAction = null;
+            clearHighlights();
+            return;
+          }
+          const dist =
+            Math.abs(attacker.r - target.r) + Math.abs(attacker.c - target.c);
+          if (dist > 1) {
+            alert("Solo se puede atacar a enemigos adyacentes");
+            currentAction = null;
+            clearHighlights();
+            return;
+          }
+
+          const dice = rollDice();
+          state.dice = dice;
+          const diceEl = $("#board_diceResult");
+          if (diceEl) diceEl.innerText = dice;
+          logAppend(`${attacker.name} atacó a ${target.name} — Dado: ${dice}`);
+          let success = dice >= 4;
+
+          if (
+            target.template === "zarigueya" &&
+            !target.zarigFirstDefenseUsed
+          ) {
+            target.zarigFirstDefenseUsed = true;
+            success = false;
+            logAppend(`¡La Zarigüeya esquivó el primer ataque!`);
+          }
+
+          if (target.template === "robotAliado") {
+            const cnt = target.allyBlockCounter || 0;
+            if (cnt % 3 === 0) {
+              target.allyBlockCounter = cnt + 1;
+              success = false;
+              logAppend(`El Robot Aliado bloqueó el ataque (habilidad).`);
+            } else {
+              target.allyBlockCounter = cnt + 1;
+            }
+          }
+
+          if (success) {
+            let damage = 1;
+            if (attacker.template === "oso") damage = 2;
+            if (attacker.template === "zorro" && attacker._justMoved)
+              damage = 2;
+            target.hp -= damage;
+            logAppend(
+              `Impacto: ${damage} daño a ${target.name}. HP ahora ${target.hp}`
+            );
+            if (target.hp <= 0) {
+              logAppend(`${target.name} ha sido eliminado.`);
+              const wasPato = target.template === "pato";
+              delete state.pieces[target.id];
+              if (wasPato) {
+                declareWinner(
+                  "Robots",
+                  `El Pato fue capturado en turno ${state.turno}.`
+                );
+                return;
+              }
+            }
+          } else {
+            logAppend(`El ataque falló.`);
+          }
+
+          state.actionsLeft--;
+          attacker._justMoved = false;
+          currentAction = null;
+          clearHighlights();
+          renderBoard();
+          updateSelectedInfo();
+          checkEndGameConditions();
+        }
+
+        /* ====== Habilidades (simplificadas) ====== */
+        function useAbility(id) {
+          if (state.actionsLeft <= 0) {
+            alert("No tienes acciones. Finaliza turno.");
+            return;
+          }
+          const p = state.pieces[id];
+          if (!p) return;
+          const tpl = p.template;
+          if (tpl === "zarigueya") {
+            p.zarigFirstDefenseUsed = false;
+            logAppend(
+              `${p.name} se prepara para esquivar su primer ataque (habilidad activada).`
+            );
+          } else if (tpl === "robotAliado") {
+            p.allyBlockCounter = (p.allyBlockCounter || 0) + 1;
+            logAppend(
+              `${p.name} carga su bloqueo (contador ahora ${p.allyBlockCounter}).`
+            );
+          } else {
+            if (p.kind === "animal" && p.hp < CHARACTER_TEMPLATES[tpl].hp) {
+              p.hp += 1;
+              logAppend(
+                `${p.name} usó habilidad y recuperó 1 HP (ahora ${p.hp}).`
+              );
+            } else {
+              logAppend(
+                `${p.name} intentó usar habilidad, no aplicable ahora.`
+              );
+            }
+          }
+          state.actionsLeft--;
+          renderBoard();
+          updateSelectedInfo();
+          checkEndGameConditions();
+        }
+
+        /* ====== Turnos y condiciones de victoria ====== */
+        function endTurn() {
+          for (const id in state.pieces) {
+            state.pieces[id].movedThisTurn = false;
+            if (state.pieces[id]._justMoved)
+              state.pieces[id]._justMoved = false;
+            if (state.pieces[id].template === "robotAliado") {
+              state.pieces[id].allyBlockCounter =
+                (state.pieces[id].allyBlockCounter || 0) + 1;
+            }
+          }
+          state.turno++;
+          state.currentSide =
+            state.currentSide === "Animales" ? "Robots" : "Animales";
+          state.actionsLeft = 1;
+          const diceEl = $("#board_diceResult");
+          if (diceEl) diceEl.innerText = "—";
+          logAppend(
+            `Fin de turno. Avanza a turno ${state.turno} — Ahora juegan: ${state.currentSide}`
+          );
+          state.selected = null;
+          currentAction = null;
+          renderBoard();
+          updateSelectedInfo();
+
+          if (state.turno > MAX_TURNS) {
+            const patoAlive = Object.values(state.pieces).some(
+              (p) => p.template === "pato"
+            );
+            if (patoAlive)
+              declareWinner(
+                "Animales",
+                `Se llegó a ${MAX_TURNS} turnos y el Pato sigue vivo.`
+              );
+            else
+              declareWinner(
+                "Robots",
+                `Se llegó a ${MAX_TURNS} y el Pato fue eliminado.`
+              );
+          }
+        }
+
+        function declareWinner(side, reason) {
+          renderBoard();
+          logAppend(`¡¡Victoria de ${side}!! Motivo: ${reason}`);
+          alert(`Victoria de ${side}!\n\n${reason}`);
+          state.actionsLeft = 0;
+        }
+
+        /* ====== Comprobación fin de juego por eliminación robots o pato ====== */
+        function checkEndGameConditions() {
+          const anyRobots = Object.values(state.pieces).some(
+            (p) => p.kind === "robot"
+          );
+          const patoAlive = Object.values(state.pieces).some(
+            (p) => p.template === "pato"
+          );
+          if (!anyRobots) {
+            declareWinner("Animales", "Todos los robots han sido eliminados.");
+            return;
+          }
+          if (!patoAlive) {
+            declareWinner("Robots", "El Pato fue capturado.");
+            return;
+          }
+        }
+
+        /* ====== Inicialización ====== */
+        function initGame() {
+          state.turno = 1;
+          state.currentSide = "Animales";
+          state.actionsLeft = 1;
+          state.dice = null;
+          state.log = [];
+          seedBoard();
+          placeInitialPieces();
+          renderBoard();
+          updateSelectedInfo();
+          const diceEl = $("#board_diceResult");
+          if (diceEl) diceEl.innerText = "—";
+          logAppend("Juego iniciado. Animales comienzan.");
+        }
+
+        // start game after DOM is ready (root exists already)
+        initGame();
+      })();
+    </script>
+    <!-- ========================= END GAME SCRIPT ========================= -->
   </body>
 </html>
