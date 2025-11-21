@@ -1,6 +1,3 @@
-Aquí tienes el **código HTML completo** para tu archivo `docs/index.html` con la
-sección "Acerca del proyecto" mejorada y expandida según tu solicitud. ***
-```html
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -14,76 +11,172 @@ sección "Acerca del proyecto" mejorada y expandida según tu solicitud. ***
     <style>
       body {
         font-family: "Montserrat", Arial, sans-serif;
-        background: #f8f8fb;
-        color: #333;
+        background: linear-gradient(130deg, #e2eafc 0%, #f8f8fb 55%, #fff 100%);
+        color: #313a4e;
         margin: 0;
       }
       nav {
         display: flex;
         justify-content: center;
-        background: #213a50;
+        align-items: center;
+        background: linear-gradient(90deg, #213a50 80%, #3d5c77 100%);
+        box-shadow: 0 2px 18px rgba(46, 84, 114, 0.13);
+        position: sticky;
+        top: 0;
+        z-index: 10;
       }
       nav a {
         color: #fff;
         text-decoration: none;
-        padding: 18px 28px;
+        padding: 18px 38px 16px 38px;
         font-weight: 700;
-        transition: background 0.3s;
+        letter-spacing: 1px;
+        font-size: 1.05em;
+        border-bottom: 3px solid transparent;
+        transition: background 0.2s, border-color 0.3s;
+        border-radius: 6px 6px 0px 0px;
       }
-      nav a:hover {
-        background: #2e5472;
+      nav a:hover,
+      nav a:focus {
+        background: #284664;
+        border-bottom: 3px solid #00b5e4;
+        color: #00b5e4;
       }
       .section {
-        max-width: 960px;
+        max-width: 980px;
         margin: 38px auto 0 auto;
-        padding: 24px;
+        padding: 32px 5% 24px 5%;
         background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(46, 84, 114, 0.12);
+        border-radius: 20px;
+        box-shadow: 0 6px 36px rgba(46, 84, 114, 0.1),
+          0 2px 10px rgba(46, 84, 114, 0.05);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 36px;
+      }
+      .section::before {
+        content: "";
+        position: absolute;
+        left: -30px;
+        top: -40px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #e9f1ff 45%, #b0dcfd33 100%);
+        opacity: 0.3;
+        z-index: 0;
       }
       .section img {
-        border-radius: 14px;
-        box-shadow: 0 2px 14px rgba(46, 84, 114, 0.09);
+        border-radius: 16px;
+        box-shadow: 0 2px 18px rgba(46, 84, 114, 0.09);
         margin-bottom: 18px;
+        border: 4px solid #e2eafc;
+        transition: transform 0.15s;
       }
-      h1,
-      h2,
+      .section img:hover {
+        transform: scale(1.035);
+        border-color: #00b5e4;
+      }
+      h1 {
+        color: #1976d2;
+        font-size: 2.15em;
+        margin-top: 0;
+        text-shadow: 0 2px 20px #e2eafc;
+        letter-spacing: 1.5px;
+      }
+      h2 {
+        margin-top: 8px;
+        margin-bottom: 14px;
+        color: #1a3970;
+        font-size: 1.55em;
+      }
       h3 {
-        color: #213a50;
+        color: #0097a7;
+        font-size: 1.17em;
+        margin-top: 16px;
+        margin-bottom: 7px;
+        font-weight: 700;
       }
       .roles-img,
       .map-img,
       .diagram-img {
         display: block;
-        margin: 26px auto 18px auto;
-        max-width: 320px;
-        width: 90%;
+        margin: 32px auto 18px auto;
+        max-width: 350px;
+        width: 98%;
       }
       .gallery-img {
         max-width: 230px;
-        margin: 12px;
+        margin: 14px 20px 14px 0px;
+        display: inline-block;
+        vertical-align: top;
+        background: #f6faff;
+        box-shadow: 0 2px 18px rgba(46, 84, 114, 0.07);
       }
       .gallery {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
+        gap: 16px;
+        margin-top: 18px;
+        margin-bottom: 18px;
       }
       .tutorial-table {
         width: 100%;
         border-collapse: collapse;
         margin: 18px 0;
+        background: #f4f8fc;
+        box-shadow: 0 1px 9px rgba(46, 84, 114, 0.04);
+        border-radius: 12px;
+        overflow: hidden;
+        font-size: 1em;
       }
       .tutorial-table th,
       .tutorial-table td {
-        border: 1px solid #d6dcee;
-        padding: 7px 10px;
+        border: 1px solid #e2eafc;
+        padding: 8px 14px;
         text-align: left;
       }
       .tutorial-table th {
-        background: #e6f0fa;
+        background: #eafffa;
+        color: #1976d2;
+      }
+      .tutorial-table tr td:first-child {
+        font-weight: 600;
+        color: #1976d2;
       }
       .prototipo-img {
         max-width: 270px;
+      }
+      .acerca-icon {
+        font-size: 1.45em;
+        color: #0097a7;
+        margin-right: 7px;
+        vertical-align: text-bottom;
+      }
+      .acerca-block {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 13px;
+        align-items: flex-start;
+      }
+      .acerca-block strong {
+        color: #1976d2;
+      }
+      .acerca-team {
+        background: #f2fbff;
+        border-radius: 13px;
+        box-shadow: 0 1px 7px rgba(46, 84, 114, 0.08);
+        padding: 15px 20px;
+        margin-top: 8px;
+        margin-bottom: 16px;
+      }
+      .acerca-team-title {
+        color: #0097a7;
+        margin-bottom: 8px;
+        font-weight: 700;
+        font-size: 1.07em;
+        letter-spacing: 0.5px;
       }
     </style>
   </head>
@@ -104,9 +197,11 @@ sección "Acerca del proyecto" mejorada y expandida según tu solicitud. ***
       />
       <p>
         Juego web inspirado en la película animada de <b>Robot Salvaje</b>,
-        basado en el clásico juego de mesa. ¡Protege al pato, usa a los animales
-        aliados o juega como robots y captura al pato antes que se acabe el
-        tiempo!
+        basado en el clásico juego de mesa. <br />
+        <span style="color: #0097a7; font-weight: 600"
+          >¡Protege al pato, usa a los animales aliados o juega como robots y
+          captura al pato antes que se acabe el tiempo!</span
+        >
       </p>
     </section>
 
@@ -114,11 +209,11 @@ sección "Acerca del proyecto" mejorada y expandida según tu solicitud. ***
       <h2>Historia</h2>
       <p>
         <b>Robot Salvaje: Salva el Pato</b> nació como un juego de mesa entre
-        amigos, utilizando tablero físico y fichas artesanales. Luego,
-        evolucionó a una versión digital, digitalizando sus reglas y adaptando
-        la estética minimalista basada en la famosa película animada. El
-        objetivo principal es rescatar al pato, explorando los terrenos de la
-        isla mientras sobrevives contra los robots.
+        amigos utilizando tablero físico y fichas artesanales. <br />
+        Posteriormente evolucionó a una versión digital, digitalizando sus
+        reglas y adaptando la estética minimalista basada en la famosa película
+        animada. El objetivo principal es rescatar al pato, explorando los
+        terrenos de la isla mientras sobrevives contra los robots.
       </p>
       <div class="gallery">
         <img
@@ -189,8 +284,10 @@ sección "Acerca del proyecto" mejorada y expandida según tu solicitud. ***
       <h3>Ataque</h3>
       <p>
         Puede atacar si está adyacente a un oponente.<br />
-        Tira un dado de 6 caras: 4, 5 o 6 es ataque exitoso (pierde 1 vida el
-        objetivo).
+        Tira un dado de 6 caras: 4, 5 o 6 es ataque exitoso (<span
+          style="color: #e95a5a; font-weight: 700"
+          >pierde 1 vida el objetivo</span
+        >).
       </p>
       <h3>Habilidades Especiales</h3>
       <img
@@ -256,60 +353,101 @@ sección "Acerca del proyecto" mejorada y expandida según tu solicitud. ***
 
     <section class="section" id="acerca">
       <h2>Acerca del Proyecto</h2>
-      <p>
-        El proceso de creación del videojuego fue largo y tuvo sus
-        complicaciones, pero resultó muy divertido y entretenido para todo el
-        equipo involucrado. Desde el principio, se propuso adaptar un juego de
-        mesa inspirándonos en la película animada <b>Robot Salvaje</b>, buscando
-        transmitir la emoción de proteger al pato dentro de una isla llena de
-        aventuras y desafíos.
-      </p>
-      <p>
-        Para organizar todo el trabajo, se creó el repositorio en GitHub Pages y
-        se preparó la estructura principal del proyecto, asegurando que cada
-        carpeta y archivo estuviera correctamente presentado para facilitar el
-        desarrollo y la colaboración en equipo. Se añadió toda la documentación
-        relevante, incluyendo la historia original del juego, las reglas y
-        mecánicas, así como las imágenes representativas de los roles y el
-        prototipo físico del tablero.
-      </p>
-      <p>
-        Posteriormente, se diseñó el flujo general del juego utilizando
-        <b>Figma</b> para los primeros prototipos visuales y diagramas de
-        estructura, y se trabajó en un diagrama de flujo para definir de manera
-        clara cómo sería la dinámica y el avance de cada partida. Esto permitió
-        identificar de manera visual el recorrido de cada jugador y la
-        interacción entre robots y animales.
-      </p>
-      <p>
-        La programación del videojuego se realizó apoyándonos en herramientas de
-        inteligencia artificial y sistemas colaborativos para generar prototipos
-        rápidos, probar mecánicas y experimentar diferentes soluciones técnicas
-        antes de llegar al producto final. El código fue iterado con ayuda de
-        asistentes y plataformas IA, facilitando la escritura, depuración y
-        mejora de cada uno de los componentes.
-      </p>
-      <p>
-        Finalmente, se construyó una página web minimalista y estética que
-        integra todos los elementos visuales y funcionales, haciendo accesible
-        el videojuego para cualquier usuario. El resultado es una obra conjunta
-        que combina creatividad, trabajo en equipo y tecnología moderna,
-        reflejando el esfuerzo de varios meses en el desarrollo y presentación
-        del proyecto.
-      </p>
-      <p>
-        Este proyecto académico no solo permitió aprender sobre el proceso de
-        digitalización de un juego de mesa, sino también explorar herramientas
-        de diseño, gestión colaborativa y algoritmos de programación. El trabajo
-        se dividió entre planificación, desarrollo visual, programación y
-        documentación, haciendo uso intensivo de recursos web, generación de
-        prototipos y automatización de tareas gracias a la inteligencia
-        artificial.
-      </p>
+
+      <div class="acerca-block">
+        <span class="acerca-icon">🎲</span>
+        <div>
+          <strong>Fase de Idea y Planificación:</strong>
+          <br />La creación del videojuego comenzó con la definición del
+          proyecto y la selección del juego de mesa a digitalizar. Se eligió la
+          película <b>Robot Salvaje</b> como temática, desarrollando una
+          narrativa única y personajes adaptados al mundo digital.
+        </div>
+      </div>
+      <div class="acerca-block">
+        <span class="acerca-icon">💻</span>
+        <div>
+          <strong>Construcción del Repositorio:</strong>
+          <br />Se creó el repositorio en GitHub Pages organizando carpetas y
+          documentación, con atención especial al diseño estructural y
+          presentación visual para facilitar el trabajo en equipo.
+        </div>
+      </div>
+      <div class="acerca-block">
+        <span class="acerca-icon">🎨</span>
+        <div>
+          <strong>Prototipado y Diagramación:</strong>
+          <br />Se utilizaron herramientas como <b>Figma</b> y diagramas de
+          flujo para representar visualmente la mecánica de juego y definir los
+          procesos de cada turno, mejorando la comprensión e iteración de las
+          reglas.
+        </div>
+      </div>
+      <div class="acerca-block">
+        <span class="acerca-icon">🤖</span>
+        <div>
+          <strong>Desarrollo Digital e Inteligencia Artificial:</strong>
+          <br />El equipo experimentó con prototipos generados por IA, ayudando
+          a crear y depurar el código, testear mecánicas y construir la
+          arquitectura base del videojuego web.
+        </div>
+      </div>
+      <div class="acerca-block">
+        <span class="acerca-icon">🌐</span>
+        <div>
+          <strong>Integración Web y Presentación:</strong>
+          <br />Se diseñó una página web minimalista, funcional y visualmente
+          atractiva que integra todos los componentes: historia, reglas,
+          prototipos e imágenes originales, logrando una experiencia accesible y
+          moderna.
+        </div>
+      </div>
+      <div class="acerca-block">
+        <span class="acerca-icon">👥</span>
+        <div>
+          <strong>Trabajo en Equipo:</strong>
+          <br />La colaboración fue esencial: se dividieron tareas desde la
+          documentación y organización, hasta la programación, pruebas de
+          interfaz y mejoras creativas. Cada integrante aportó con ideas,
+          soluciones técnicas y creatividad.
+          <div class="acerca-team">
+            <span class="acerca-team-title"
+              >Integrantes y actividades principales:</span
+            >
+            <ul>
+              <li>
+                Jesús Gael Saucedo Solorzano: gestión, programación,
+                documentación y pruebas.
+              </li>
+              <li>
+                Colaboradores: diseño de prototipos y aporte en la lógica y
+                desarrollo de reglas.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="acerca-block">
+        <span class="acerca-icon">✨</span>
+        <div>
+          <strong>Logros:</strong>
+          <br />Se logró digitalizar un concepto clásico y adaptarlo a una
+          plataforma web moderna, utilizando IA y recursos visuales, aprendiendo
+          sobre integración de herramientas y desarrollo colaborativo.
+        </div>
+      </div>
     </section>
 
     <footer
-      style="text-align: center; padding: 22px; font-size: 15px; color: #213a50"
+      style="
+        text-align: center;
+        padding: 22px;
+        font-size: 16px;
+        color: #213a50;
+        background: #e2eafc;
+        border-top: 2px solid #dbeaff;
+        box-shadow: 0 -2px 12px #cfe6ff1a;
+      "
     >
       &copy; 2025 Robot Salvaje - Proyecto Web Semestral
     </footer>
