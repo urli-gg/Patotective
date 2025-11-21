@@ -3,1473 +3,268 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Robot Salvaje - Salva el Pato</title>
+    <title>Robot Salvaje: Salva el Pato</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(
-          135deg,
-          #0f4c3a 0%,
-          #1a7a5e 50%,
-          #0d3d2e 100%
-        );
-        min-height: 100vh;
-        color: white;
+        font-family: "Montserrat", Arial, sans-serif;
+        background: #f8f8fb;
+        color: #333;
+        margin: 0;
       }
-
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px;
+      nav {
+        display: flex;
+        justify-content: center;
+        background: #213a50;
       }
-
-      .screen {
-        display: none;
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 18px 28px;
+        font-weight: 700;
+        transition: background 0.3s;
       }
-
-      .screen.active {
+      nav a:hover {
+        background: #2e5472;
+      }
+      .section {
+        max-width: 960px;
+        margin: 38px auto 0 auto;
+        padding: 24px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(46, 84, 114, 0.12);
+      }
+      .section img {
+        border-radius: 14px;
+        box-shadow: 0 2px 14px rgba(46, 84, 114, 0.09);
+        margin-bottom: 18px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #213a50;
+      }
+      .roles-img,
+      .map-img,
+      .diagram-img {
         display: block;
+        margin: 26px auto 18px auto;
+        max-width: 320px;
+        width: 90%;
       }
-
-      /* Home Screen */
-      .home-screen {
-        text-align: center;
-        padding: 60px 20px;
+      .gallery-img {
+        max-width: 230px;
+        margin: 12px;
       }
-
-      .home-screen h1 {
-        font-size: 5em;
-        margin-bottom: 10px;
-        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
-      }
-
-      .home-screen h2 {
-        font-size: 3em;
-        color: #4ade80;
-        margin-bottom: 30px;
-      }
-
-      .home-screen p {
-        font-size: 1.3em;
-        margin-bottom: 40px;
-        opacity: 0.9;
-      }
-
-      .btn {
-        padding: 15px 40px;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        margin: 10px;
-        font-weight: bold;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-
-      .btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        color: white;
-      }
-
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-      }
-
-      /* Instructions Screen */
-      .instructions-screen {
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-
-      .card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .card h2 {
-        font-size: 2em;
-        margin-bottom: 20px;
-        color: #4ade80;
-      }
-
-      .card h3 {
-        font-size: 1.5em;
-        margin: 15px 0 10px;
-        color: #60a5fa;
-      }
-
-      .card ul {
-        margin-left: 30px;
-        line-height: 1.8;
-      }
-
-      .character-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-        margin-top: 20px;
-      }
-
-      .character-card {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-      }
-
-      .character-card h4 {
-        font-size: 1.3em;
-        margin-bottom: 10px;
-      }
-
-      /* Game Board Screen */
-      .game-header {
+      .gallery {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
         flex-wrap: wrap;
-        gap: 15px;
-      }
-
-      .turn-info {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 15px 25px;
-        border-radius: 10px;
-        font-size: 1.3em;
-        font-weight: bold;
-      }
-
-      .scores {
-        display: flex;
-        gap: 15px;
-      }
-
-      .score-card {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 15px 20px;
-        border-radius: 10px;
-        text-align: center;
-      }
-
-      .score-card.animals {
-        border: 2px solid #10b981;
-      }
-
-      .score-card.robots {
-        border: 2px solid #ef4444;
-      }
-
-      .game-area {
-        display: grid;
-        grid-template-columns: 1fr 350px;
-        gap: 20px;
-      }
-
-      @media (max-width: 1024px) {
-        .game-area {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* Board */
-      .board {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border-radius: 15px;
-      }
-
-      .board-grid {
-        display: grid;
-        grid-template-columns: repeat(9, 1fr);
-        gap: 3px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .cell {
-        aspect-ratio: 1;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
         justify-content: center;
-        font-size: 2em;
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
       }
-
-      .cell:hover {
-        transform: scale(1.05);
-        z-index: 10;
+      .tutorial-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
       }
-
-      .cell.plain {
-        background: #86efac;
+      .tutorial-table th,
+      .tutorial-table td {
+        border: 1px solid #d6dcee;
+        padding: 7px 10px;
+        text-align: left;
       }
-      .cell.forest {
-        background: #16a34a;
+      .tutorial-table th {
+        background: #e6f0fa;
       }
-      .cell.water {
-        background: #3b82f6;
-      }
-      .cell.mountain {
-        background: #6b7280;
-      }
-
-      .cell.selected {
-        box-shadow: 0 0 0 4px #fbbf24;
-        transform: scale(1.1);
-        z-index: 20;
-      }
-
-      .cell .character {
-        font-size: 2.5em;
-        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-      }
-
-      .cell .health {
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        background: #ef4444;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        font-size: 0.4em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        border: 2px solid white;
-      }
-
-      .legend {
-        display: flex;
-        gap: 15px;
-        margin-top: 15px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9em;
-      }
-
-      .legend-color {
-        width: 25px;
-        height: 25px;
-        border-radius: 5px;
-      }
-
-      /* Side Panel */
-      .side-panel {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .panel-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 20px;
-      }
-
-      .panel-card h3 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-        color: #4ade80;
-      }
-
-      .character-info {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 15px;
-      }
-
-      .character-emoji {
-        font-size: 3em;
-      }
-
-      .health-bar {
-        display: flex;
-        gap: 5px;
-        margin: 10px 0;
-      }
-
-      .health-segment {
-        flex: 1;
-        height: 12px;
-        border-radius: 5px;
-        background: #ef4444;
-      }
-
-      .health-segment.empty {
-        background: #374151;
-      }
-
-      .action-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .action-btn {
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        font-size: 1em;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .action-btn:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      .action-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      .action-btn.move {
-        background: #3b82f6;
-        color: white;
-      }
-      .action-btn.attack {
-        background: #ef4444;
-        color: white;
-      }
-      .action-btn.ability {
-        background: #a855f7;
-        color: white;
-      }
-      .action-btn.end-turn {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .dice-result {
-        text-align: center;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        margin-top: 15px;
-      }
-
-      .dice-number {
-        font-size: 4em;
-        font-weight: bold;
-        margin: 10px 0;
-      }
-
-      .dice-result.success {
-        background: rgba(16, 185, 129, 0.2);
-        border: 2px solid #10b981;
-      }
-
-      .dice-result.fail {
-        background: rgba(239, 68, 68, 0.2);
-        border: 2px solid #ef4444;
-      }
-
-      .game-log {
-        max-height: 200px;
-        overflow-y: auto;
-      }
-
-      .log-entry {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 8px 12px;
-        margin-bottom: 8px;
-        border-radius: 5px;
-        font-size: 0.9em;
-      }
-
-      /* Game Over Screen */
-      .game-over-screen {
-        text-align: center;
-        padding: 60px 20px;
-      }
-
-      .trophy {
-        font-size: 8em;
-        margin-bottom: 20px;
-      }
-
-      .game-over-screen h1 {
-        font-size: 4em;
-        margin-bottom: 20px;
-      }
-
-      .game-over-screen h2 {
-        font-size: 2.5em;
-        margin-bottom: 40px;
-      }
-
-      .final-scores {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        max-width: 600px;
-        margin: 40px auto;
-      }
-
-      .final-score-card {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 30px;
-        border-radius: 15px;
-        border: 3px solid;
-      }
-
-      .final-score-card.winner {
-        background: rgba(16, 185, 129, 0.2);
-        border-color: #10b981;
-      }
-
-      .final-score-card .emoji {
-        font-size: 3em;
-        margin-bottom: 10px;
-      }
-
-      .final-score-card .score {
-        font-size: 3em;
-        font-weight: bold;
-        margin: 10px 0;
-      }
-
-      /* Utility */
-      .text-center {
-        text-align: center;
-      }
-
-      .mt-20 {
-        margin-top: 20px;
-      }
-
-      .mb-20 {
-        margin-bottom: 20px;
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-      }
-
-      .pulse {
-        animation: pulse 2s infinite;
+      .prototipo-img {
+        max-width: 270px;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <!-- Home Screen -->
-      <div id="homeScreen" class="screen active">
-        <div class="home-screen">
-          <h1>🤖 ROBOT SALVAJE</h1>
-          <h2>Salva el Pato 🦆</h2>
-          <p>
-            Un juego estratégico de supervivencia basado en la película animada
-          </p>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#historia">Historia</a>
+      <a href="#mecanicas">Mecánicas</a>
+      <a href="#acerca">Acerca</a>
+    </nav>
 
-          <div class="card" style="max-width: 800px; margin: 40px auto">
-            <h2>Sobre el Juego</h2>
-            <p style="text-align: left; line-height: 1.8">
-              En una isla remota, los animales deben proteger a su amigo el Pato
-              de una invasión de robots. ¿Podrán los habitantes de la isla
-              mantener a salvo al Pato durante 20 turnos, o los robots lograrán
-              capturarlo primero?
-            </p>
-          </div>
+    <section class="section" id="inicio">
+      <h1>Robot Salvaje: Salva el Pato</h1>
+      <img
+        src="../assets/wp.jpeg"
+        alt="Portada Robot Salvaje"
+        style="width: 100%; max-width: 550px"
+      />
+      <p>
+        Juego web inspirado en la película animada de <b>Robot Salvaje</b>,
+        basado en el clásico juego de mesa. ¡Protege al pato, usa a los animales
+        aliados o juega como robots y captura al pato antes que se acabe el
+        tiempo!
+      </p>
+    </section>
 
-          <div>
-            <button
-              class="btn btn-primary"
-              onclick="showScreen('gameSetupScreen')"
-            >
-              🎮 Jugar Ahora
-            </button>
-            <button
-              class="btn btn-secondary"
-              onclick="showScreen('instructionsScreen')"
-            >
-              📖 Instrucciones
-            </button>
-          </div>
-
-          <p style="margin-top: 60px; opacity: 0.6; font-size: 0.9em">
-            Juego creado para Programación en Lenguajes Interpretados<br />
-            Basado en la película "Robot Salvaje"
-          </p>
-        </div>
+    <section class="section" id="historia">
+      <h2>Historia</h2>
+      <p>
+        <b>Robot Salvaje: Salva el Pato</b> nació como un juego de mesa entre
+        amigos, utilizando tablero físico y fichas artesanales. Luego,
+        evolucionó a una versión digital, digitalizando sus reglas y adaptando
+        la estética minimalista basada en la famosa película animada. El
+        objetivo principal es rescatar al pato, explorando los terrenos de la
+        isla mientras sobrevives contra los robots.
+      </p>
+      <div class="gallery">
+        <img
+          src="../assets/IMG_8941.PNG"
+          class="gallery-img"
+          alt="Diagrama de flujo del juego"
+        />
+        <img
+          src="../assets/foto1.jpeg"
+          class="gallery-img prototipo-img"
+          alt="Prototipo de tablero físico"
+        />
       </div>
-
-      <!-- Instructions Screen -->
-      <div id="instructionsScreen" class="screen">
-        <div class="instructions-screen">
-          <button
-            class="btn btn-secondary mb-20"
-            onclick="showScreen('homeScreen')"
-          >
-            ← Volver
-          </button>
-
-          <h1 style="font-size: 3em; margin-bottom: 30px">📖 Instrucciones</h1>
-
-          <div class="card">
-            <h2>🎯 Objetivo del Juego</h2>
-            <div style="display: grid; gap: 15px; margin-top: 20px">
-              <div
-                style="
-                  background: rgba(16, 185, 129, 0.2);
-                  border: 2px solid #10b981;
-                  padding: 20px;
-                  border-radius: 10px;
-                "
-              >
-                <h3>🦊 Animales</h3>
-                <p>Proteger al Pato de los robots durante 20 turnos.</p>
-              </div>
-              <div
-                style="
-                  background: rgba(239, 68, 68, 0.2);
-                  border: 2px solid #ef4444;
-                  padding: 20px;
-                  border-radius: 10px;
-                "
-              >
-                <h3>🤖 Robots</h3>
-                <p>Capturar al Pato antes de que termine ese tiempo.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h2>⚔️ Mecánicas del Juego</h2>
-            <h3>🚶 Movimiento</h3>
-            <ul>
-              <li>
-                Robots: Hasta 2 espacios en llanos, solo 1 en bosque o montaña
-              </li>
-              <li>Animales: Hasta 3 espacios (Zorro: 4 espacios)</li>
-              <li>El Pato: Solo 1 espacio, puede esconderse en agua</li>
-            </ul>
-
-            <h3>⚔️ Ataque</h3>
-            <ul>
-              <li>Solo puedes atacar si hay un oponente adyacente</li>
-              <li>Lanza un dado de 6 caras</li>
-              <li>Con 4, 5 o 6: Ataque exitoso, el adversario pierde 1 vida</li>
-            </ul>
-
-            <h3>🎮 Acciones por Turno</h3>
-            <ul>
-              <li>Mover tu ficha</li>
-              <li>Usar una habilidad especial</li>
-              <li>Atacar a un oponente cercano</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h2>⚡ Personajes y Habilidades</h2>
-            <div class="character-grid">
-              <div class="character-card">
-                <h4>🐻 Oso</h4>
-                <p>❤️ Vida: 2</p>
-                <p><small>Al atacar hace 2 puntos de daño</small></p>
-              </div>
-              <div class="character-card">
-                <h4>🦆 Pato</h4>
-                <p>❤️ Vida: 1</p>
-                <p>
-                  <small
-                    >Se mueve 3 casillas en agua, objetivo a proteger</small
-                  >
-                </p>
-              </div>
-              <div class="character-card">
-                <h4>🦌 Alce</h4>
-                <p>❤️ Vida: 2</p>
-                <p><small>Se mueve hasta 3 casillas por turno</small></p>
-              </div>
-              <div class="character-card">
-                <h4>🦡 Zarigüeya</h4>
-                <p>❤️ Vida: 2</p>
-                <p><small>Esquiva 1 ataque si es atacada primero</small></p>
-              </div>
-              <div class="character-card">
-                <h4>🦊 Zorro</h4>
-                <p>❤️ Vida: 2</p>
-                <p><small>Al atacar desde detrás hace 2 de daño</small></p>
-              </div>
-              <div class="character-card">
-                <h4>🤖 Robot</h4>
-                <p>❤️ Vida: 3</p>
-                <p><small>En montaña solo se mueve 1 casilla</small></p>
-              </div>
-              <div class="character-card">
-                <h4>🤖 Robot Aliado</h4>
-                <p>❤️ Vida: 3</p>
-                <p><small>Bloquea ataque y ataca 1 vez cada 3 turnos</small></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h2>🏆 Condiciones de Victoria</h2>
-            <div style="display: grid; gap: 15px; margin-top: 20px">
-              <div
-                style="
-                  background: rgba(239, 68, 68, 0.2);
-                  border: 2px solid #ef4444;
-                  padding: 20px;
-                  border-radius: 10px;
-                "
-              >
-                <h3>Ganan los Robots</h3>
-                <p>Si capturan al Pato antes del turno 20</p>
-                <p>
-                  <small>Puntuación: 10 puntos por cada turno restante</small>
-                </p>
-              </div>
-              <div
-                style="
-                  background: rgba(16, 185, 129, 0.2);
-                  border: 2px solid #10b981;
-                  padding: 20px;
-                  border-radius: 10px;
-                "
-              >
-                <h3>Ganan los Animales</h3>
-                <p>Si protegen al Pato hasta el turno 20</p>
-                <p>
-                  <small>Puntuación: 10 puntos por cada robot eliminado</small>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-center mt-20">
-            <button
-              class="btn btn-primary"
-              onclick="showScreen('gameSetupScreen')"
-            >
-              ¡Comenzar a Jugar! 🎮
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Game Setup Screen -->
-      <div id="gameSetupScreen" class="screen">
-        <div style="max-width: 900px; margin: 0 auto">
-          <button
-            class="btn btn-secondary mb-20"
-            onclick="showScreen('homeScreen')"
-          >
-            ← Volver
-          </button>
-
-          <h1 style="font-size: 3em; margin-bottom: 30px">⚙️ Configuración</h1>
-
-          <div class="card">
-            <h2>Configuración de Partida</h2>
-            <div
-              style="
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-                margin-top: 30px;
-              "
-            >
-              <div
-                style="
-                  background: rgba(16, 185, 129, 0.2);
-                  border: 2px solid #10b981;
-                  padding: 25px;
-                  border-radius: 10px;
-                "
-              >
-                <h3>Jugador 1: Animales 🦊</h3>
-                <p>Protege al Pato durante 20 turnos</p>
-                <ul style="margin-top: 15px; opacity: 0.8">
-                  <li>Oso, Pato, Alce</li>
-                  <li>Zarigüeya, Zorro</li>
-                </ul>
-              </div>
-              <div
-                style="
-                  background: rgba(239, 68, 68, 0.2);
-                  border: 2px solid #ef4444;
-                  padding: 25px;
-                  border-radius: 10px;
-                "
-              >
-                <h3>Jugador 2: Robots 🤖</h3>
-                <p>Captura al Pato antes del turno 20</p>
-                <ul style="margin-top: 15px; opacity: 0.8">
-                  <li>3 Robots</li>
-                  <li>1 Robot Aliado</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="text-center" style="margin-top: 40px">
-              <button
-                class="btn btn-primary"
-                style="font-size: 1.4em; padding: 20px 50px"
-                onclick="startGame()"
-              >
-                ▶️ Comenzar Partida
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Game Board Screen -->
-      <div id="gameBoardScreen" class="screen">
-        <div class="game-header">
-          <button class="btn btn-secondary" onclick="confirmExit()">
-            🏠 Salir
-          </button>
-
-          <div class="turn-info" id="turnInfo">
-            Turno 1 / 20 - Turno de Animales 🦊
-          </div>
-
-          <div class="scores">
-            <div class="score-card animals">
-              <div style="color: #10b981; font-weight: bold">Animales</div>
-              <div id="animalsScore" style="font-size: 1.5em; margin-top: 5px">
-                0 pts
-              </div>
-            </div>
-            <div class="score-card robots">
-              <div style="color: #ef4444; font-weight: bold">Robots</div>
-              <div id="robotsScore" style="font-size: 1.5em; margin-top: 5px">
-                0 pts
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="game-area">
-          <div class="board">
-            <div class="board-grid" id="boardGrid">
-              <!-- Generated by JavaScript -->
-            </div>
-            <div class="legend">
-              <div class="legend-item">
-                <div class="legend-color" style="background: #86efac"></div>
-                <span>Llano</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-color" style="background: #16a34a"></div>
-                <span>Bosque</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-color" style="background: #3b82f6"></div>
-                <span>Agua</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-color" style="background: #6b7280"></div>
-                <span>Montaña</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="side-panel">
-            <div class="panel-card">
-              <h3>Personaje Seleccionado</h3>
-              <div id="characterInfo">
-                <p style="opacity: 0.6; text-align: center">
-                  Selecciona un personaje en el tablero
-                </p>
-              </div>
-            </div>
-
-            <div class="panel-card">
-              <h3>Acciones</h3>
-              <div id="actionsPanel">
-                <p style="opacity: 0.6; text-align: center">
-                  Selecciona un personaje
-                </p>
-              </div>
-            </div>
-
-            <div class="panel-card">
-              <h3>📜 Registro de Eventos</h3>
-              <div class="game-log" id="gameLog">
-                <div class="log-entry">Turno 1 - Comienza el juego</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Game Over Screen -->
-      <div id="gameOverScreen" class="screen">
-        <div class="game-over-screen">
-          <div class="trophy pulse">🏆</div>
-          <h1>¡FIN DEL JUEGO!</h1>
-          <h2 id="winnerText">Victoria de los Animales 🦊🦆</h2>
-
-          <div class="final-scores">
-            <div class="final-score-card" id="finalAnimalsCard">
-              <div class="emoji">🦊</div>
-              <div
-                style="color: #10b981; font-weight: bold; margin-bottom: 10px"
-              >
-                Animales
-              </div>
-              <div class="score" id="finalAnimalsScore">0</div>
-              <div style="opacity: 0.7">puntos</div>
-            </div>
-            <div class="final-score-card" id="finalRobotsCard">
-              <div class="emoji">🤖</div>
-              <div
-                style="color: #ef4444; font-weight: bold; margin-bottom: 10px"
-              >
-                Robots
-              </div>
-              <div class="score" id="finalRobotsScore">0</div>
-              <div style="opacity: 0.7">puntos</div>
-            </div>
-          </div>
-
-          <div class="card" style="max-width: 500px; margin: 40px auto">
-            <h3>Estadísticas de la Partida</h3>
-            <div
-              style="
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-                margin-top: 20px;
-                text-align: left;
-              "
-            >
-              <div>Turnos jugados:</div>
-              <div style="text-align: right; font-weight: bold" id="finalTurns">
-                -
-              </div>
-              <div>Resultado:</div>
-              <div
-                style="text-align: right; font-weight: bold"
-                id="finalResult"
-              >
-                -
-              </div>
-            </div>
-          </div>
-
-          <p id="winnerMessage" style="font-size: 1.3em; margin: 30px 0">
-            ¡Los animales lograron proteger al Pato durante 20 turnos!
-          </p>
-
-          <div>
-            <button
-              class="btn btn-primary"
-              onclick="showScreen('gameSetupScreen')"
-            >
-              🔄 Jugar de Nuevo
-            </button>
-            <button
-              class="btn btn-secondary"
-              onclick="showScreen('homeScreen')"
-            >
-              🏠 Menú Principal
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      // Game State
-      let gameState = {
-        currentTurn: 1,
-        currentPlayer: "animals", // 'animals' or 'robots'
-        animalsScore: 0,
-        robotsScore: 0,
-        selectedCharacter: null,
-        characters: [],
-        gameLog: [],
-      };
-
-      // Character Templates
-      const characterTemplates = {
-        Oso: {
-          emoji: "🐻",
-          health: 2,
-          maxHealth: 2,
-          movement: 3,
-          type: "animal",
-          ability: "Al atacar hace 2 puntos de daño",
-        },
-        Pato: {
-          emoji: "🦆",
-          health: 1,
-          maxHealth: 1,
-          movement: 1,
-          type: "animal",
-          ability: "Se mueve 3 casillas en agua",
-        },
-        Alce: {
-          emoji: "🦌",
-          health: 2,
-          maxHealth: 2,
-          movement: 3,
-          type: "animal",
-          ability: "Se mueve hasta 3 casillas por turno",
-        },
-        Zarigüeya: {
-          emoji: "🦡",
-          health: 2,
-          maxHealth: 2,
-          movement: 3,
-          type: "animal",
-          ability: "Esquiva 1 ataque si es atacada primero",
-        },
-        Zorro: {
-          emoji: "🦊",
-          health: 2,
-          maxHealth: 2,
-          movement: 4,
-          type: "animal",
-          ability: "Al atacar desde detrás hace 2 de daño",
-        },
-        Robot: {
-          emoji: "🤖",
-          health: 3,
-          maxHealth: 3,
-          movement: 2,
-          type: "robot",
-          ability: "En montaña solo se mueve 1 casilla",
-        },
-        "Robot Aliado": {
-          emoji: "🤖",
-          health: 3,
-          maxHealth: 3,
-          movement: 2,
-          type: "robot",
-          ability: "Bloquea ataque y ataca 1 vez cada 3 turnos",
-        },
-      };
-
-      // Terrain
-      function getTerrainType(x, y) {
-        if (
-          (x === 4 && y === 4) ||
-          (x === 3 && y === 4) ||
-          (x === 5 && y === 4)
-        )
-          return "water";
-        if (x < 2 || x > 6 || y < 2 || y > 6) return "mountain";
-        if ((x + y) % 3 === 0) return "forest";
-        return "plain";
-      }
-
-      // Initialize Game
-      function startGame() {
-        gameState = {
-          currentTurn: 1,
-          currentPlayer: "animals",
-          animalsScore: 0,
-          robotsScore: 0,
-          selectedCharacter: null,
-          characters: [
-            { ...characterTemplates["Oso"], name: "Oso", id: 1, x: 3, y: 4 },
-            {
-              ...characterTemplates["Pato"],
-              name: "Pato",
-              id: 2,
-              x: 4,
-              y: 4,
-              isDuck: true,
-            },
-            { ...characterTemplates["Alce"], name: "Alce", id: 3, x: 5, y: 4 },
-            {
-              ...characterTemplates["Zarigüeya"],
-              name: "Zarigüeya",
-              id: 4,
-              x: 4,
-              y: 3,
-            },
-            {
-              ...characterTemplates["Zorro"],
-              name: "Zorro",
-              id: 5,
-              x: 4,
-              y: 5,
-            },
-            {
-              ...characterTemplates["Robot"],
-              name: "Robot 1",
-              id: 6,
-              x: 0,
-              y: 0,
-            },
-            {
-              ...characterTemplates["Robot"],
-              name: "Robot 2",
-              id: 7,
-              x: 8,
-              y: 0,
-            },
-            {
-              ...characterTemplates["Robot"],
-              name: "Robot 3",
-              id: 8,
-              x: 0,
-              y: 8,
-            },
-            {
-              ...characterTemplates["Robot Aliado"],
-              name: "Robot Aliado",
-              id: 9,
-              x: 8,
-              y: 8,
-            },
-          ],
-          gameLog: ["Turno 1 - Comienza el juego"],
-        };
-
-        showScreen("gameBoardScreen");
-        renderBoard();
-        updateUI();
-      }
-
-      // Render Board
-      function renderBoard() {
-        const boardGrid = document.getElementById("boardGrid");
-        boardGrid.innerHTML = "";
-
-        for (let y = 0; y < 9; y++) {
-          for (let x = 0; x < 9; x++) {
-            const cell = document.createElement("div");
-            cell.className = `cell ${getTerrainType(x, y)}`;
-            cell.dataset.x = x;
-            cell.dataset.y = y;
-
-            const character = gameState.characters.find(
-              (c) => c.x === x && c.y === y && c.health > 0
-            );
-
-            if (character) {
-              const charDiv = document.createElement("div");
-              charDiv.className = "character";
-              charDiv.textContent = character.emoji;
-              cell.appendChild(charDiv);
-
-              if (character.health < character.maxHealth) {
-                const healthDiv = document.createElement("div");
-                healthDiv.className = "health";
-                healthDiv.textContent = character.health;
-                cell.appendChild(healthDiv);
-              }
-            }
-
-            if (
-              gameState.selectedCharacter &&
-              gameState.selectedCharacter.x === x &&
-              gameState.selectedCharacter.y === y
-            ) {
-              cell.classList.add("selected");
-            }
-
-            cell.onclick = () => handleCellClick(x, y);
-            boardGrid.appendChild(cell);
-          }
-        }
-      }
-
-      // Handle Cell Click
-      function handleCellClick(x, y) {
-        const character = gameState.characters.find(
-          (c) => c.x === x && c.y === y && c.health > 0
-        );
-
-        if (character) {
-          selectCharacter(character);
-        }
-      }
-
-      // Select Character
-      function selectCharacter(character) {
-        gameState.selectedCharacter = character;
-        renderBoard();
-        updateCharacterInfo();
-        updateActionsPanel();
-      }
-
-      // Update Character Info
-      function updateCharacterInfo() {
-        const infoDiv = document.getElementById("characterInfo");
-
-        if (!gameState.selectedCharacter) {
-          infoDiv.innerHTML =
-            '<p style="opacity: 0.6; text-align: center;">Selecciona un personaje en el tablero</p>';
-          return;
-        }
-
-        const char = gameState.selectedCharacter;
-        const canAct = char.type === gameState.currentPlayer;
-
-        let healthBars = "";
-        for (let i = 0; i < char.maxHealth; i++) {
-          healthBars += `<div class="health-segment ${
-            i >= char.health ? "empty" : ""
-          }"></div>`;
-        }
-
-        infoDiv.innerHTML = `
-                <div class="character-info">
-                    <div class="character-emoji">${char.emoji}</div>
-                    <div style="flex: 1;">
-                        <div style="font-size: 1.5em; font-weight: bold; margin-bottom: 5px;">${
-                          char.name
-                        }</div>
-                        <div style="color: ${
-                          char.type === "animal" ? "#10b981" : "#ef4444"
-                        }; font-size: 0.9em;">
-                            ${char.type === "animal" ? "Animal" : "Robot"}
-                        </div>
-                    </div>
-                </div>
-                <div style="margin: 15px 0;">
-                    <div style="opacity: 0.8; margin-bottom: 5px;">❤️ Vida: ${
-                      char.health
-                    } / ${char.maxHealth}</div>
-                    <div class="health-bar">${healthBars}</div>
-                </div>
-                <div style="margin: 15px 0; opacity: 0.8;">
-                    🚶 Movimiento: ${char.movement} casillas
-                </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-top: 15px;">
-                    <div style="color: #fbbf24; font-weight: bold; margin-bottom: 8px;">⚡ Habilidad Especial</div>
-                    <div style="font-size: 0.9em; opacity: 0.9;">${
-                      char.ability
-                    }</div>
-                </div>
-                <div style="margin-top: 15px; opacity: 0.6; font-size: 0.85em;">
-                    Posición: (${char.x}, ${char.y})
-                </div>
-                ${
-                  !canAct
-                    ? '<div style="background: rgba(251, 191, 36, 0.2); border: 2px solid #fbbf24; padding: 10px; border-radius: 8px; text-align: center; margin-top: 15px; color: #fbbf24;">No es tu turno</div>'
-                    : ""
-                }
-            `;
-      }
-
-      // Update Actions Panel
-      function updateActionsPanel() {
-        const actionsDiv = document.getElementById("actionsPanel");
-
-        if (!gameState.selectedCharacter) {
-          actionsDiv.innerHTML =
-            '<p style="opacity: 0.6; text-align: center;">Selecciona un personaje</p>';
-          return;
-        }
-
-        const char = gameState.selectedCharacter;
-        const canAct = char.type === gameState.currentPlayer;
-
-        if (!canAct) {
-          actionsDiv.innerHTML =
-            '<div style="background: rgba(251, 191, 36, 0.2); border: 2px solid #fbbf24; padding: 15px; border-radius: 8px; text-align: center; color: #fbbf24;">No puedes actuar con este personaje en este turno</div>';
-          return;
-        }
-
-        actionsDiv.innerHTML = `
-                <div class="action-buttons">
-                    <button class="action-btn move" onclick="handleMove()" ${
-                      char.name === "Pato" ? "" : ""
-                    }>
-                        🚶 Mover
-                    </button>
-                    <button class="action-btn attack" onclick="handleAttack()" ${
-                      char.name === "Pato" ? "disabled" : ""
-                    }>
-                        ⚔️ Atacar
-                    </button>
-                    <button class="action-btn ability" onclick="handleAbility()" ${
-                      char.name === "Pato" ? "disabled" : ""
-                    }>
-                        ⚡ Usar Habilidad
-                    </button>
-                    <div style="border-top: 1px solid rgba(255,255,255,0.2); margin: 10px 0;"></div>
-                    <button class="action-btn end-turn" onclick="endTurn()">
-                        ⏭️ Terminar Turno
-                    </button>
-                </div>
-                <div id="diceResult"></div>
-            `;
-      }
-
-      // Handle Move (Simplified)
-      function handleMove() {
-        const char = gameState.selectedCharacter;
-        const validMoves = [];
-
-        // Find valid adjacent cells
-        for (let dy = -1; dy <= 1; dy++) {
-          for (let dx = -1; dx <= 1; dx++) {
-            if (dx === 0 && dy === 0) continue;
-            const newX = char.x + dx;
-            const newY = char.y + dy;
-
-            if (newX >= 0 && newX < 9 && newY >= 0 && newY < 9) {
-              const occupied = gameState.characters.find(
-                (c) => c.x === newX && c.y === newY && c.health > 0
-              );
-              if (!occupied) {
-                validMoves.push({ x: newX, y: newY });
-              }
-            }
-          }
-        }
-
-        if (validMoves.length > 0) {
-          const move =
-            validMoves[Math.floor(Math.random() * validMoves.length)];
-          char.x = move.x;
-          char.y = move.y;
-          addLog(`${char.name} se movió a (${move.x}, ${move.y})`);
-          renderBoard();
-          updateUI();
-        } else {
-          alert("No hay movimientos válidos disponibles");
-        }
-      }
-
-      // Handle Attack
-      function handleAttack() {
-        const char = gameState.selectedCharacter;
-        const enemies = gameState.characters.filter((c) => {
-          if (c.health <= 0 || c.type === char.type) return false;
-          const dist = Math.abs(c.x - char.x) + Math.abs(c.y - char.y);
-          return dist === 1;
-        });
-
-        if (enemies.length === 0) {
-          alert("No hay enemigos adyacentes para atacar");
-          return;
-        }
-
-        // Roll dice
-        const diceRoll = Math.floor(Math.random() * 6) + 1;
-        const success = diceRoll >= 4;
-
-        const diceDiv = document.getElementById("diceResult");
-        diceDiv.innerHTML = `
-                <div class="dice-result ${success ? "success" : "fail"}">
-                    <div style="font-size: 3em;">🎲</div>
-                    <div class="dice-number">${diceRoll}</div>
-                    <div style="font-weight: bold; font-size: 1.1em;">
-                        ${success ? "¡Ataque exitoso! ✅" : "Ataque fallido ❌"}
-                    </div>
-                </div>
-            `;
-
-        if (success) {
-          const target = enemies[0];
-          let damage = 1;
-
-          // Apply special abilities
-          if (char.name === "Oso") damage = 2;
-          if (char.name === "Zorro") damage = 2; // Simplified
-
-          target.health = Math.max(0, target.health - damage);
-          addLog(
-            `${char.name} atacó a ${target.name} causando ${damage} de daño`
-          );
-
-          if (target.health === 0) {
-            addLog(`${target.name} ha sido eliminado`);
-            if (target.type === "robot") {
-              gameState.animalsScore += 10;
-            }
-            if (target.isDuck) {
-              endGame("robots");
-              return;
-            }
-          }
-
-          renderBoard();
-          updateUI();
-        } else {
-          addLog(`${char.name} falló su ataque (dado: ${diceRoll})`);
-        }
-      }
-
-      // Handle Ability (Simplified)
-      function handleAbility() {
-        const char = gameState.selectedCharacter;
-        alert(`${char.name} usó su habilidad: ${char.ability}`);
-        addLog(`${char.name} usó su habilidad especial`);
-      }
-
-      // End Turn
-      function endTurn() {
-        if (gameState.currentPlayer === "animals") {
-          gameState.currentPlayer = "robots";
-          addLog(`Turno ${gameState.currentTurn} - Turno de Robots`);
-        } else {
-          gameState.currentPlayer = "animals";
-          gameState.currentTurn++;
-          addLog(`Turno ${gameState.currentTurn} - Turno de Animales`);
-
-          if (gameState.currentTurn > 20) {
-            endGame("animals");
-            return;
-          }
-        }
-
-        // Check if all robots are dead
-        const aliveRobots = gameState.characters.filter(
-          (c) => c.type === "robot" && c.health > 0
-        );
-        if (aliveRobots.length === 0) {
-          endGame("animals");
-          return;
-        }
-
-        gameState.selectedCharacter = null;
-        renderBoard();
-        updateUI();
-      }
-
-      // End Game
-      function endGame(winner) {
-        if (winner === "animals") {
-          gameState.animalsScore += (20 - gameState.currentTurn + 1) * 5;
-        } else {
-          const turnsRemaining = 20 - gameState.currentTurn;
-          gameState.robotsScore += turnsRemaining * 10;
-        }
-
-        document.getElementById("winnerText").textContent =
-          winner === "animals"
-            ? "Victoria de los Animales 🦊🦆"
-            : "Victoria de los Robots 🤖";
-
-        document.getElementById("finalAnimalsScore").textContent =
-          gameState.animalsScore;
-        document.getElementById("finalRobotsScore").textContent =
-          gameState.robotsScore;
-        document.getElementById("finalTurns").textContent =
-          gameState.currentTurn;
-        document.getElementById("finalResult").textContent =
-          winner === "animals" ? "Pato protegido" : "Pato capturado";
-
-        if (winner === "animals") {
-          document.getElementById("finalAnimalsCard").classList.add("winner");
-          document.getElementById("winnerMessage").textContent =
-            "¡Los animales lograron proteger al Pato durante 20 turnos!";
-        } else {
-          document.getElementById("finalRobotsCard").classList.add("winner");
-          document.getElementById("winnerMessage").textContent =
-            "¡Los robots lograron capturar al Pato antes del turno 20!";
-        }
-
-        setTimeout(() => {
-          showScreen("gameOverScreen");
-        }, 2000);
-      }
-
-      // Update UI
-      function updateUI() {
-        document.getElementById("turnInfo").textContent = `Turno ${
-          gameState.currentTurn
-        } / 20 - Turno de ${
-          gameState.currentPlayer === "animals" ? "Animales 🦊" : "Robots 🤖"
-        }`;
-        document.getElementById(
-          "animalsScore"
-        ).textContent = `${gameState.animalsScore} pts`;
-        document.getElementById(
-          "robotsScore"
-        ).textContent = `${gameState.robotsScore} pts`;
-        updateGameLog();
-      }
-
-      // Add Log Entry
-      function addLog(message) {
-        gameState.gameLog.unshift(message);
-        if (gameState.gameLog.length > 20) {
-          gameState.gameLog.pop();
-        }
-        updateGameLog();
-      }
-
-      // Update Game Log
-      function updateGameLog() {
-        const logDiv = document.getElementById("gameLog");
-        logDiv.innerHTML = gameState.gameLog
-          .map((log) => `<div class="log-entry">${log}</div>`)
-          .join("");
-      }
-
-      // Show Screen
-      function showScreen(screenId) {
-        document.querySelectorAll(".screen").forEach((screen) => {
-          screen.classList.remove("active");
-        });
-        document.getElementById(screenId).classList.add("active");
-      }
-
-      // Confirm Exit
-      function confirmExit() {
-        if (confirm("¿Estás seguro de que quieres salir del juego?")) {
-          showScreen("homeScreen");
-        }
-      }
-
-      // Initialize on load
-      window.onload = function () {
-        showScreen("homeScreen");
-      };
-    </script>
+    </section>
+
+    <section class="section" id="mecanicas">
+      <h2>Mecánicas</h2>
+      <h3>Objetivo del juego</h3>
+      <ul>
+        <li>
+          <b>Animales:</b> Proteger al Pato de los robots durante 20 turnos.
+        </li>
+        <li><b>Robots:</b> Capturar al Pato antes de que termine el tiempo.</li>
+      </ul>
+      <h3>Preparación</h3>
+      <ol>
+        <li>
+          Coloca el mapa de la isla al centro, mostrando bosque, ríos, montañas
+          y escondites.
+        </li>
+        <li>
+          Cada jugador toma su bando y ficha (robot/animal). Robots inician en
+          el borde, animales en el centro protegiendo al pato.
+        </li>
+        <li>Reparte marcadores de vida según personaje.</li>
+        <li>Entrega cartas de habilidad por personaje.</li>
+        <li>El pato inicia en agua o escondite.</li>
+      </ol>
+      <h3>Turnos y acciones</h3>
+      <ul>
+        <li>Mover la ficha</li>
+        <li>Usar una habilidad especial</li>
+        <li>Atacar a un oponente cercano</li>
+      </ul>
+      <h3>Movimiento</h3>
+      <table class="tutorial-table">
+        <tr>
+          <th>Personaje</th>
+          <th>Casillas por turno</th>
+          <th>Restricciones</th>
+        </tr>
+        <tr>
+          <td>Robots</td>
+          <td>2 en llanos, 1 en bosque/montaña</td>
+          <td>No en escondite</td>
+        </tr>
+        <tr>
+          <td>Animales</td>
+          <td>Hasta 3; Zorro: 4</td>
+          <td>Depende del animal</td>
+        </tr>
+        <tr>
+          <td>Pato</td>
+          <td>1, pero 3 en agua</td>
+          <td>No puede atacar</td>
+        </tr>
+      </table>
+      <h3>Ataque</h3>
+      <p>
+        Puede atacar si está adyacente a un oponente.<br />
+        Tira un dado de 6 caras: 4, 5 o 6 es ataque exitoso (pierde 1 vida el
+        objetivo).
+      </p>
+      <h3>Habilidades Especiales</h3>
+      <img
+        src="../assets/roles.jpg"
+        class="roles-img"
+        alt="Cartas de roles, animales y robots"
+      />
+      <table class="tutorial-table">
+        <tr>
+          <th>Personaje</th>
+          <th>Vida</th>
+          <th>Habilidad</th>
+        </tr>
+        <tr>
+          <td>Oso</td>
+          <td>2</td>
+          <td>Hace 2 puntos de daño en ataque</td>
+        </tr>
+        <tr>
+          <td>Pato</td>
+          <td>1</td>
+          <td>Se mueve 3 en agua, objetivo a eliminar</td>
+        </tr>
+        <tr>
+          <td>Alce</td>
+          <td>2</td>
+          <td>Hasta 3 casillas por turno</td>
+        </tr>
+        <tr>
+          <td>Zarigüeya</td>
+          <td>2</td>
+          <td>Esquiva 1 ataque si es atacada primero</td>
+        </tr>
+        <tr>
+          <td>Zorro</td>
+          <td>2</td>
+          <td>Atacando por detrás hace 2 de daño</td>
+        </tr>
+        <tr>
+          <td>Robot Aliado</td>
+          <td>3</td>
+          <td>Bloquea ataque y ataca cada 3 turnos</td>
+        </tr>
+        <tr>
+          <td>Robot</td>
+          <td>3</td>
+          <td>En montaña solo 1 casilla</td>
+        </tr>
+      </table>
+      <h3>Condiciones de victoria</h3>
+      <ul>
+        <li>
+          Robots ganan si capturan al pato antes del turno 20 (10 puntos por
+          turno restante por robot).
+        </li>
+        <li>
+          Animales ganan si protegen al pato hasta el turno 20 (10 puntos por
+          robot eliminado).
+        </li>
+        <li>El pato no puede atacar, solo moverse o esconderse.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="acerca">
+      <h2>Acerca del Proyecto</h2>
+      <p>
+        <i>Prototipo en desarrollo.</i> En este apartado se agregará el proceso
+        creativo, el uso de herramientas IA, los algoritmos desarrollados,
+        diagramas utilizados y la historia detrás del proyecto semestral con los
+        datos de los integrantes y sus actividades.
+      </p>
+    </section>
+
+    <footer
+      style="text-align: center; padding: 22px; font-size: 15px; color: #213a50"
+    >
+      &copy; 2025 Robot Salvaje - Proyecto Web Semestral
+    </footer>
   </body>
 </html>
