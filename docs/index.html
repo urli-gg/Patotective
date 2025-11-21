@@ -135,6 +135,37 @@
       tr:last-child td {
         border-bottom: none;
       }
+      /* Secciones especiales */
+      .especial-section {
+        background: linear-gradient(112deg, #f7f9fc 70%, #e6f8f3 100%);
+        border-left: 7px solid #1976d2;
+        box-shadow: 0 2px 18px #1b406810;
+      }
+      .especial-block {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 17px;
+        align-items: flex-start;
+      }
+      .especial-block strong {
+        color: #1e62b4;
+      }
+      .especial-icon {
+        font-size: 1.5em;
+        color: #3887f7;
+        margin-right: 7px;
+        vertical-align: text-bottom;
+      }
+      .especial-img {
+        border-radius: 12px;
+        box-shadow: 0 3px 22px #1976d226;
+        border: 2.5px solid #e3eeff;
+        width: 155px;
+        margin-right: 18px;
+        margin-bottom: 6px;
+        float: right;
+      }
+      /* Acerca */
       #acerca {
         background: linear-gradient(120deg, #e2eafc 70%, #f0fffa 95%);
         border-left: 7px solid #41b6ae;
@@ -229,6 +260,9 @@
           font-size: 0.97em;
           padding: 13px 10px 13px 10px;
         }
+        .especial-img {
+          width: 80px;
+        }
         .game-board {
           grid-template-columns: repeat(7, 28px);
           grid-template-rows: repeat(7, 28px);
@@ -249,6 +283,7 @@
     </header>
     <nav>
       <a href="#inicio">Inicio</a>
+      <a href="#historia">Historia</a>
       <a href="#instrucciones">Instrucciones</a>
       <a href="#gallery">Galería</a>
       <a href="#acerca">Acerca</a>
@@ -275,6 +310,78 @@
           Ver instrucciones
         </button>
         <button class="btn" onclick="showGallery()">Galería</button>
+      </section>
+      <!-- Historia -->
+      <section class="card especial-section" id="historia">
+        <h2>Historia</h2>
+        <div class="especial-block">
+          <span class="especial-icon">🤖</span>
+          <div>
+            <strong
+              >Inspirado en la película "Robot Salvaje" (The Wild
+              Robot):</strong
+            >
+            <br />
+            Este videojuego está basado en la película animada y libro de Peter
+            Brown, donde una robot llamada <b>Roz</b> naufraga y aparece en una
+            isla salvaje. A pesar de ser una máquina, Roz aprende el lenguaje de
+            los animales, se adapta al entorno natural, cuida a un pequeño pato
+            y enfrenta desafíos que ponen a prueba su "humanidad". La historia
+            explora temas de convivencia, naturaleza, empatía y el sentido de
+            pertenencia.
+          </div>
+        </div>
+        <div class="especial-block">
+          <img
+            src="assets/roles.jpg"
+            class="especial-img"
+            alt="Roles y personajes de Robot Salvaje"
+          />
+          <div>
+            <strong>Contexto importante:</strong>
+            <ul>
+              <li>
+                <b>Roz:</b> La protagonista, una robot que aprende sobre la vida
+                y el cuidado al adoptar un patito huérfano.
+              </li>
+              <li>
+                <b>Los animales:</b> Diferentes criaturas silvestres ayudan (o
+                desconfían) de Roz y del pato, enseñándole lecciones vitales y
+                formando una peculiar familia.
+              </li>
+              <li>
+                <b>Mensaje de la obra:</b> Acentúa la empatía entre seres
+                distintos y el poder de la colaboración, la protección y la
+                adaptación.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="especial-block">
+          <span class="especial-icon">🦆</span>
+          <div>
+            <strong>La adaptación en el juego:</strong>
+            <br />
+            En este juego, se toma como inspiración la relación de protección
+            entre los animales y el pato: los animales trabajan juntos para
+            cuidar y salvar al pato de los robots, mientras que los robots
+            intentan capturarlo antes de que pase el tiempo. De este modo, el
+            espíritu de la película y el libro se vive de una manera competitiva
+            y cooperativa dentro del tablero digital.
+          </div>
+        </div>
+        <div class="especial-block">
+          <span class="especial-icon">🎮</span>
+          <div>
+            <strong>De la narrativa a la jugabilidad:</strong>
+            <br />
+            El tablero, los roles, las mecánicas y las reglas se diseñaron para
+            transmitir el reto de sobrevivir y trabajar en equipo, con mecánicas
+            que representan las habilidades y debilidades de cada personaje,
+            volviendo cada partida distinta pero siempre fiel al mensaje
+            original de la historia.
+          </div>
+        </div>
       </section>
       <!-- Tablero del juego: jugable -->
       <section class="card" id="game-board" style="display: none">
@@ -365,8 +472,8 @@
           <div>
             <strong>Fase de Idea y Planificación:</strong>
             <br />La creación del videojuego comenzó con la definición del
-            proyecto y la selección del juego de mesa a digitalizar. Se eligió
-            la película <b>Robot Salvaje</b> como temática, desarrollando una
+            proyecto y la elección del juego de mesa a digitalizar. Se eligió la
+            película <b>Robot Salvaje</b> como temática, desarrollando una
             narrativa única y personajes adaptados al mundo digital.
           </div>
         </div>
@@ -565,11 +672,11 @@
         document.getElementById("inicio").style.display = "block";
       }
       function hideAllSections() {
-        ["inicio", "game-board", "instructions", "gallery"].forEach(function (
-          id
-        ) {
-          document.getElementById(id).style.display = "none";
-        });
+        ["inicio", "game-board", "instructions", "gallery", "historia"].forEach(
+          function (id) {
+            document.getElementById(id).style.display = "none";
+          }
+        );
         document.getElementById("acerca").style.display = "none";
       }
       // Menú navegación
@@ -577,6 +684,14 @@
         link.onclick = function (e) {
           if (link.getAttribute("href") === "#inicio") {
             back();
+            return false;
+          }
+          if (link.getAttribute("href") === "#historia") {
+            hideAllSections();
+            document.getElementById("historia").style.display = "block";
+            document
+              .getElementById("historia")
+              .scrollIntoView({ behavior: "smooth" });
             return false;
           }
           if (link.getAttribute("href") === "#instrucciones") {
@@ -597,7 +712,6 @@
           }
         };
       });
-      // Al cargar, solo "inicio" visible
       back();
     </script>
   </body>
