@@ -135,7 +135,6 @@
       tr:last-child td {
         border-bottom: none;
       }
-      /* Acerca del proyecto */
       #acerca {
         background: linear-gradient(120deg, #e2eafc 70%, #f0fffa 95%);
         border-left: 7px solid #41b6ae;
@@ -172,6 +171,50 @@
         font-size: 1.04em;
         letter-spacing: 0.3px;
       }
+      /* Juego visual */
+      .game-board {
+        display: grid;
+        grid-template-columns: repeat(7, 42px);
+        grid-template-rows: repeat(7, 42px);
+        gap: 2px;
+        justify-content: center;
+        margin: 18px 0;
+      }
+      .cell {
+        width: 42px;
+        height: 42px;
+        background: #e0f7fa;
+        border-radius: 6px;
+        border: 1.5px solid #b2ebf2;
+        font-size: 1.4em;
+        cursor: pointer;
+        text-align: center;
+        line-height: 42px;
+        transition: box-shadow 0.16s, background 0.12s;
+        user-select: none;
+      }
+      .cell.selectedMove {
+        background: #ffe082;
+        border: 2px solid #f6b93b;
+        box-shadow: 0 0 9px #ffe08299;
+      }
+      .cell.cellPato {
+        background: #f4ff81;
+      }
+      .cell.cellRobot {
+        background: #e1bee7;
+      }
+      .cell.cellBoth {
+        background: #dce775;
+        border: 2px solid #8e24aa;
+      }
+      .turnInfo {
+        font-size: 1.14em;
+        color: #1a3970;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 10px;
+      }
       @media (max-width: 700px) {
         main {
           padding: 0.4em;
@@ -185,6 +228,16 @@
         nav a {
           font-size: 0.97em;
           padding: 13px 10px 13px 10px;
+        }
+        .game-board {
+          grid-template-columns: repeat(7, 28px);
+          grid-template-rows: repeat(7, 28px);
+        }
+        .cell {
+          width: 28px;
+          height: 28px;
+          line-height: 28px;
+          font-size: 1.1em;
         }
       }
     </style>
@@ -223,15 +276,14 @@
         </button>
         <button class="btn" onclick="showGallery()">Galería</button>
       </section>
-
-      <!-- Tablero del juego: ejemplo visual -->
+      <!-- Tablero del juego: jugable -->
       <section class="card" id="game-board" style="display: none">
-        <h2>Tablero</h2>
+        <h2>Tablero interactivo</h2>
+        <div id="turnInfo" class="turnInfo"></div>
         <div id="boardGrid"></div>
         <button class="btn" onclick="finishTurn()">Terminar turno</button>
         <button class="btn" onclick="back()">Volver</button>
       </section>
-
       <!-- Instrucciones -->
       <section class="card" id="instructions" style="display: none">
         <h2>Instrucciones</h2>
@@ -296,7 +348,6 @@
         </table>
         <button class="btn" onclick="back()">Volver</button>
       </section>
-
       <!-- Galería de imágenes -->
       <section class="card" id="gallery" style="display: none">
         <h2>Galería</h2>
@@ -306,7 +357,6 @@
         </div>
         <button class="btn" onclick="back()">Volver</button>
       </section>
-
       <!-- Acerca del proyecto -->
       <section class="card" id="acerca">
         <h2>Acerca del Proyecto</h2>
@@ -364,7 +414,7 @@
             <strong>Trabajo en Equipo:</strong>
             <br />La colaboración fue esencial: se dividieron tareas desde la
             documentación y organización, hasta la programación, pruebas de
-            interfaz y mejoras creativas. Cada integrante aportó con ideas,
+            interfaz y mejoras creativas. Cada integrante aportó ideas,
             soluciones técnicas y creatividad.
             <div class="acerca-team">
               <span class="acerca-team-title"
@@ -376,8 +426,12 @@
                   documentación y pruebas.
                 </li>
                 <li>
-                  Colaboradores: diseño de prototipos y aporte en la lógica y
-                  desarrollo de reglas.
+                  Diego Hernandez: diseño de prototipos, reglas y experiencia de
+                  usuario.
+                </li>
+                <li>
+                  Aslan Yacid: desarrollo visual, aportes en la estructura y
+                  documentación.
                 </li>
               </ul>
             </div>
@@ -395,7 +449,6 @@
         </div>
       </section>
     </main>
-
     <footer
       style="
         text-align: center;
@@ -409,15 +462,95 @@
     >
       &copy; 2025 Robot Salvaje - Proyecto Web Semestral
     </footer>
-
     <script>
-      // Cambia entre secciones
+      // Juego interactivo básico: tablero 7x7, Pato y Robot mueven por turnos
+      let boardSize = 7,
+        turno = "Pato";
+      let pato = { x: 3, y: 3 }; // Centro
+      let robot = { x: 0, y: 0 }; // Esquina inicial
+      const maxPato = 1,
+        maxRobot = 2; // Casillas máximo a mover
+      function renderBoard() {
+        let html = "";
+        for (let y = 0; y < boardSize; y++) {
+          for (let x = 0; x < boardSize; x++) {
+            let content = "";
+            let classes = "cell";
+            if (
+              pato.x === x &&
+              pato.y === y &&
+              robot.x === x &&
+              robot.y === y
+            ) {
+              content = "🦆🤖";
+              classes += " cellBoth";
+            } else if (pato.x === x && pato.y === y) {
+              content = "🦆";
+              classes += " cellPato";
+            } else if (robot.x === x && robot.y === y) {
+              content = "🤖";
+              classes += " cellRobot";
+            }
+            html += `<div class="${classes}" onclick="moveHere(${x},${y})" id="c${x}_${y}">${content}</div>`;
+          }
+        }
+        document.getElementById("boardGrid").className = "game-board";
+        document.getElementById("boardGrid").innerHTML = html;
+        let turnText =
+          turno === "Pato"
+            ? "Turno del <b>Pato 🦆</b> (1 casilla, no puede atacar)"
+            : "Turno del <b>Robot 🤖</b> (máximo 2 casillas)";
+        document.getElementById("turnInfo").innerHTML = turnText;
+        markValidMoves();
+      }
+      function markValidMoves() {
+        let { x, y } = turno === "Pato" ? pato : robot;
+        let max = turno === "Pato" ? maxPato : maxRobot;
+        for (let dx = -max; dx <= max; dx++) {
+          for (let dy = -max; dy <= max; dy++) {
+            if (
+              Math.abs(dx) + Math.abs(dy) === 0 ||
+              Math.abs(dx) + Math.abs(dy) > max
+            )
+              continue;
+            let nx = x + dx,
+              ny = y + dy;
+            if (nx < 0 || nx >= boardSize || ny < 0 || ny >= boardSize)
+              continue;
+            document
+              .getElementById(`c${nx}_${ny}`)
+              .classList.add("selectedMove");
+          }
+        }
+      }
+      function moveHere(x, y) {
+        let moving = turno === "Pato" ? pato : robot;
+        let max = turno === "Pato" ? maxPato : maxRobot;
+        if (Math.abs(moving.x - x) + Math.abs(moving.y - y) > max) return;
+        if (turno === "Pato" && robot.x === x && robot.y === y) return;
+        moving.x = x;
+        moving.y = y;
+        // Si se encuentran: robot captura pato
+        if (pato.x === robot.x && pato.y === robot.y) {
+          alert("¡El Robot ha capturado al Pato! 🦆🤖\n¡Los Robots ganan!");
+          back();
+          return;
+        }
+        // Fin de turno
+        turno = turno === "Pato" ? "Robot" : "Pato";
+        renderBoard();
+      }
+      function finishTurn() {
+        turno = turno === "Pato" ? "Robot" : "Pato";
+        renderBoard();
+      }
       function startGame() {
         hideAllSections();
         document.getElementById("game-board").style.display = "block";
-        // Aquí podrías agregar lógica JS para tablero real.
-        document.getElementById("boardGrid").innerHTML =
-          "<div style='text-align:center;padding-top:80px;color:#0097a7;font-size:1.22em;'>Aquí aparecerá el tablero del juego.<br>¡Pronto podrás jugar desde la web!</div>";
+        turno = "Pato";
+        pato = { x: 3, y: 3 };
+        robot = { x: 0, y: 0 };
+        renderBoard();
       }
       function showInstructions() {
         hideAllSections();
@@ -431,22 +564,17 @@
         hideAllSections();
         document.getElementById("inicio").style.display = "block";
       }
-      function finishTurn() {
-        alert("El turno ha terminado. ¡Siguiente jugador!");
-        // Aquí iría la lógica para pasar el turno, controlar los eventos de juego, etc.
-      }
       function hideAllSections() {
         ["inicio", "game-board", "instructions", "gallery"].forEach(function (
           id
         ) {
           document.getElementById(id).style.display = "none";
         });
+        document.getElementById("acerca").style.display = "none";
       }
-
-      // Menú navegación permite ir directo a cada sección (responsive)
+      // Menú navegación
       document.querySelectorAll("nav a").forEach(function (link) {
         link.onclick = function (e) {
-          // Para "inicio", "instrucciones", "gallery" usa lógica de botones
           if (link.getAttribute("href") === "#inicio") {
             back();
             return false;
@@ -459,7 +587,6 @@
             showGallery();
             return false;
           }
-          // Para "acerca", scroll suave
           if (link.getAttribute("href") === "#acerca") {
             hideAllSections();
             document.getElementById("acerca").style.display = "block";
@@ -470,7 +597,6 @@
           }
         };
       });
-
       // Al cargar, solo "inicio" visible
       back();
     </script>
