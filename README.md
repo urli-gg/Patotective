@@ -204,7 +204,7 @@ Si turno_actual > 20 y los robots no capturaron al pato → declarar victoria de
 
 ## Diagramas de Flujo
 
-![Diagrama de Flujo](assets/IMG_8941.PNG)
+![Diagrama de Flujo](assets/dig2.jpg)
 
 ## Prototipo en Figma
 
