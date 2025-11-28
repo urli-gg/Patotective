@@ -202,7 +202,7 @@
         font-size: 1.04em;
         letter-spacing: 0.3px;
       }
-      /* Juego visual: ahora 10x10, el grid se adapta con repeat(10, ...) usando auto-fill */
+      /* Juego visual: 10x10 */
       .game-board {
         display: grid;
         grid-template-columns: repeat(10, 36px);
@@ -332,7 +332,7 @@
         </div>
         <div class="especial-block">
           <img
-            src="assets/roles.jpg"
+            src="./assets/roles.jpg"
             class="especial-img"
             alt="Roles y personajes de Robot Salvaje"
           />
@@ -457,8 +457,8 @@
       <section class="card" id="gallery" style="display: none">
         <h2>Galería</h2>
         <div class="gallery">
-          <img src="assets/foto1.jpeg" alt="Foto del tablero" />
-          <img src="assets/roles.jpg" alt="Roles y personajes" />
+          <img src="./assets/foto1.jpeg" alt="Foto del tablero" />
+          <img src="./assets/roles.jpg" alt="Roles y personajes" />
         </div>
         <button class="btn" onclick="back()">Volver</button>
       </section>
@@ -566,67 +566,25 @@
     </footer>
 
     <script>
-      // ==========================
-      //   CONFIGURACIÓN DEL JUEGO
-      // ==========================
       const boardSize = 10;
 
       const ROLES = {
-        Pato: {
-          emoji: "🦆",
-          maxMove: 1,
-          vida: 1,
-          equipo: "Animales",
-        },
-        Oso: {
-          emoji: "🐻",
-          maxMove: 2,
-          vida: 2,
-          equipo: "Animales",
-        },
-        Alce: {
-          emoji: "🫎",
-          maxMove: 3,
-          vida: 2,
-          equipo: "Animales",
-        },
-        Zarigueya: {
-          emoji: "🦡",
-          maxMove: 2,
-          vida: 2,
-          equipo: "Animales",
-        },
-        Zorro: {
-          emoji: "🦊",
-          maxMove: 4,
-          vida: 2,
-          equipo: "Animales",
-        },
-        RobotAliado: {
-          emoji: "🤖",
-          maxMove: 2,
-          vida: 3,
-          equipo: "Animales",
-        },
-        RobotEnemigo: {
-          emoji: "💀",
-          maxMove: 2,
-          vida: 3,
-          equipo: "Robots",
-        },
+        Pato: { emoji: "🦆", maxMove: 1, vida: 1, equipo: "Animales" },
+        Oso: { emoji: "🐻", maxMove: 2, vida: 2, equipo: "Animales" },
+        Alce: { emoji: "🫎", maxMove: 3, vida: 2, equipo: "Animales" },
+        Zarigueya: { emoji: "🦡", maxMove: 2, vida: 2, equipo: "Animales" },
+        Zorro: { emoji: "🦊", maxMove: 4, vida: 2, equipo: "Animales" },
+        RobotAliado: { emoji: "🤖", maxMove: 2, vida: 3, equipo: "Animales" },
+        RobotEnemigo: { emoji: "💀", maxMove: 2, vida: 3, equipo: "Robots" },
       };
 
       let personajes = [];
       let turnoIndex = 0;
       let turnosTranscurridos = 0;
-      const TURNOS_MAX = 25; // más turnos para mapa grande
+      const TURNOS_MAX = 25;
 
-      // ==========================
-      //   INICIALIZACIÓN
-      // ==========================
       function crearPersonajesIniciales() {
         personajes = [
-          // Animales (zona central)
           { id: 1, tipo: "Pato", x: 4, y: 5, vida: ROLES.Pato.vida },
           { id: 2, tipo: "Oso", x: 3, y: 6, vida: ROLES.Oso.vida },
           { id: 3, tipo: "Alce", x: 5, y: 6, vida: ROLES.Alce.vida },
@@ -639,8 +597,6 @@
             y: 7,
             vida: ROLES.RobotAliado.vida,
           },
-
-          // Robots enemigos: aparecen desde distintas esquinas y bordes
           {
             id: 7,
             tipo: "RobotEnemigo",
@@ -688,12 +644,8 @@
         turnosTranscurridos = 0;
       }
 
-      // ==========================
-      //   RENDER DEL TABLERO
-      // ==========================
       function renderBoard() {
         let html = "";
-
         const mapa = {};
         personajes.forEach((p) => {
           if (p.vida <= 0) return;
@@ -763,9 +715,6 @@
         ).innerHTML = `Turno de <b>${actual.tipo}</b> (${equipo}) · Vida: ${actual.vida} · Movimiento máximo: ${rol.maxMove} casillas.<br>${extra}`;
       }
 
-      // ==========================
-      //   MOVIMIENTO / ATAQUE
-      // ==========================
       function marcarMovimientosValidos() {
         document
           .querySelectorAll(".cell")
@@ -853,9 +802,6 @@
         }
       }
 
-      // ==========================
-      //   CONTROL DE TURNO
-      // ==========================
       function pasarTurno() {
         const vivos = personajesVivos();
         if (vivos.length === 0) return;
@@ -896,9 +842,6 @@
         }
       }
 
-      // ==========================
-      //   INTERFAZ / SECCIONES
-      // ==========================
       function startGame() {
         hideAllSections();
         document.getElementById("game-board").style.display = "block";
