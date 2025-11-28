@@ -135,7 +135,6 @@
       tr:last-child td {
         border-bottom: none;
       }
-      /* Secciones especiales */
       .especial-section {
         background: linear-gradient(112deg, #f7f9fc 70%, #e6f8f3 100%);
         border-left: 7px solid #1976d2;
@@ -165,7 +164,6 @@
         margin-bottom: 6px;
         float: right;
       }
-      /* Acerca */
       #acerca {
         background: linear-gradient(120deg, #e2eafc 70%, #f0fffa 95%);
         border-left: 7px solid #41b6ae;
@@ -202,7 +200,6 @@
         font-size: 1.04em;
         letter-spacing: 0.3px;
       }
-      /* Juego visual: 10x10 */
       .game-board {
         display: grid;
         grid-template-columns: repeat(10, 36px);
@@ -289,7 +286,6 @@
       <a href="#acerca">Acerca</a>
     </nav>
     <main>
-      <!-- Información del juego -->
       <section class="card" id="inicio">
         <h2>¿Cómo se juega?</h2>
         <p>
@@ -312,7 +308,6 @@
         <button class="btn" onclick="showGallery()">Galería</button>
       </section>
 
-      <!-- Historia -->
       <section class="card especial-section" id="historia">
         <h2>Historia</h2>
         <div class="especial-block">
@@ -323,16 +318,14 @@
               Robot):</strong
             >
             <br />
-            Este videojuego está basado en la película animada y libro de Peter
-            Brown, donde una robot llamada <b>Roz</b> naufraga y aparece en una
-            isla salvaje. A pesar de ser una máquina, Roz aprende el lenguaje de
-            los animales y protege a un patito, lo que inspira la mecánica de
-            defensa del juego. [web:14]
+            Este videojuego está basado en la obra donde una robot llamada Roz
+            naufraga en una isla llena de animales y termina protegiendo a un
+            patito. [web:14]
           </div>
         </div>
         <div class="especial-block">
           <img
-            src="./assets/roles.jpg"
+            src="../assets/roles.jpg"
             class="especial-img"
             alt="Roles y personajes de Robot Salvaje"
           />
@@ -340,18 +333,13 @@
             <strong>Contexto importante:</strong>
             <ul>
               <li>
-                <b>Roz:</b> La protagonista, una robot que aprende sobre la vida
-                y el cuidado al adoptar un patito huérfano. [web:14]
+                Roz aprende a convivir con los animales de la isla. [web:14]
               </li>
               <li>
-                <b>Los animales:</b> Diferentes criaturas silvestres ayudan o
-                desconfían de Roz, construyendo una comunidad alrededor de la
-                protección del pato. [web:62]
+                El patito se vuelve el centro de la historia de cuidado.
+                [web:14]
               </li>
-              <li>
-                <b>Mensaje de la obra:</b> Habla de empatía, adaptación y
-                convivencia entre naturaleza y tecnología. [web:62]
-              </li>
+              <li>Se exploran temas de empatía y adaptación. [web:62]</li>
             </ul>
           </div>
         </div>
@@ -360,10 +348,8 @@
           <div>
             <strong>La adaptación en el juego:</strong>
             <br />
-            En este juego, los animales forman un equipo para proteger al pato
-            mientras los robots enemigos intentan capturarlo antes de que se
-            acaben los turnos, emulando el conflicto entre protección y amenaza.
-            [image:2]
+            Los animales cooperan para proteger al pato de oleadas de robots que
+            intentan capturarlo antes de que se acaben los turnos. [image:2]
           </div>
         </div>
         <div class="especial-block">
@@ -371,15 +357,12 @@
           <div>
             <strong>De la narrativa a la jugabilidad:</strong>
             <br />
-            Cada rol del tablero digital recupera las habilidades de las
-            tarjetas físicas (daños extra, esquivar, bloqueos y movilidad),
-            logrando partidas cooperativas y competitivas al mismo tiempo.
-            [image:2]
+            Las cartas de roles del juego de mesa se transforman en fichas
+            digitales con movimientos y habilidades especiales. [image:2]
           </div>
         </div>
       </section>
 
-      <!-- Tablero del juego: jugable -->
       <section class="card" id="game-board" style="display: none">
         <h2>Tablero interactivo</h2>
         <div id="turnInfo" class="turnInfo"></div>
@@ -388,25 +371,18 @@
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
-      <!-- Instrucciones -->
       <section class="card" id="instructions" style="display: none">
         <h2>Instrucciones</h2>
         <p>
           Cada jugador puede mover su ficha, usar una habilidad especial o
-          atacar a un oponente cercano. El resultado del ataque se decide
-          lanzando un dado de 6 caras.
+          atacar a un oponente cercano; los ataques se resuelven con un dado de
+          6 caras. [image:2]
         </p>
         <ul>
-          <li>Movimiento especial según personaje</li>
-          <li>Robots: Hasta 2 espacios llanos, 1 en montaña/bosque</li>
-          <li>
-            Animales: Hasta 3 (Zorro hasta 4), el <b>Pato</b> solo 1, pero puede
-            esconderse
-          </li>
-          <li>
-            Ataques: Si hay oponente adyacente, lanza dado; con 4-6 el ataque
-            tiene éxito y el enemigo pierde vida.
-          </li>
+          <li>Movimiento especial según personaje.</li>
+          <li>Robots: hasta 2 espacios llanos.</li>
+          <li>Animales: hasta 3 (Zorro hasta 4); el pato solo 1.</li>
+          <li>Con 4-6 en el dado el ataque tiene éxito.</li>
         </ul>
         <table>
           <tr>
@@ -417,80 +393,77 @@
           <tr>
             <td>Oso</td>
             <td>2</td>
-            <td>Al atacar causa 2 de daño</td>
+            <td>Golpea por 2 de daño</td>
           </tr>
           <tr>
             <td>Pato</td>
             <td>1</td>
-            <td>Objetivo a proteger; en agua se movería 3 casillas</td>
+            <td>Objetivo a proteger</td>
           </tr>
           <tr>
             <td>Alce</td>
             <td>2</td>
-            <td>Se mueve hasta 3 casillas por turno</td>
+            <td>Hasta 3 casillas</td>
           </tr>
           <tr>
             <td>Zarigüeya</td>
             <td>2</td>
-            <td>Esquiva un ataque si la atacan primero</td>
+            <td>Esquiva el primer ataque</td>
           </tr>
           <tr>
             <td>Zorro</td>
             <td>2</td>
-            <td>Atacando desde detrás hace 2 de daño</td>
+            <td>2 de daño desde detrás</td>
           </tr>
           <tr>
             <td>Robot Aliado</td>
             <td>3</td>
-            <td>Bloquea ataques y contraataca en ciertas rondas</td>
+            <td>Bloquea y contraataca</td>
           </tr>
           <tr>
             <td>Robots enemigos</td>
             <td>3</td>
-            <td>Se mueven 2 casillas y buscan capturar al pato</td>
+            <td>Persiguen al pato</td>
           </tr>
         </table>
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
-      <!-- Galería de imágenes -->
       <section class="card" id="gallery" style="display: none">
         <h2>Galería</h2>
         <div class="gallery">
-          <img src="./assets/foto1.jpeg" alt="Foto del tablero" />
-          <img src="./assets/roles.jpg" alt="Roles y personajes" />
+          <!-- IMPORTANTE: archivo ubicado en /assets/foto1.jpeg -->
+          <img src="../assets/foto1.jpeg" alt="Foto del tablero" />
+          <img src="../assets/roles.jpg" alt="Roles y personajes" />
         </div>
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
-      <!-- Acerca del proyecto -->
       <section class="card" id="acerca">
         <h2>Acerca del Proyecto</h2>
         <div class="acerca-block">
           <span class="acerca-icon">🎲</span>
           <div>
             <strong>Fase de Idea y Planificación:</strong>
-            <br />La creación del videojuego comenzó con la definición del
-            proyecto y la elección del juego de mesa a digitalizar, tomando la
-            isla y los animales de Robot Salvaje como base temática. [web:14]
+            <br />Se tomó Robot Salvaje como inspiración para un juego
+            cooperativo de tablero digital. [web:14]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">💻</span>
           <div>
             <strong>Construcción del Repositorio:</strong>
-            <br />Se creó el repositorio en GitHub Pages con carpetas para
-            imágenes, código y documentación, facilitando el trabajo
-            colaborativo y el control de versiones. [memory:23]
+            <br />Se organizó el proyecto con una carpeta <code>docs</code> para
+            el sitio y <code>assets</code> para imágenes, siguiendo el patrón
+            típico de GitHub Pages. [web:66]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🎨</span>
           <div>
             <strong>Prototipado y Diagramación:</strong>
-            <br />Se usaron herramientas de diseño y diagramas de flujo para
-            definir turnos, condiciones de victoria y roles, como se ve en el
-            mapa de flujo adjunto.
+            <br />Se crearon diagramas de flujo para definir turnos y
+            condiciones de victoria antes de programar.
             [attached_file:Imagen-de-WhatsApp-2025-11-05-a-las-11.15.34_09ddb3c2.jpg]
           </div>
         </div>
@@ -498,55 +471,33 @@
           <span class="acerca-icon">🤖</span>
           <div>
             <strong>Desarrollo Digital e Inteligencia Artificial:</strong>
-            <br />Se apoyó el desarrollo con asistentes de IA para generar
-            prototipos de código, refinar reglas y conectar la narrativa con la
-            jugabilidad web. [memory:23]
+            <br />Se utilizaron asistentes de IA para refinar el tablero y las
+            reglas en formato web. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🌐</span>
           <div>
             <strong>Integración Web y Presentación:</strong>
-            <br />La página integra historia, reglas, tablero interactivo y
-            galería en un solo sitio accesible desde navegador, manteniendo un
-            diseño limpio y responsivo. [memory:23]
+            <br />La página muestra historia, reglas, juego y galería de forma
+            responsiva y accesible. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">👥</span>
           <div>
             <strong>Trabajo en Equipo:</strong>
-            <br />La colaboración incluyó diseño de reglas, programación,
-            pruebas del tablero y mejora visual del sitio, con roles claros para
-            cada integrante del equipo.
-            <div class="acerca-team">
-              <span class="acerca-team-title"
-                >Integrantes y actividades principales:</span
-              >
-              <ul>
-                <li>
-                  Jesús Gael Saucedo Solorzano: gestión, programación,
-                  documentación y pruebas.
-                </li>
-                <li>
-                  Diego Hernandez: diseño de prototipos, reglas y experiencia de
-                  usuario.
-                </li>
-                <li>
-                  Aslan Yacid: desarrollo visual, aportes en la estructura y
-                  documentación.
-                </li>
-              </ul>
-            </div>
+            <br />El equipo colaboró en código, arte y pruebas para lograr la
+            versión final del prototipo.
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">✨</span>
           <div>
             <strong>Logros:</strong>
-            <br />Se consiguió adaptar un juego de mesa cooperativo a un entorno
-            web interactivo, ampliando el tablero y el número de enemigos para
-            equilibrar la dificultad y prolongar las partidas. [web:53]
+            <br />Se consiguió llevar un juego de mesa físico a un tablero web
+            con múltiples robots enemigos y roles animales diferenciados.
+            [web:53]
           </div>
         </div>
       </section>
@@ -567,7 +518,6 @@
 
     <script>
       const boardSize = 10;
-
       const ROLES = {
         Pato: { emoji: "🦆", maxMove: 1, vida: 1, equipo: "Animales" },
         Oso: { emoji: "🐻", maxMove: 2, vida: 2, equipo: "Animales" },
@@ -699,7 +649,7 @@
         const equipo = rol.equipo === "Animales" ? "Animales 🦊" : "Robots 🤖";
         const extra =
           actual.tipo === "Pato"
-            ? "Objetivo a proteger (si muere, ganan los Robots)."
+            ? "Objetivo a proteger."
             : actual.tipo === "Oso"
             ? "Al atacar hace 2 puntos de daño."
             : actual.tipo === "Zarigueya"
@@ -708,7 +658,7 @@
             ? "Si ataca desde la misma fila causa 2 puntos de daño."
             : actual.tipo === "RobotAliado"
             ? "Robot que ayuda a los animales."
-            : "Robot enemigo que intenta capturar al Pato desde los bordes del mapa.";
+            : "Robot enemigo que intenta capturar al Pato.";
 
         document.getElementById(
           "turnInfo"
@@ -775,9 +725,7 @@
         }
 
         let dano = 1;
-
         if (atacante.tipo === "Oso") dano = 2;
-
         if (atacante.tipo === "Zorro" && atacante.y === defensor.y) {
           dano = 2;
         }
