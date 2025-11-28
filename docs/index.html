@@ -311,6 +311,7 @@
         </button>
         <button class="btn" onclick="showGallery()">Galería</button>
       </section>
+
       <!-- Historia -->
       <section class="card especial-section" id="historia">
         <h2>Historia</h2>
@@ -328,7 +329,7 @@
             los animales, se adapta al entorno natural, cuida a un pequeño pato
             y enfrenta desafíos que ponen a prueba su "humanidad". La historia
             explora temas de convivencia, naturaleza, empatía y el sentido de
-            pertenencia.
+            pertenencia. [web:8]
           </div>
         </div>
         <div class="especial-block">
@@ -347,12 +348,12 @@
               <li>
                 <b>Los animales:</b> Diferentes criaturas silvestres ayudan (o
                 desconfían) de Roz y del pato, enseñándole lecciones vitales y
-                formando una peculiar familia.
+                formando una peculiar familia. [web:8]
               </li>
               <li>
                 <b>Mensaje de la obra:</b> Acentúa la empatía entre seres
                 distintos y el poder de la colaboración, la protección y la
-                adaptación.
+                adaptación. [web:8]
               </li>
             </ul>
           </div>
@@ -383,6 +384,7 @@
           </div>
         </div>
       </section>
+
       <!-- Tablero del juego: jugable -->
       <section class="card" id="game-board" style="display: none">
         <h2>Tablero interactivo</h2>
@@ -391,6 +393,7 @@
         <button class="btn" onclick="finishTurn()">Terminar turno</button>
         <button class="btn" onclick="back()">Volver</button>
       </section>
+
       <!-- Instrucciones -->
       <section class="card" id="instructions" style="display: none">
         <h2>Instrucciones</h2>
@@ -455,6 +458,7 @@
         </table>
         <button class="btn" onclick="back()">Volver</button>
       </section>
+
       <!-- Galería de imágenes -->
       <section class="card" id="gallery" style="display: none">
         <h2>Galería</h2>
@@ -464,6 +468,7 @@
         </div>
         <button class="btn" onclick="back()">Volver</button>
       </section>
+
       <!-- Acerca del proyecto -->
       <section class="card" id="acerca">
         <h2>Acerca del Proyecto</h2>
@@ -474,7 +479,7 @@
             <br />La creación del videojuego comenzó con la definición del
             proyecto y la elección del juego de mesa a digitalizar. Se eligió la
             película <b>Robot Salvaje</b> como temática, desarrollando una
-            narrativa única y personajes adaptados al mundo digital.
+            narrativa única y personajes adaptados al mundo digital. [web:14]
           </div>
         </div>
         <div class="acerca-block">
@@ -494,6 +499,7 @@
             flujo para representar visualmente la mecánica de juego y definir
             los procesos de cada turno, mejorando la comprensión e iteración de
             las reglas.
+            [attached_file:Imagen-de-WhatsApp-2025-11-05-a-las-11.15.34_09ddb3c2.jpg]
           </div>
         </div>
         <div class="acerca-block">
@@ -502,7 +508,7 @@
             <strong>Desarrollo Digital e Inteligencia Artificial:</strong>
             <br />El equipo experimentó con prototipos generados por IA,
             ayudando a crear y depurar el código, testear mecánicas y construir
-            la arquitectura base del videojuego web.
+            la arquitectura base del videojuego web. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
@@ -512,7 +518,7 @@
             <br />Se diseñó una página web minimalista, funcional y visualmente
             atractiva que integra todos los componentes: historia, reglas,
             prototipos e imágenes originales, logrando una experiencia accesible
-            y moderna.
+            y moderna. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
@@ -551,7 +557,7 @@
             <br />Se logró digitalizar un concepto clásico y adaptarlo a una
             plataforma web moderna, utilizando IA y recursos visuales,
             aprendiendo sobre integración de herramientas y desarrollo
-            colaborativo.
+            colaborativo. [memory:23]
           </div>
         </div>
       </section>
@@ -569,124 +575,348 @@
     >
       &copy; 2025 Robot Salvaje - Proyecto Web Semestral
     </footer>
+
     <script>
-      // Juego interactivo básico: tablero 7x7, Pato y Robot mueven por turnos
-      let boardSize = 7,
-        turno = "Pato";
-      let pato = { x: 3, y: 3 }; // Centro
-      let robot = { x: 0, y: 0 }; // Esquina inicial
-      const maxPato = 1,
-        maxRobot = 2; // Casillas máximo a mover
+      // ==========================
+      //   CONFIGURACIÓN DEL JUEGO
+      // ==========================
+      const boardSize = 7;
+
+      // Definición de roles y habilidades básicas (según tus cartas de roles)
+      const ROLES = {
+        Pato: {
+          emoji: "🦆",
+          maxMove: 1, // En este tablero simple no hay agua, se queda a 1
+          vida: 1,
+          equipo: "Animales",
+        },
+        Oso: {
+          emoji: "🐻",
+          maxMove: 2,
+          vida: 2,
+          equipo: "Animales",
+        },
+        Alce: {
+          emoji: "🫎",
+          maxMove: 3,
+          vida: 2,
+          equipo: "Animales",
+        },
+        Zarigueya: {
+          emoji: "🦡", // sustituto visual
+          maxMove: 2,
+          vida: 2,
+          equipo: "Animales",
+        },
+        Zorro: {
+          emoji: "🦊",
+          maxMove: 4,
+          vida: 2,
+          equipo: "Animales",
+        },
+        RobotAliado: {
+          emoji: "🤖",
+          maxMove: 2,
+          vida: 3,
+          equipo: "Animales",
+        },
+        RobotEnemigo: {
+          emoji: "💀",
+          maxMove: 2,
+          vida: 3,
+          equipo: "Robots",
+        },
+      };
+
+      let personajes = [];
+      let turnoIndex = 0;
+      let turnosTranscurridos = 0;
+      const TURNOS_MAX = 20;
+
+      // ==========================
+      //   INICIALIZACIÓN
+      // ==========================
+      function crearPersonajesIniciales() {
+        personajes = [
+          { id: 1, tipo: "Pato", x: 3, y: 3, vida: ROLES.Pato.vida },
+          { id: 2, tipo: "Oso", x: 2, y: 4, vida: ROLES.Oso.vida },
+          { id: 3, tipo: "Alce", x: 4, y: 4, vida: ROLES.Alce.vida },
+          { id: 4, tipo: "Zarigueya", x: 1, y: 2, vida: ROLES.Zarigueya.vida },
+          { id: 5, tipo: "Zorro", x: 5, y: 2, vida: ROLES.Zorro.vida },
+          {
+            id: 6,
+            tipo: "RobotAliado",
+            x: 3,
+            y: 5,
+            vida: ROLES.RobotAliado.vida,
+          },
+          {
+            id: 7,
+            tipo: "RobotEnemigo",
+            x: 0,
+            y: 0,
+            vida: ROLES.RobotEnemigo.vida,
+          },
+        ];
+        turnoIndex = 0;
+        turnosTranscurridos = 0;
+      }
+
+      // ==========================
+      //   RENDER DEL TABLERO
+      // ==========================
       function renderBoard() {
         let html = "";
+
+        const mapa = {};
+        personajes.forEach((p) => {
+          if (p.vida <= 0) return;
+          const key = `${p.x}_${p.y}`;
+          if (!mapa[key]) mapa[key] = [];
+          mapa[key].push(p);
+        });
+
         for (let y = 0; y < boardSize; y++) {
           for (let x = 0; x < boardSize; x++) {
+            const key = `${x}_${y}`;
             let content = "";
             let classes = "cell";
-            if (
-              pato.x === x &&
-              pato.y === y &&
-              robot.x === x &&
-              robot.y === y
-            ) {
-              content = "🦆🤖";
+
+            if (mapa[key] && mapa[key].length === 1) {
+              const p = mapa[key][0];
+              content = ROLES[p.tipo].emoji;
+              if (p.tipo === "Pato") classes += " cellPato";
+              else if (ROLES[p.tipo].equipo === "Robots")
+                classes += " cellRobot";
+            } else if (mapa[key] && mapa[key].length > 1) {
+              content = "⚔️";
               classes += " cellBoth";
-            } else if (pato.x === x && pato.y === y) {
-              content = "🦆";
-              classes += " cellPato";
-            } else if (robot.x === x && robot.y === y) {
-              content = "🤖";
-              classes += " cellRobot";
             }
-            html += `<div class="${classes}" onclick="moveHere(${x},${y})" id="c${x}_${y}">${content}</div>`;
+
+            html += `<div class="${classes}" onclick="cellClick(${x},${y})" id="c${x}_${y}">${content}</div>`;
           }
         }
-        document.getElementById("boardGrid").className = "game-board";
-        document.getElementById("boardGrid").innerHTML = html;
-        let turnText =
-          turno === "Pato"
-            ? "Turno del <b>Pato 🦆</b> (1 casilla, no puede atacar)"
-            : "Turno del <b>Robot 🤖</b> (máximo 2 casillas)";
-        document.getElementById("turnInfo").innerHTML = turnText;
-        markValidMoves();
+
+        const grid = document.getElementById("boardGrid");
+        grid.className = "game-board";
+        grid.innerHTML = html;
+
+        actualizarInfoTurno();
+        marcarMovimientosValidos();
       }
-      function markValidMoves() {
-        let { x, y } = turno === "Pato" ? pato : robot;
-        let max = turno === "Pato" ? maxPato : maxRobot;
-        for (let dx = -max; dx <= max; dx++) {
-          for (let dy = -max; dy <= max; dy++) {
-            if (
-              Math.abs(dx) + Math.abs(dy) === 0 ||
-              Math.abs(dx) + Math.abs(dy) > max
-            )
-              continue;
-            let nx = x + dx,
-              ny = y + dy;
+
+      function personajesVivos() {
+        return personajes.filter((p) => p.vida > 0);
+      }
+
+      function actualizarInfoTurno() {
+        const vivos = personajesVivos();
+        if (vivos.length === 0) {
+          document.getElementById("turnInfo").innerHTML = "";
+          return;
+        }
+
+        const actual = vivos[turnoIndex];
+        const rol = ROLES[actual.tipo];
+        const equipo = rol.equipo === "Animales" ? "Animales 🦊" : "Robots 🤖";
+        const extra =
+          actual.tipo === "Pato"
+            ? "Objetivo a proteger (si muere, ganan los Robots)."
+            : actual.tipo === "Oso"
+            ? "Al atacar hace 2 puntos de daño."
+            : actual.tipo === "Zarigueya"
+            ? "La primera vez que la atacan puede esquivar el daño."
+            : actual.tipo === "Zorro"
+            ? "Si ataca desde la misma fila causa 2 puntos de daño."
+            : actual.tipo === "RobotAliado"
+            ? "Robot que ayuda a los animales."
+            : "Robot enemigo que intenta capturar al Pato.";
+
+        document.getElementById(
+          "turnInfo"
+        ).innerHTML = `Turno de <b>${actual.tipo}</b> (${equipo}) · Vida: ${actual.vida} · Movimiento máximo: ${rol.maxMove} casillas.<br>${extra}`;
+      }
+
+      // ==========================
+      //   MOVIMIENTO / ATAQUE
+      // ==========================
+      function marcarMovimientosValidos() {
+        document
+          .querySelectorAll(".cell")
+          .forEach((c) => c.classList.remove("selectedMove"));
+
+        const vivos = personajesVivos();
+        if (vivos.length === 0) return;
+        const actual = vivos[turnoIndex];
+        const rol = ROLES[actual.tipo];
+
+        for (let dx = -rol.maxMove; dx <= rol.maxMove; dx++) {
+          for (let dy = -rol.maxMove; dy <= rol.maxMove; dy++) {
+            if (Math.abs(dx) + Math.abs(dy) === 0) continue;
+            if (Math.abs(dx) + Math.abs(dy) > rol.maxMove) continue;
+            const nx = actual.x + dx;
+            const ny = actual.y + dy;
             if (nx < 0 || nx >= boardSize || ny < 0 || ny >= boardSize)
               continue;
-            document
-              .getElementById(`c${nx}_${ny}`)
-              .classList.add("selectedMove");
+            const celda = document.getElementById(`c${nx}_${ny}`);
+            if (celda) celda.classList.add("selectedMove");
           }
         }
       }
-      function moveHere(x, y) {
-        let moving = turno === "Pato" ? pato : robot;
-        let max = turno === "Pato" ? maxPato : maxRobot;
-        if (Math.abs(moving.x - x) + Math.abs(moving.y - y) > max) return;
-        if (turno === "Pato" && robot.x === x && robot.y === y) return;
-        moving.x = x;
-        moving.y = y;
-        // Si se encuentran: robot captura pato
-        if (pato.x === robot.x && pato.y === robot.y) {
-          alert("¡El Robot ha capturado al Pato! 🦆🤖\n¡Los Robots ganan!");
+
+      function cellClick(x, y) {
+        const vivos = personajesVivos();
+        if (vivos.length === 0) return;
+        const actual = vivos[turnoIndex];
+        const rol = ROLES[actual.tipo];
+
+        const distancia = Math.abs(actual.x - x) + Math.abs(actual.y - y);
+        if (distancia === 0 || distancia > rol.maxMove) return;
+
+        const objetivo = personajes.find(
+          (p) => p.vida > 0 && p.x === x && p.y === y
+        );
+
+        if (objetivo && objetivo.id !== actual.id) {
+          resolverAtaque(actual, objetivo);
+        } else {
+          actual.x = x;
+          actual.y = y;
+        }
+
+        comprobarEstadoPartida();
+        pasarTurno();
+      }
+
+      function tirarDado6() {
+        return Math.floor(Math.random() * 6) + 1;
+      }
+
+      function resolverAtaque(atacante, defensor) {
+        const dado = tirarDado6();
+        if (dado < 4) {
+          alert(`El ataque de ${atacante.tipo} falló (dado: ${dado}).`);
+          return;
+        }
+
+        let dano = 1;
+
+        if (atacante.tipo === "Oso") dano = 2;
+
+        if (atacante.tipo === "Zorro" && atacante.y === defensor.y) {
+          dano = 2;
+        }
+
+        if (defensor.tipo === "Zarigueya" && !defensor.esquivado) {
+          defensor.esquivado = true;
+          alert(
+            `¡La Zarigüeya esquiva el ataque gracias a su habilidad especial!`
+          );
+          return;
+        }
+
+        defensor.vida -= dano;
+        if (defensor.vida <= 0) {
+          alert(
+            `${atacante.tipo} derrotó a ${defensor.tipo} (daño ${dano}, dado ${dado}).`
+          );
+        } else {
+          alert(
+            `${atacante.tipo} golpea a ${defensor.tipo} por ${dano} de daño (vida restante: ${defensor.vida}, dado ${dado}).`
+          );
+        }
+      }
+
+      // ==========================
+      //   CONTROL DE TURNO
+      // ==========================
+      function pasarTurno() {
+        const vivos = personajesVivos();
+        if (vivos.length === 0) return;
+
+        let nuevoIndex = turnoIndex + 1;
+        if (nuevoIndex >= vivos.length) {
+          nuevoIndex = 0;
+          turnosTranscurridos++;
+        }
+
+        turnoIndex = nuevoIndex;
+        renderBoard();
+      }
+
+      function comprobarEstadoPartida() {
+        const pato = personajes.find((p) => p.tipo === "Pato" && p.vida > 0);
+        const robotsVivos = personajes.filter(
+          (p) => p.vida > 0 && ROLES[p.tipo].equipo === "Robots"
+        );
+
+        if (!pato) {
+          alert("¡Los Robots han capturado al Pato! Ganan los Robots 🤖");
           back();
           return;
         }
-        // Fin de turno
-        turno = turno === "Pato" ? "Robot" : "Pato";
-        renderBoard();
+
+        if (robotsVivos.length === 0) {
+          alert("¡No quedan robots enemigos! Ganan los Animales 🦊🦆");
+          back();
+          return;
+        }
+
+        if (turnosTranscurridos >= TURNOS_MAX) {
+          alert(
+            `¡Los animales protegieron al Pato durante ${TURNOS_MAX} turnos! Ganan los Animales.`
+          );
+          back();
+        }
       }
-      function finishTurn() {
-        turno = turno === "Pato" ? "Robot" : "Pato";
-        renderBoard();
-      }
+
+      // ==========================
+      //   INTERFAZ / SECCIONES
+      // ==========================
       function startGame() {
         hideAllSections();
         document.getElementById("game-board").style.display = "block";
-        turno = "Pato";
-        pato = { x: 3, y: 3 };
-        robot = { x: 0, y: 0 };
+        crearPersonajesIniciales();
         renderBoard();
       }
+
+      function finishTurn() {
+        pasarTurno();
+      }
+
       function showInstructions() {
         hideAllSections();
         document.getElementById("instructions").style.display = "block";
       }
+
       function showGallery() {
         hideAllSections();
         document.getElementById("gallery").style.display = "block";
       }
+
       function back() {
         hideAllSections();
         document.getElementById("inicio").style.display = "block";
       }
+
       function hideAllSections() {
         ["inicio", "game-board", "instructions", "gallery", "historia"].forEach(
           function (id) {
-            document.getElementById(id).style.display = "none";
+            const el = document.getElementById(id);
+            if (el) el.style.display = "none";
           }
         );
         document.getElementById("acerca").style.display = "none";
       }
-      // Menú navegación
+
       document.querySelectorAll("nav a").forEach(function (link) {
-        link.onclick = function (e) {
-          if (link.getAttribute("href") === "#inicio") {
+        link.onclick = function () {
+          const href = link.getAttribute("href");
+          if (href === "#inicio") {
             back();
             return false;
           }
-          if (link.getAttribute("href") === "#historia") {
+          if (href === "#historia") {
             hideAllSections();
             document.getElementById("historia").style.display = "block";
             document
@@ -694,15 +924,15 @@
               .scrollIntoView({ behavior: "smooth" });
             return false;
           }
-          if (link.getAttribute("href") === "#instrucciones") {
+          if (href === "#instrucciones") {
             showInstructions();
             return false;
           }
-          if (link.getAttribute("href") === "#gallery") {
+          if (href === "#gallery") {
             showGallery();
             return false;
           }
-          if (link.getAttribute("href") === "#acerca") {
+          if (href === "#acerca") {
             hideAllSections();
             document.getElementById("acerca").style.display = "block";
             document
@@ -712,6 +942,7 @@
           }
         };
       });
+
       back();
     </script>
   </body>
