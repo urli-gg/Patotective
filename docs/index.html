@@ -16,20 +16,28 @@
         color: #252b33;
       }
       header {
-        background: #81d4fa;
+        background: linear-gradient(120deg, #4fc3f7, #0288d1);
         color: #fff;
-        padding: 1.2em 0;
+        padding: 1.6em 0 1.1em;
         text-align: center;
         border-bottom: 6px solid #41b6ae;
-        box-shadow: 0 2px 6px #acbfc0a5;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
         letter-spacing: 1.5px;
+      }
+      header h1 {
+        margin: 0 0 0.3em;
+      }
+      header p {
+        margin: 0;
+        font-size: 0.98em;
+        opacity: 0.96;
       }
       nav {
         display: flex;
         justify-content: center;
         align-items: center;
         background: linear-gradient(90deg, #213a50 80%, #3d5c77 100%);
-        box-shadow: 0 2px 18px rgba(46, 84, 114, 0.1);
+        box-shadow: 0 2px 18px rgba(46, 84, 114, 0.25);
         position: sticky;
         top: 0;
         z-index: 10;
@@ -37,53 +45,78 @@
       nav a {
         color: #fff;
         text-decoration: none;
-        padding: 18px 38px 16px 38px;
+        padding: 18px 32px 15px 32px;
         font-weight: 700;
         letter-spacing: 1px;
-        font-size: 1.06em;
-        border-bottom: 2.5px solid transparent;
-        transition: background 0.2s, border-color 0.3s;
-        border-radius: 6px 6px 0px 0px;
+        font-size: 1.02em;
+        border-bottom: 3px solid transparent;
+        transition: background 0.2s, border-color 0.25s, color 0.2s;
+        border-radius: 8px 8px 0 0;
       }
       nav a:hover,
       nav a:focus {
         background: #284664;
-        border-bottom: 3px solid #81d4fa;
+        border-bottom-color: #81d4fa;
         color: #44d3c4;
       }
       main {
-        max-width: 900px;
-        padding: 2em;
+        max-width: 980px;
+        padding: 2.2em 1.5em 2.5em;
         margin: 0 auto;
         min-height: 60vh;
       }
       .card {
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 4px 14px #0001;
-        margin-bottom: 2em;
-        padding: 1.5em 2em;
-        transition: box-shadow 0.2s;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 5px 18px rgba(33, 58, 80, 0.16);
+        margin-bottom: 2.3em;
+        padding: 1.8em 2.1em 1.9em;
+        transition: box-shadow 0.25s ease, transform 0.15s ease;
         position: relative;
         overflow: hidden;
+        border: 1px solid rgba(190, 205, 214, 0.4);
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(129, 212, 250, 0.12),
+          transparent 45%,
+          transparent
+        );
+        opacity: 0.7;
+        pointer-events: none;
       }
       .card:hover {
-        box-shadow: 0 8px 32px #5ac4f021;
+        box-shadow: 0 10px 30px rgba(33, 58, 80, 0.26);
+        transform: translateY(-2px);
+      }
+      .card > * {
+        position: relative;
+        z-index: 1;
       }
       .btn {
-        padding: 0.8em 2em;
-        border-radius: 14px;
+        padding: 0.8em 2.2em;
+        border-radius: 18px;
         border: none;
         background: linear-gradient(90deg, #f6b93b, #e55039);
         color: #fff;
-        font-size: 1.1em;
+        font-size: 1.05em;
         margin-top: 12px;
         cursor: pointer;
-        transition: background 0.3s;
-        box-shadow: 0 2px 6px #e5503930;
+        transition: background 0.3s, box-shadow 0.25s, transform 0.15s;
+        box-shadow: 0 3px 10px rgba(229, 80, 57, 0.45);
       }
       .btn:hover {
         background: linear-gradient(90deg, #ffa53b, #ee5646);
+        box-shadow: 0 6px 16px rgba(229, 80, 57, 0.55);
+        transform: translateY(-1px);
+      }
+      .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(229, 80, 57, 0.4);
       }
       .gallery {
         display: flex;
@@ -94,17 +127,18 @@
         justify-content: flex-start;
       }
       .gallery img {
-        border-radius: 12px;
-        box-shadow: 0 4px 14px #465f6020;
+        border-radius: 14px;
+        box-shadow: 0 4px 14px rgba(33, 58, 80, 0.32);
         background: #eef3f6;
         padding: 6px;
-        border: 1px solid #e1e5e8;
-        height: 110px;
-        transition: transform 0.15s;
+        border: 1px solid #dde6ec;
+        height: 140px;
+        transition: transform 0.16s, box-shadow 0.16s, border-color 0.2s;
       }
       .gallery img:hover {
-        transform: scale(1.07);
-        border: 2px solid #81d4fa;
+        transform: scale(1.05) translateY(-2px);
+        border-color: #81d4fa;
+        box-shadow: 0 8px 22px rgba(33, 58, 80, 0.45);
       }
       section h2 {
         color: #1a3970;
@@ -119,7 +153,7 @@
         border-radius: 10px;
         overflow: hidden;
         font-size: 1.05em;
-        box-shadow: 0 2px 16px #abbebe13;
+        box-shadow: 0 2px 16px rgba(171, 190, 190, 0.15);
       }
       th,
       td {
@@ -138,7 +172,7 @@
       .especial-section {
         background: linear-gradient(112deg, #f7f9fc 70%, #e6f8f3 100%);
         border-left: 7px solid #1976d2;
-        box-shadow: 0 2px 18px #1b406810;
+        box-shadow: 0 3px 18px rgba(27, 64, 104, 0.18);
       }
       .especial-block {
         display: flex;
@@ -150,24 +184,25 @@
         color: #1e62b4;
       }
       .especial-icon {
-        font-size: 1.5em;
+        font-size: 1.7em;
         color: #3887f7;
         margin-right: 7px;
+        margin-top: 2px;
         vertical-align: text-bottom;
       }
       .especial-img {
-        border-radius: 12px;
-        box-shadow: 0 3px 22px #1976d226;
-        border: 2.5px solid #e3eeff;
-        width: 155px;
-        margin-right: 18px;
+        border-radius: 14px;
+        box-shadow: 0 6px 24px rgba(25, 118, 210, 0.4);
+        border: 3px solid #e3eeff;
+        width: 190px;
+        margin-right: 22px;
         margin-bottom: 6px;
         float: right;
       }
       #acerca {
         background: linear-gradient(120deg, #e2eafc 70%, #f0fffa 95%);
         border-left: 7px solid #41b6ae;
-        box-shadow: 0 2px 24px #27b29c12;
+        box-shadow: 0 3px 24px rgba(39, 178, 156, 0.22);
       }
       .acerca-block {
         display: flex;
@@ -179,9 +214,10 @@
         color: #1976d2;
       }
       .acerca-icon {
-        font-size: 1.42em;
+        font-size: 1.6em;
         color: #0097a7;
         margin-right: 7px;
+        margin-top: 2px;
         vertical-align: text-bottom;
       }
       .acerca-team {
@@ -191,7 +227,7 @@
         padding: 13px 18px;
         margin-top: 8px;
         margin-bottom: 16px;
-        box-shadow: 0 2px 10px #a0e4e67a;
+        box-shadow: 0 2px 10px rgba(160, 228, 230, 0.48);
       }
       .acerca-team-title {
         color: #0097a7;
@@ -199,6 +235,16 @@
         font-weight: 700;
         font-size: 1.04em;
         letter-spacing: 0.3px;
+      }
+      .acerca-link {
+        color: #1565c0;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px dashed rgba(21, 101, 192, 0.6);
+      }
+      .acerca-link:hover {
+        color: #0d47a1;
+        border-bottom-style: solid;
       }
       .game-board {
         display: grid;
@@ -218,13 +264,14 @@
         cursor: pointer;
         text-align: center;
         line-height: 36px;
-        transition: box-shadow 0.16s, background 0.12s;
+        transition: box-shadow 0.16s, background 0.12s, transform 0.1s;
         user-select: none;
       }
       .cell.selectedMove {
         background: #ffe082;
         border: 2px solid #f6b93b;
         box-shadow: 0 0 9px #ffe08299;
+        transform: translateY(-1px);
       }
       .cell.cellPato {
         background: #f4ff81;
@@ -248,17 +295,17 @@
           padding: 0.4em;
         }
         .card {
-          padding: 1em;
+          padding: 1em 1.1em 1.2em;
         }
         .gallery img {
-          height: 70px;
+          height: 90px;
         }
         nav a {
-          font-size: 0.97em;
+          font-size: 0.93em;
           padding: 13px 10px 13px 10px;
         }
         .especial-img {
-          width: 80px;
+          width: 130px;
         }
         .game-board {
           grid-template-columns: repeat(10, 26px);
@@ -276,7 +323,7 @@
   <body>
     <header>
       <h1>Robot Salvaje: Salva el Pato</h1>
-      <p>Inspirado en la película animada Robot Salvaje</p>
+      <p>Adaptación web de un juego de mesa inspirado en Robot Salvaje</p>
     </header>
     <nav>
       <a href="#inicio">Inicio</a>
@@ -286,40 +333,40 @@
       <a href="#acerca">Acerca</a>
     </nav>
     <main>
+      <!-- INICIO -->
       <section class="card" id="inicio">
         <h2>Bienvenido al proyecto</h2>
         <p>
-          ¡Bienvenido a <b>Robot Salvaje: Salva el Pato</b>, una adaptación
-          digital de nuestro juego de mesa inspirado en la obra Robot Salvaje!
-          Aquí podrás conocer la historia, revisar las reglas y probar un
-          tablero interactivo donde animales y robots se enfrentan por la
-          supervivencia del pato. [web:14]
+          Bienvenido a <b>Robot Salvaje: Salva el Pato</b>, un proyecto escolar
+          donde se tomó un juego de mesa original y se convirtió en una
+          experiencia digital jugable desde el navegador. Aquí se mezclan
+          historia, prototipos físicos y programación web en una sola página.
         </p>
         <div class="especial-block" style="margin-top: 10px">
-          <!-- imagen de portada wp.jpeg en la misma carpeta docs -->
+          <!-- imagen de portada, más grande y protagonista -->
           <img
             src="wp.jpeg"
-            alt="Ilustración de Robot Salvaje"
+            alt="Ilustración del mundo de Robot Salvaje"
             style="
-              border-radius: 14px;
-              box-shadow: 0 4px 18px #0002;
-              width: 260px;
-              margin-right: 18px;
+              border-radius: 18px;
+              box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+              width: 320px;
+              max-width: 45%;
+              margin-right: 22px;
+              object-fit: cover;
             "
           />
           <div>
             <h3 style="margin-top: 0">¿Cómo se juega?</h3>
             <p>
-              En el tablero, los animales cooperan para proteger al pato
-              mientras los robots intentan capturarlo antes de que terminen los
-              turnos. Cada partida combina estrategia, azar con dados y
-              habilidades especiales de cada rol. [image:2]
+              En el tablero, los animales forman un equipo para proteger al pato
+              mientras los robots intentan capturarlo antes de que se agoten los
+              turnos. Cada personaje tiene habilidades especiales que cambian la
+              estrategia en cada partida.
             </p>
             <ul>
               <li>Duración aproximada: 20–30 minutos</li>
-              <li>
-                El tablero representa la isla donde vive Roz y los animales
-              </li>
+              <li>Tablero basado en la isla donde vive Roz y los animales</li>
               <li>Escoge bando: equipo de Robots o equipo de Animales</li>
               <li>El Pato es el objetivo a proteger o capturar</li>
             </ul>
@@ -332,16 +379,17 @@
         <button class="btn" onclick="showGallery()">Galería</button>
       </section>
 
+      <!-- HISTORIA -->
       <section class="card especial-section" id="historia">
         <h2>Historia</h2>
         <div class="especial-block">
           <span class="especial-icon">🤖</span>
           <div>
-            <strong>Inspirado en la película "Robot Salvaje":</strong>
+            <strong>Inspiración principal:</strong>
             <br />
-            La historia sigue a Roz, una robot que despierta en una isla
-            desconocida y aprende a convivir con los animales mientras protege a
-            un patito huérfano. [web:14]
+            La historia nace de Robot Salvaje, donde Roz, una robot, naufraga en
+            una isla llena de vida salvaje y aprende a comunicarse con los
+            animales mientras protege a un patito huérfano.
           </div>
         </div>
         <div class="especial-block">
@@ -349,18 +397,18 @@
           <img
             src="roles.jpg"
             class="especial-img"
-            alt="Tarjetas de roles del juego de animales"
+            alt="Tarjetas de roles del juego de animales y robots"
           />
           <div>
             <strong>Roles del juego:</strong>
             <ul>
               <li>
-                Cada carta representa a un animal o robot con vida y habilidad
-                especial (daño extra, esquiva, bloqueos, movilidad). [image:2]
+                Cada carta representa a un animal o robot con puntos de vida y
+                habilidades distintas, como daño adicional, esquiva o bloqueo.
               </li>
               <li>
-                Estas cartas sirvieron como base para programar los personajes
-                del tablero web y equilibrar turnos y ataques. [image:2]
+                Estas tarjetas físicas fueron el primer prototipo del sistema de
+                personajes que ahora se ve en el tablero web.
               </li>
             </ul>
           </div>
@@ -370,9 +418,9 @@
           <div>
             <strong>Del cuento al tablero:</strong>
             <br />
-            La relación de cuidado entre Roz y el pato se convierte en una
-            mecánica central: si el pato sobrevive los turnos, ganan los
-            animales; si los robots lo atrapan, ganan ellos. [web:14]
+            La relación de cuidado entre Roz y el pato se traduce en una
+            condición de victoria: si el pato sobrevive los turnos, ganan los
+            animales; si un robot llega hasta él, ganan los robots.
           </div>
         </div>
         <div class="especial-block">
@@ -380,13 +428,14 @@
           <div>
             <strong>De la narrativa a la jugabilidad:</strong>
             <br />
-            El diseño de roles, mapa y condiciones de victoria busca mantener el
-            mensaje de cooperación y supervivencia de la historia original.
-            [image:2]
+            El diseño de roles, mapa y reglas busca mantener el mensaje de
+            cooperación y supervivencia, pero ahora en forma de partidas
+            competitivas y cooperativas en pantalla.
           </div>
         </div>
       </section>
 
+      <!-- TABLERO -->
       <section class="card" id="game-board" style="display: none">
         <h2>Tablero interactivo</h2>
         <div id="turnInfo" class="turnInfo"></div>
@@ -395,18 +444,20 @@
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
+      <!-- INSTRUCCIONES -->
       <section class="card" id="instructions" style="display: none">
         <h2>Instrucciones</h2>
         <p>
-          Cada jugador puede mover su ficha, usar una habilidad especial o
-          atacar a un oponente cercano; los ataques se resuelven con un dado de
-          6 caras. [image:2]
+          En cada turno, el jugador activo puede mover su ficha, usar una
+          habilidad especial o atacar a un oponente cercano. Los ataques se
+          resuelven con un dado de 6 caras y las habilidades modifican daño o
+          defensa.
         </p>
         <ul>
           <li>Movimiento especial según personaje.</li>
-          <li>Robots: hasta 2 espacios llanos.</li>
-          <li>Animales: hasta 3 (Zorro hasta 4); el pato solo 1.</li>
-          <li>Con 4–6 en el dado el ataque tiene éxito.</li>
+          <li>Robots: hasta 2 espacios llanos por turno.</li>
+          <li>Animales: hasta 3 (Zorro hasta 4); el pato solo 1 espacio.</li>
+          <li>Con 4–6 en el dado el ataque tiene éxito y causa daño.</li>
         </ul>
         <table>
           <tr>
@@ -453,88 +504,134 @@
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
+      <!-- GALERÍA -->
       <section class="card" id="gallery" style="display: none">
         <h2>Galería</h2>
         <div class="gallery">
-          <!-- foto física del tablero -->
           <img src="foto1.jpeg" alt="Foto del tablero físico" />
-          <!-- captura/diseño del mapa web -->
           <img src="mapaweb.png" alt="Diseño del mapa en la versión web" />
         </div>
         <p>
-          El primer mapa corresponde al tablero físico hecho a mano, con
-          casillas hexagonales y materiales tradicionales; el segundo muestra la
-          versión digital simplificada usada en el tablero web, pensada para
-          turnos más rápidos y lectura clara en pantalla.
-          [attached_file:image.jpg]
+          El <b>mapa físico</b> fue pintado y recortado a mano sobre cartón,
+          usando casillas hexagonales para representar mejor la forma de la
+          isla, sus montañas y zonas de agua. La textura de la tela y los
+          materiales le dan un aspecto artesanal y único, pensado para jugar en
+          mesa y mover fichas físicas.
+        </p>
+        <p>
+          El <b>mapa web</b> simplifica esa misma isla a un tablero cuadriculado
+          pensado para pantalla: mantiene la idea de zonas seguras, caminos y
+          espacios de riesgo, pero con casillas regulares que facilitan el
+          cálculo de movimientos de los personajes y la programación del juego.
+        </p>
+        <p>
+          Mientras que el tablero físico se centra en la experiencia táctil y
+          visual de tener el mapa frente a los jugadores, la versión digital se
+          enfoca en la claridad, el seguimiento de turnos y la posibilidad de
+          jugar desde cualquier dispositivo con acceso a internet.
         </p>
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
+      <!-- ACERCA -->
       <section class="card" id="acerca">
         <h2>Acerca del Proyecto</h2>
         <div class="acerca-block">
           <span class="acerca-icon">🎲</span>
           <div>
-            <strong>Fase de Idea y Planificación:</strong>
-            <br />Se tomó Robot Salvaje como inspiración para diseñar un juego
-            cooperativo de protección del pato en tablero físico y digital.
-            [web:14]
+            <strong>Fase de idea y planificación:</strong>
+            <br />Se partió de la historia de Robot Salvaje para imaginar un
+            juego cooperativo en el que los animales protegen al pato mientras
+            los robots avanzan desde los bordes del mapa.
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">💻</span>
           <div>
             <strong>Repositorio del proyecto:</strong>
-            <br />El código fuente completo, imágenes y documentación se
-            encuentran en el repositorio de GitHub:
+            <br />El código fuente, imágenes y documentación se encuentran en el
+            siguiente repositorio de GitHub:
             <a
               href="https://github.com/urli-gg/Patotective.git"
               target="_blank"
               rel="noopener noreferrer"
-              >https://github.com/urli-gg/Patotective.git</a
-            >. [web:131]
+              class="acerca-link"
+              >github.com/urli-gg/Patotective</a
+            >.
+          </div>
+        </div>
+        <div class="acerca-block">
+          <span class="acerca-icon">📊</span>
+          <div>
+            <strong>Diagrama de flujo:</strong>
+            <br />Antes de programar el juego web se elaboró un diagrama de
+            flujo que resume el recorrido completo del jugador, desde que entra
+            a la página hasta las condiciones de victoria y reinicio.
+            <div style="margin-top: 10px">
+              <img
+                src="dig.PNG"
+                alt="Diagrama de flujo del juego Robot Salvaje"
+                style="
+                  max-width: 100%;
+                  border-radius: 14px;
+                  border: 2px solid #c5d7ff;
+                  box-shadow: 0 6px 24px rgba(25, 118, 210, 0.35);
+                "
+              />
+            </div>
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🎨</span>
           <div>
-            <strong>Prototipado y Diagramación:</strong>
-            <br />Se crearon diagramas de flujo para definir turnos y
-            condiciones de victoria antes de programar.
-            [attached_file:Imagen-de-WhatsApp-2025-11-05-a-las-11.15.34_09ddb3c2.jpg]
+            <strong>Prototipado y diseño:</strong>
+            <br />Se trabajó con prototipos de tablero, cartas de rol e imágenes
+            de referencia para definir colores, personajes y el aspecto general
+            de la interfaz web.
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🤖</span>
           <div>
-            <strong>Desarrollo Digital e Inteligencia Artificial:</strong>
-            <br />Se utilizaron asistentes de IA para refinar el tablero y las
-            reglas en formato web. [memory:23]
+            <strong>Desarrollo digital e IA:</strong>
+            <br />Durante el desarrollo se utilizaron asistentes de
+            programación, pruebas iterativas y ajustes en las reglas para que el
+            tablero digital fuera jugable y entendible para nuevos jugadores.
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🌐</span>
           <div>
-            <strong>Integración Web y Presentación:</strong>
-            <br />La página muestra historia, reglas, juego y galería en un
-            único sitio responsivo accesible desde navegador. [memory:23]
+            <strong>Integración web y presentación:</strong>
+            <br />El sitio reúne historia, reglas, tablero jugable y galería en
+            una sola página responsiva, pensada para mostrar el proyecto en
+            clase o compartirlo en línea.
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">👥</span>
           <div>
-            <strong>Trabajo en Equipo:</strong>
-            <br />El equipo colaboró en código, arte y pruebas para lograr la
-            versión final del prototipo.
+            <strong>Trabajo en equipo:</strong>
+            <br />El proyecto se realizó en equipo, combinando documentación,
+            diseño, programación, pruebas de usabilidad y mejoras creativas a
+            partir del prototipo inicial de juego de mesa.
             <div class="acerca-team">
               <span class="acerca-team-title"
                 >Integrantes y actividades principales:</span
               >
               <ul>
-                <li>Jesús Gael Saucedo Solorzano: gestión, programación.</li>
-                <li>Diego Hernandez: reglas y experiencia de usuario.</li>
-                <li>Aslan Yacid: diseño visual y documentación.</li>
+                <li>
+                  Jesús Gael Saucedo Solorzano: gestión del proyecto,
+                  programación, pruebas.
+                </li>
+                <li>
+                  Diego Hernandez: diseño de prototipos, reglas y experiencia de
+                  usuario.
+                </li>
+                <li>
+                  Aslan Yacid: diseño visual, estructura del sitio y
+                  documentación.
+                </li>
               </ul>
             </div>
           </div>
@@ -543,8 +640,10 @@
           <span class="acerca-icon">✨</span>
           <div>
             <strong>Logros:</strong>
-            <br />Se adaptó un juego de mesa cooperativo a un tablero web con
-            varios robots enemigos y roles animales diferenciados. [web:53]
+            <br />Se logró adaptar un juego de mesa cooperativo a un tablero web
+            con varios robots enemigos, roles diferenciados y una presentación
+            visual pensada para que cualquier visitante entienda la historia y
+            pueda jugar una partida rápida.
           </div>
         </div>
       </section>
@@ -694,18 +793,21 @@
         const actual = vivos[turnoIndex];
         const rol = ROLES[actual.tipo];
         const equipo = rol.equipo === "Animales" ? "Animales 🦊" : "Robots 🤖";
-        const extra =
-          actual.tipo === "Pato"
-            ? "Objetivo a proteger."
-            : actual.tipo === "Oso"
-            ? "Al atacar hace 2 puntos de daño."
-            : actual.tipo === "Zarigueya"
-            ? "La primera vez que la atacan puede esquivar el daño."
-            : actual.tipo === "Zorro"
-            ? "Si ataca desde la misma fila causa 2 puntos de daño."
-            : actual.tipo === "RobotAliado"
-            ? "Robot que ayuda a los animales."
-            : "Robot enemigo que intenta capturar al Pato.";
+        let extra = "";
+        if (actual.tipo === "Pato") {
+          extra = "Objetivo a proteger: si cae, ganan los Robots.";
+        } else if (actual.tipo === "Oso") {
+          extra = "Al atacar hace 2 puntos de daño.";
+        } else if (actual.tipo === "Zarigueya") {
+          extra = "Puede esquivar el primer ataque que reciba.";
+        } else if (actual.tipo === "Zorro") {
+          extra = "Si ataca desde la misma fila causa 2 puntos de daño.";
+        } else if (actual.tipo === "RobotAliado") {
+          extra = "Robot que ayuda al equipo de animales.";
+        } else {
+          extra =
+            "Robot enemigo que intenta capturar al Pato desde los bordes.";
+        }
 
         document.getElementById(
           "turnInfo"
@@ -779,9 +881,7 @@
 
         if (defensor.tipo === "Zarigueya" && !defensor.esquivado) {
           defensor.esquivado = true;
-          alert(
-            `¡La Zarigüeya esquiva el ataque gracias a su habilidad especial!`
-          );
+          alert("¡La Zarigüeya esquiva el ataque gracias a su habilidad!");
           return;
         }
 
