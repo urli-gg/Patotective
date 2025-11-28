@@ -287,20 +287,44 @@
     </nav>
     <main>
       <section class="card" id="inicio">
-        <h2>¿Cómo se juega?</h2>
+        <h2>Bienvenido al proyecto</h2>
         <p>
-          <b>Objetivo:</b> Los animales deben proteger al Pato de los robots
-          durante 20 turnos. Los robots intentan capturarlo antes de ese tiempo.
+          ¡Bienvenido a <b>Robot Salvaje: Salva el Pato</b>, una adaptación
+          digital de nuestro juego de mesa inspirado en la obra Robot Salvaje!
+          Aquí podrás conocer la historia, revisar las reglas y probar un
+          tablero interactivo donde animales y robots se enfrentan por la
+          supervivencia del pato. [web:14]
         </p>
-        <ul>
-          <li>Duración aproximada: 20-30 minutos</li>
-          <li>Coloca el mapa de la isla en el centro</li>
-          <li>
-            Selecciona bando y ficha para jugar: <b>Robot</b> o <b>Animal</b>
-          </li>
-          <li>Reparte marcadores de vida y tarjetas de habilidad</li>
-          <li>El Pato comienza en una zona de agua o escondite</li>
-        </ul>
+        <div class="especial-block" style="margin-top: 10px">
+          <!-- imagen de portada wp.jpeg en la misma carpeta docs -->
+          <img
+            src="wp.jpeg"
+            alt="Ilustración de Robot Salvaje"
+            style="
+              border-radius: 14px;
+              box-shadow: 0 4px 18px #0002;
+              width: 260px;
+              margin-right: 18px;
+            "
+          />
+          <div>
+            <h3 style="margin-top: 0">¿Cómo se juega?</h3>
+            <p>
+              En el tablero, los animales cooperan para proteger al pato
+              mientras los robots intentan capturarlo antes de que terminen los
+              turnos. Cada partida combina estrategia, azar con dados y
+              habilidades especiales de cada rol. [image:2]
+            </p>
+            <ul>
+              <li>Duración aproximada: 20–30 minutos</li>
+              <li>
+                El tablero representa la isla donde vive Roz y los animales
+              </li>
+              <li>Escoge bando: equipo de Robots o equipo de Animales</li>
+              <li>El Pato es el objetivo a proteger o capturar</li>
+            </ul>
+          </div>
+        </div>
         <button class="btn" onclick="startGame()">Jugar ahora</button>
         <button class="btn" onclick="showInstructions()">
           Ver instrucciones
@@ -315,40 +339,40 @@
           <div>
             <strong>Inspirado en la película "Robot Salvaje":</strong>
             <br />
-            El juego se basa en la historia de Roz, una robot que naufraga en
-            una isla llena de animales y termina protegiendo a un patito.
-            [web:14]
+            La historia sigue a Roz, una robot que despierta en una isla
+            desconocida y aprende a convivir con los animales mientras protege a
+            un patito huérfano. [web:14]
           </div>
         </div>
         <div class="especial-block">
-          <!-- imagen del tablero, está en docs/foto1.jpeg -->
+          <!-- ahora usamos roles.jpg en historia -->
           <img
-            src="foto1.jpeg"
+            src="roles.jpg"
             class="especial-img"
-            alt="Foto del tablero de isla"
+            alt="Tarjetas de roles del juego de animales"
           />
           <div>
-            <strong>Contexto importante:</strong>
+            <strong>Roles del juego:</strong>
             <ul>
               <li>
-                Roz aprende a convivir con los animales de la isla. [web:14]
+                Cada carta representa a un animal o robot con vida y habilidad
+                especial (daño extra, esquiva, bloqueos, movilidad). [image:2]
               </li>
               <li>
-                El patito se vuelve el centro de la historia de cuidado.
-                [web:14]
+                Estas cartas sirvieron como base para programar los personajes
+                del tablero web y equilibrar turnos y ataques. [image:2]
               </li>
-              <li>Se exploran empatía, naturaleza y tecnología. [web:62]</li>
             </ul>
           </div>
         </div>
         <div class="especial-block">
           <span class="especial-icon">🦆</span>
           <div>
-            <strong>La adaptación en el juego:</strong>
+            <strong>Del cuento al tablero:</strong>
             <br />
-            Los animales cooperan para proteger al pato mientras los robots
-            enemigos intentan capturarlo antes de que termine el tiempo.
-            [image:2]
+            La relación de cuidado entre Roz y el pato se convierte en una
+            mecánica central: si el pato sobrevive los turnos, ganan los
+            animales; si los robots lo atrapan, ganan ellos. [web:14]
           </div>
         </div>
         <div class="especial-block">
@@ -356,8 +380,9 @@
           <div>
             <strong>De la narrativa a la jugabilidad:</strong>
             <br />
-            Cada rol del tablero digital toma habilidades del prototipo de
-            cartas físicas, como daño extra, esquivar o bloqueos. [image:2]
+            El diseño de roles, mapa y condiciones de victoria busca mantener el
+            mensaje de cooperación y supervivencia de la historia original.
+            [image:2]
           </div>
         </div>
       </section>
@@ -381,7 +406,7 @@
           <li>Movimiento especial según personaje.</li>
           <li>Robots: hasta 2 espacios llanos.</li>
           <li>Animales: hasta 3 (Zorro hasta 4); el pato solo 1.</li>
-          <li>Con 4-6 en el dado el ataque tiene éxito.</li>
+          <li>Con 4–6 en el dado el ataque tiene éxito.</li>
         </ul>
         <table>
           <tr>
@@ -431,9 +456,18 @@
       <section class="card" id="gallery" style="display: none">
         <h2>Galería</h2>
         <div class="gallery">
-          <!-- mismas rutas: index.html y foto1.jpeg están juntos en docs -->
-          <img src="foto1.jpeg" alt="Foto del tablero" />
+          <!-- foto física del tablero -->
+          <img src="foto1.jpeg" alt="Foto del tablero físico" />
+          <!-- captura/diseño del mapa web -->
+          <img src="mapaweb.png" alt="Diseño del mapa en la versión web" />
         </div>
+        <p>
+          El primer mapa corresponde al tablero físico hecho a mano, con
+          casillas hexagonales y materiales tradicionales; el segundo muestra la
+          versión digital simplificada usada en el tablero web, pensada para
+          turnos más rápidos y lectura clara en pantalla.
+          [attached_file:image.jpg]
+        </p>
         <button class="btn" onclick="back()">Volver</button>
       </section>
 
@@ -444,16 +478,22 @@
           <div>
             <strong>Fase de Idea y Planificación:</strong>
             <br />Se tomó Robot Salvaje como inspiración para diseñar un juego
-            cooperativo de protección del pato. [web:14]
+            cooperativo de protección del pato en tablero físico y digital.
+            [web:14]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">💻</span>
           <div>
-            <strong>Construcción del Repositorio:</strong>
-            <br />Se organizó el proyecto con <code>docs</code> para el sitio y
-            se añadieron imágenes junto al index para que se publiquen en GitHub
-            Pages. [web:66]
+            <strong>Repositorio del proyecto:</strong>
+            <br />El código fuente completo, imágenes y documentación se
+            encuentran en el repositorio de GitHub:
+            <a
+              href="https://github.com/urli-gg/Patotective.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              >https://github.com/urli-gg/Patotective.git</a
+            >. [web:131]
           </div>
         </div>
         <div class="acerca-block">
@@ -478,7 +518,7 @@
           <div>
             <strong>Integración Web y Presentación:</strong>
             <br />La página muestra historia, reglas, juego y galería en un
-            único sitio responsivo. [memory:23]
+            único sitio responsivo accesible desde navegador. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
@@ -487,6 +527,16 @@
             <strong>Trabajo en Equipo:</strong>
             <br />El equipo colaboró en código, arte y pruebas para lograr la
             versión final del prototipo.
+            <div class="acerca-team">
+              <span class="acerca-team-title"
+                >Integrantes y actividades principales:</span
+              >
+              <ul>
+                <li>Jesús Gael Saucedo Solorzano: gestión, programación.</li>
+                <li>Diego Hernandez: reglas y experiencia de usuario.</li>
+                <li>Aslan Yacid: diseño visual y documentación.</li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="acerca-block">
