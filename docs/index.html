@@ -202,25 +202,25 @@
         font-size: 1.04em;
         letter-spacing: 0.3px;
       }
-      /* Juego visual */
+      /* Juego visual: ahora 10x10, el grid se adapta con repeat(10, ...) usando auto-fill */
       .game-board {
         display: grid;
-        grid-template-columns: repeat(7, 42px);
-        grid-template-rows: repeat(7, 42px);
+        grid-template-columns: repeat(10, 36px);
+        grid-template-rows: repeat(10, 36px);
         gap: 2px;
         justify-content: center;
         margin: 18px 0;
       }
       .cell {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         background: #e0f7fa;
         border-radius: 6px;
         border: 1.5px solid #b2ebf2;
-        font-size: 1.4em;
+        font-size: 1.2em;
         cursor: pointer;
         text-align: center;
-        line-height: 42px;
+        line-height: 36px;
         transition: box-shadow 0.16s, background 0.12s;
         user-select: none;
       }
@@ -264,14 +264,14 @@
           width: 80px;
         }
         .game-board {
-          grid-template-columns: repeat(7, 28px);
-          grid-template-rows: repeat(7, 28px);
+          grid-template-columns: repeat(10, 26px);
+          grid-template-rows: repeat(10, 26px);
         }
         .cell {
-          width: 28px;
-          height: 28px;
-          line-height: 28px;
-          font-size: 1.1em;
+          width: 26px;
+          height: 26px;
+          line-height: 26px;
+          font-size: 1.05em;
         }
       }
     </style>
@@ -326,10 +326,8 @@
             Este videojuego está basado en la película animada y libro de Peter
             Brown, donde una robot llamada <b>Roz</b> naufraga y aparece en una
             isla salvaje. A pesar de ser una máquina, Roz aprende el lenguaje de
-            los animales, se adapta al entorno natural, cuida a un pequeño pato
-            y enfrenta desafíos que ponen a prueba su "humanidad". La historia
-            explora temas de convivencia, naturaleza, empatía y el sentido de
-            pertenencia. [web:8]
+            los animales y protege a un patito, lo que inspira la mecánica de
+            defensa del juego. [web:14]
           </div>
         </div>
         <div class="especial-block">
@@ -343,17 +341,16 @@
             <ul>
               <li>
                 <b>Roz:</b> La protagonista, una robot que aprende sobre la vida
-                y el cuidado al adoptar un patito huérfano.
+                y el cuidado al adoptar un patito huérfano. [web:14]
               </li>
               <li>
-                <b>Los animales:</b> Diferentes criaturas silvestres ayudan (o
-                desconfían) de Roz y del pato, enseñándole lecciones vitales y
-                formando una peculiar familia. [web:8]
+                <b>Los animales:</b> Diferentes criaturas silvestres ayudan o
+                desconfían de Roz, construyendo una comunidad alrededor de la
+                protección del pato. [web:62]
               </li>
               <li>
-                <b>Mensaje de la obra:</b> Acentúa la empatía entre seres
-                distintos y el poder de la colaboración, la protección y la
-                adaptación. [web:8]
+                <b>Mensaje de la obra:</b> Habla de empatía, adaptación y
+                convivencia entre naturaleza y tecnología. [web:62]
               </li>
             </ul>
           </div>
@@ -363,12 +360,10 @@
           <div>
             <strong>La adaptación en el juego:</strong>
             <br />
-            En este juego, se toma como inspiración la relación de protección
-            entre los animales y el pato: los animales trabajan juntos para
-            cuidar y salvar al pato de los robots, mientras que los robots
-            intentan capturarlo antes de que pase el tiempo. De este modo, el
-            espíritu de la película y el libro se vive de una manera competitiva
-            y cooperativa dentro del tablero digital.
+            En este juego, los animales forman un equipo para proteger al pato
+            mientras los robots enemigos intentan capturarlo antes de que se
+            acaben los turnos, emulando el conflicto entre protección y amenaza.
+            [image:2]
           </div>
         </div>
         <div class="especial-block">
@@ -376,11 +371,10 @@
           <div>
             <strong>De la narrativa a la jugabilidad:</strong>
             <br />
-            El tablero, los roles, las mecánicas y las reglas se diseñaron para
-            transmitir el reto de sobrevivir y trabajar en equipo, con mecánicas
-            que representan las habilidades y debilidades de cada personaje,
-            volviendo cada partida distinta pero siempre fiel al mensaje
-            original de la historia.
+            Cada rol del tablero digital recupera las habilidades de las
+            tarjetas físicas (daños extra, esquivar, bloqueos y movilidad),
+            logrando partidas cooperativas y competitivas al mismo tiempo.
+            [image:2]
           </div>
         </div>
       </section>
@@ -400,7 +394,7 @@
         <p>
           Cada jugador puede mover su ficha, usar una habilidad especial o
           atacar a un oponente cercano. El resultado del ataque se decide
-          lanzando un dado de 6 caras:
+          lanzando un dado de 6 caras.
         </p>
         <ul>
           <li>Movimiento especial según personaje</li>
@@ -410,8 +404,8 @@
             esconderse
           </li>
           <li>
-            Ataques: Si hay oponente adyacente, lanza dado. 4-6: éxito, el
-            enemigo pierde 1 vida
+            Ataques: Si hay oponente adyacente, lanza dado; con 4-6 el ataque
+            tiene éxito y el enemigo pierde vida.
           </li>
         </ul>
         <table>
@@ -428,7 +422,7 @@
           <tr>
             <td>Pato</td>
             <td>1</td>
-            <td>Se mueve 3 casillas en agua, objetivo a proteger</td>
+            <td>Objetivo a proteger; en agua se movería 3 casillas</td>
           </tr>
           <tr>
             <td>Alce</td>
@@ -443,17 +437,17 @@
           <tr>
             <td>Zorro</td>
             <td>2</td>
-            <td>Atacando desde detrás causa 2 de daño</td>
+            <td>Atacando desde detrás hace 2 de daño</td>
           </tr>
           <tr>
             <td>Robot Aliado</td>
             <td>3</td>
-            <td>Bloquea ataque y responde cada 3 turnos</td>
+            <td>Bloquea ataques y contraataca en ciertas rondas</td>
           </tr>
           <tr>
-            <td>Robot</td>
+            <td>Robots enemigos</td>
             <td>3</td>
-            <td>En montaña solo se mueve 1 casilla</td>
+            <td>Se mueven 2 casillas y buscan capturar al pato</td>
           </tr>
         </table>
         <button class="btn" onclick="back()">Volver</button>
@@ -477,28 +471,26 @@
           <div>
             <strong>Fase de Idea y Planificación:</strong>
             <br />La creación del videojuego comenzó con la definición del
-            proyecto y la elección del juego de mesa a digitalizar. Se eligió la
-            película <b>Robot Salvaje</b> como temática, desarrollando una
-            narrativa única y personajes adaptados al mundo digital. [web:14]
+            proyecto y la elección del juego de mesa a digitalizar, tomando la
+            isla y los animales de Robot Salvaje como base temática. [web:14]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">💻</span>
           <div>
             <strong>Construcción del Repositorio:</strong>
-            <br />Se creó el repositorio en GitHub Pages organizando carpetas y
-            documentación, con atención especial al diseño estructural y
-            presentación visual para facilitar el trabajo en equipo.
+            <br />Se creó el repositorio en GitHub Pages con carpetas para
+            imágenes, código y documentación, facilitando el trabajo
+            colaborativo y el control de versiones. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🎨</span>
           <div>
             <strong>Prototipado y Diagramación:</strong>
-            <br />Se utilizaron herramientas como <b>Figma</b> y diagramas de
-            flujo para representar visualmente la mecánica de juego y definir
-            los procesos de cada turno, mejorando la comprensión e iteración de
-            las reglas.
+            <br />Se usaron herramientas de diseño y diagramas de flujo para
+            definir turnos, condiciones de victoria y roles, como se ve en el
+            mapa de flujo adjunto.
             [attached_file:Imagen-de-WhatsApp-2025-11-05-a-las-11.15.34_09ddb3c2.jpg]
           </div>
         </div>
@@ -506,29 +498,27 @@
           <span class="acerca-icon">🤖</span>
           <div>
             <strong>Desarrollo Digital e Inteligencia Artificial:</strong>
-            <br />El equipo experimentó con prototipos generados por IA,
-            ayudando a crear y depurar el código, testear mecánicas y construir
-            la arquitectura base del videojuego web. [memory:23]
+            <br />Se apoyó el desarrollo con asistentes de IA para generar
+            prototipos de código, refinar reglas y conectar la narrativa con la
+            jugabilidad web. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">🌐</span>
           <div>
             <strong>Integración Web y Presentación:</strong>
-            <br />Se diseñó una página web minimalista, funcional y visualmente
-            atractiva que integra todos los componentes: historia, reglas,
-            prototipos e imágenes originales, logrando una experiencia accesible
-            y moderna. [memory:23]
+            <br />La página integra historia, reglas, tablero interactivo y
+            galería en un solo sitio accesible desde navegador, manteniendo un
+            diseño limpio y responsivo. [memory:23]
           </div>
         </div>
         <div class="acerca-block">
           <span class="acerca-icon">👥</span>
           <div>
             <strong>Trabajo en Equipo:</strong>
-            <br />La colaboración fue esencial: se dividieron tareas desde la
-            documentación y organización, hasta la programación, pruebas de
-            interfaz y mejoras creativas. Cada integrante aportó ideas,
-            soluciones técnicas y creatividad.
+            <br />La colaboración incluyó diseño de reglas, programación,
+            pruebas del tablero y mejora visual del sitio, con roles claros para
+            cada integrante del equipo.
             <div class="acerca-team">
               <span class="acerca-team-title"
                 >Integrantes y actividades principales:</span
@@ -554,10 +544,9 @@
           <span class="acerca-icon">✨</span>
           <div>
             <strong>Logros:</strong>
-            <br />Se logró digitalizar un concepto clásico y adaptarlo a una
-            plataforma web moderna, utilizando IA y recursos visuales,
-            aprendiendo sobre integración de herramientas y desarrollo
-            colaborativo. [memory:23]
+            <br />Se consiguió adaptar un juego de mesa cooperativo a un entorno
+            web interactivo, ampliando el tablero y el número de enemigos para
+            equilibrar la dificultad y prolongar las partidas. [web:53]
           </div>
         </div>
       </section>
@@ -580,13 +569,12 @@
       // ==========================
       //   CONFIGURACIÓN DEL JUEGO
       // ==========================
-      const boardSize = 7;
+      const boardSize = 10;
 
-      // Definición de roles y habilidades básicas (según tus cartas de roles)
       const ROLES = {
         Pato: {
           emoji: "🦆",
-          maxMove: 1, // En este tablero simple no hay agua, se queda a 1
+          maxMove: 1,
           vida: 1,
           equipo: "Animales",
         },
@@ -603,7 +591,7 @@
           equipo: "Animales",
         },
         Zarigueya: {
-          emoji: "🦡", // sustituto visual
+          emoji: "🦡",
           maxMove: 2,
           vida: 2,
           equipo: "Animales",
@@ -631,30 +619,68 @@
       let personajes = [];
       let turnoIndex = 0;
       let turnosTranscurridos = 0;
-      const TURNOS_MAX = 20;
+      const TURNOS_MAX = 25; // más turnos para mapa grande
 
       // ==========================
       //   INICIALIZACIÓN
       // ==========================
       function crearPersonajesIniciales() {
         personajes = [
-          { id: 1, tipo: "Pato", x: 3, y: 3, vida: ROLES.Pato.vida },
-          { id: 2, tipo: "Oso", x: 2, y: 4, vida: ROLES.Oso.vida },
-          { id: 3, tipo: "Alce", x: 4, y: 4, vida: ROLES.Alce.vida },
-          { id: 4, tipo: "Zarigueya", x: 1, y: 2, vida: ROLES.Zarigueya.vida },
-          { id: 5, tipo: "Zorro", x: 5, y: 2, vida: ROLES.Zorro.vida },
+          // Animales (zona central)
+          { id: 1, tipo: "Pato", x: 4, y: 5, vida: ROLES.Pato.vida },
+          { id: 2, tipo: "Oso", x: 3, y: 6, vida: ROLES.Oso.vida },
+          { id: 3, tipo: "Alce", x: 5, y: 6, vida: ROLES.Alce.vida },
+          { id: 4, tipo: "Zarigueya", x: 3, y: 4, vida: ROLES.Zarigueya.vida },
+          { id: 5, tipo: "Zorro", x: 5, y: 4, vida: ROLES.Zorro.vida },
           {
             id: 6,
             tipo: "RobotAliado",
-            x: 3,
-            y: 5,
+            x: 4,
+            y: 7,
             vida: ROLES.RobotAliado.vida,
           },
+
+          // Robots enemigos: aparecen desde distintas esquinas y bordes
           {
             id: 7,
             tipo: "RobotEnemigo",
             x: 0,
             y: 0,
+            vida: ROLES.RobotEnemigo.vida,
+          },
+          {
+            id: 8,
+            tipo: "RobotEnemigo",
+            x: 9,
+            y: 0,
+            vida: ROLES.RobotEnemigo.vida,
+          },
+          {
+            id: 9,
+            tipo: "RobotEnemigo",
+            x: 0,
+            y: 9,
+            vida: ROLES.RobotEnemigo.vida,
+          },
+          {
+            id: 10,
+            tipo: "RobotEnemigo",
+            x: 9,
+            y: 9,
+            vida: ROLES.RobotEnemigo.vida,
+          },
+          {
+            id: 11,
+            tipo: "RobotEnemigo",
+            x: 0,
+            y: 4,
+            vida: ROLES.RobotEnemigo.vida,
+          },
+          {
+            id: 12,
+            tipo: "RobotEnemigo",
+            x: 9,
+            y: 5,
             vida: ROLES.RobotEnemigo.vida,
           },
         ];
@@ -730,7 +756,7 @@
             ? "Si ataca desde la misma fila causa 2 puntos de daño."
             : actual.tipo === "RobotAliado"
             ? "Robot que ayuda a los animales."
-            : "Robot enemigo que intenta capturar al Pato.";
+            : "Robot enemigo que intenta capturar al Pato desde los bordes del mapa.";
 
         document.getElementById(
           "turnInfo"
